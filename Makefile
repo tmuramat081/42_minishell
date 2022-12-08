@@ -25,6 +25,8 @@ LIBPQUEUE := ${LIBPQUEUE_DIR}libpqueue.a
 LIBHASHSET_DIR := libs/hashset/
 LIBHASHSET := ${LIBHASHSET_DIR}libhashset.a
 
+LIBREADLINE := -lreadline
+
 INCS := -I./incs/ -I./${LIBFT_DIR}incs/ -I./${LIBDEQUE_DIR}incs/ \
 	-I./${LIBVECTOR_DIR}incs/ -I./${LIBPQUEUE_DIR}incs/ -I./${LIBHASHSET_DIR}incs/
 
@@ -51,7 +53,7 @@ PROGRESS = ${eval SRC_CNT = ${shell expr ${SRC_CNT} + 1}} \
 
 # Main commands
 ${NAME}: ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${OBJS}
-	@${CC} ${CFLAGS} ${INCS} ${OBJS} ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} -o $@
+	@${CC} ${CFLAGS} ${INCS} ${OBJS} ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBREADLINE} -o $@
 	@echo "\n${BLUE}--- ${NAME} is up to date! ---${DEFAULT}"
 
 ${LIBFT}:
@@ -122,3 +124,12 @@ help:
 
 .PHONY:
 	all clean fclean re debug git help
+
+credit:
+	@echo "███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     "
+	@echo "████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     "
+	@echo "██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     "
+	@echo "██║╚██╔╝██║██║██║╚█f█╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     "
+	@echo "██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗"
+	@echo "╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝"
+	@echo "         Made with love by : \033[1;91mzjamali\033[m and \033[1;91mmbari\033[m"
