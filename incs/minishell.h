@@ -6,5 +6,10 @@
 # include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "libft.h"
+# include "ft_deque.h"
+# include "ft_vector.h"
+
+void	lexer_line(char *line);
 
 #endif
