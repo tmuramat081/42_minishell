@@ -1,25 +1,43 @@
 #include "minishell.h"
 
-void	launch_minishell(void)
+/** コマンド入力を待機 */
+void	boot_minishell(char **envp)
 {
-	char	*line = NULL;
+	char	*line;
 
+	(void)envp;
+	line = NULL;
 	while (42)
 	{
 		line = readline("> ");
-		if (line == NULL || strlen(line) == 0)
-		{
-			free(line);
-			break ;
-		}
-		printf("line is '%s'\n", line);
 		add_history(line);
+		lexer_line(line);
+		printf("line is '%s'\n", line);
 		free(line);
 	}
 }
 
-int	main(void)
+/**
+ * @brief 起動バナーの表示（仮）
+ *
+ */
+void	put_boot_banner(void)
 {
-	launch_minishell();
+	ft_putendl_fd("DEVELOPMENT TEST", 1);
+}
+
+/*
+**	function: main
+**
+** @params[argc] コマンドライン引数の数
+** @params[argv] コマンドライン引数の配列
+** @params[envp] 環境変数へのポインタ
+*/
+int	main(int argc, char **argv, char **envp)
+{
+	(void)argc;
+	(void)argv;
+	put_boot_banner();
+	boot_minishell(envp);
 	return (0);
 }
