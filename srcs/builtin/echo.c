@@ -16,7 +16,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
-int	main(int argc, char *argv[])
+int	execute_echo(int argc, char *argv[])
 {
 	size_t	i;
 	int		not_work;
@@ -53,3 +53,9 @@ int	is_opn(char *s)
 		return (1);
 	return (0);
 }
+
+
+//bad pattern: [n 
+//入力待ち: / ( \
+//parse error near: )
+//zsh: not found: =n
