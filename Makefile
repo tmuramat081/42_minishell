@@ -1,7 +1,7 @@
 # Compile variables
 NAME := minishell
-CC := gcc
-CFLAGS := -Wall -Wextra -Werror
+CC := gcc -w -g
+#CFLAGS := -Wall -Wextra -Werror
 
 SRCS_DIR := srcs/
 SRCS := main.c \
