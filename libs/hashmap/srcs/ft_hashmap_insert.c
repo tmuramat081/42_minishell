@@ -23,7 +23,7 @@ static bool	_is_over_load_factor(t_hashmap *map)
 static int	_hash_insert(t_hashmap *map, char *key, void *value)
 {
 	size_t	i;
-	size_t hashed_key;
+	size_t	hashed_key;
 
 	hashed_key = map->hash(key);
 	i = map->mask & (hashed_key * PRIME_1);
@@ -45,7 +45,7 @@ int	ft_hashmap_insert(t_hashmap *map, char *key, void *value)
 {
 	bool			status;
 
- 	status = _hash_insert(map, key, value);
+	status = _hash_insert(map, key, value);
 	if (_is_over_load_factor(map) == true)
 	{
 		if (ft_hashmap_resize(map) == HASHMAP_FAILURE)

@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_hashmap_iterate.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 16:42:19 by kkohki            #+#    #+#             */
-/*   Updated: 2022/12/17 16:42:21 by kkohki           ###   ########.fr       */
+/*   Updated: 2022/12/18 02:30:22 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_hashmap.h"
 
-int ft_hashmap_iterate(t_hashmap *map, int(*f)(t_hashmap_data *, void *), void * item)
+int	ft_hashmap_iterate(t_hashmap *map, int(*f)(t_hashmap_data *, void *),
+	void *item)
 {
-    size_t          i;
-    int             status;
-    t_hashmap_data  data;
+	size_t			i;
+	int				status;
+	t_hashmap_data	data;
 
 	i = 0;
 	while (i < map->cap)
