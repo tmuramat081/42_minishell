@@ -1,7 +1,7 @@
 # Compile variables
 NAME := minishell
-CC := gcc
-CFLAGS := -Wall -Wextra -Werror
+CC := gcc -w -g
+#CFLAGS := -Wall -Wextra -Werror
 
 SRCS_DIR := srcs/
 SRCS := main.c \
@@ -26,10 +26,13 @@ LIBPQUEUE := ${LIBPQUEUE_DIR}libpqueue.a
 LIBHASHSET_DIR := libs/hashset/
 LIBHASHSET := ${LIBHASHSET_DIR}libhashset.a
 
+LIBHASHMAP_DIR := libs/hashmap/
+LIBHASHMAP := ${LIBHASHMAP_DIR}libhashmap.a
+
 LIBREADLINE := -lreadline
 
 INCS := -I./incs/ -I./${LIBFT_DIR}incs/ -I./${LIBDEQUE_DIR}incs/ \
-	-I./${LIBVECTOR_DIR}incs/ -I./${LIBPQUEUE_DIR}incs/ -I./${LIBHASHSET_DIR}incs/
+	-I./${LIBVECTOR_DIR}incs/ -I./${LIBPQUEUE_DIR}incs/ -I./${LIBHASHSET_DIR}incs/ -I./${LIBHASHMAP_DIR}
 
 # Print variables
 PRINTF := printf
@@ -53,8 +56,8 @@ PROGRESS = ${eval SRC_CNT = ${shell expr ${SRC_CNT} + 1}} \
 	$(SRC_CNT) $(SRC_TOT) $(SRC_PCT)
 
 # Main commands
-${NAME}: ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${OBJS}
-	@${CC} ${CFLAGS} ${INCS} ${OBJS} ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBREADLINE} -o $@
+${NAME}: ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBHASHMAP} ${OBJS}
+	@${CC} ${CFLAGS} ${INCS} ${OBJS} ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBREADLINE} ${LIBHASHMAP} -o $@
 	@echo "\n${BLUE}--- ${NAME} is up to date! ---${DEFAULT}"
 
 ${LIBFT}:
@@ -71,6 +74,9 @@ ${LIBPQUEUE}:
 
 ${LIBHASHSET}:
 	@${MAKE} -C ${LIBHASHSET_DIR} --no-print-directory
+
+${LIBHASHMAP}:
+	@${MAKE} -C ${LIBHASHMAP_DIR} --no-print-directory
 
 ${OBJS_DIR}%.o: ${SRCS_DIR}%.c
 	@${PROGRESS}
