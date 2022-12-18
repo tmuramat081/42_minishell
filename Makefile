@@ -4,8 +4,10 @@ CC := gcc -w -g
 #CFLAGS := -Wall -Wextra -Werror
 
 SRCS_DIR := srcs/
-SRCS := main.c \
-	lexer_line.c
+SRCS := \
+	main.c \
+	lexer_line.c \
+	builtin/export.c
 
 OBJS_DIR := objs/
 OBJS := ${addprefix ${OBJS_DIR},${SRCS:.c=.o}}

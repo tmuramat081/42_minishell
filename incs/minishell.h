@@ -10,6 +10,11 @@
 # include "ft_deque.h"
 # include "ft_vector.h"
 
+typedef struct s_key_value {
+	char *key;
+	char *value;
+} t_key_value;
+
 typedef enum e_value_type {
 	CHAR_QUOTE = '\'',
 	CHAR_DQUOTE = '\"',
@@ -21,5 +26,7 @@ struct s_token {
 }	t_token;
 
 void	lexer_line(char *line);
+void	sort_environs(t_key_value *env);
+
 
 #endif
