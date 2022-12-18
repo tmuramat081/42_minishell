@@ -10,6 +10,13 @@
 # include "ft_deque.h"
 # include "ft_vector.h"
 
+typedef struct s_key_value {
+	char *key;
+	char *value;
+} t_key_value;
+
 void	lexer_line(char *line);
+void	sort_environs(t_key_value *env);
+
 
 #endif
