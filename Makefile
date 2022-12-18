@@ -1,7 +1,7 @@
 # Compile variables
 NAME := minishell
 CC := gcc -w -g
-#CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror
 
 SRCS_DIR := srcs/
 SRCS := main.c \
@@ -29,10 +29,20 @@ LIBHASHSET := ${LIBHASHSET_DIR}libhashset.a
 LIBHASHMAP_DIR := libs/hashmap/
 LIBHASHMAP := ${LIBHASHMAP_DIR}libhashmap.a
 
+LIBFSM_DIR := libs/fsm/
+LIBFSM := ${LIBFSM_DIR}libfsm.a
+
 LIBREADLINE := -lreadline
 
-INCS := -I./incs/ -I./${LIBFT_DIR}incs/ -I./${LIBDEQUE_DIR}incs/ \
-	-I./${LIBVECTOR_DIR}incs/ -I./${LIBPQUEUE_DIR}incs/ -I./${LIBHASHSET_DIR}incs/ -I./${LIBHASHMAP_DIR}
+INCS := \
+	-I./incs/ \
+	-I./${LIBFT_DIR}incs/ \
+	-I./${LIBDEQUE_DIR}incs/ \
+	-I./${LIBVECTOR_DIR}incs/ \
+	-I./${LIBPQUEUE_DIR}incs/ \
+	-I./${LIBHASHSET_DIR}incs/ \
+	-I./${LIBHASHMAP_DIR}incs/ \
+	-I./${LIBFSM_DIR}incs/
 
 # Print variables
 PRINTF := printf
@@ -56,8 +66,8 @@ PROGRESS = ${eval SRC_CNT = ${shell expr ${SRC_CNT} + 1}} \
 	$(SRC_CNT) $(SRC_TOT) $(SRC_PCT)
 
 # Main commands
-${NAME}: ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBHASHMAP} ${OBJS}
-	@${CC} ${CFLAGS} ${INCS} ${OBJS} ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBREADLINE} ${LIBHASHMAP} -o $@
+${NAME}: ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBHASHMAP} ${LIBFSM} ${OBJS}
+	@${CC} ${CFLAGS} ${INCS} ${OBJS} ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBREADLINE} ${LIBHASHMAP} ${LIBFSM} -o $@
 	@echo "\n${BLUE}--- ${NAME} is up to date! ---${DEFAULT}"
 
 ${LIBFT}:
@@ -78,6 +88,9 @@ ${LIBHASHSET}:
 ${LIBHASHMAP}:
 	@${MAKE} -C ${LIBHASHMAP_DIR} --no-print-directory
 
+${LIBFSM}:
+	@${MAKE} -C ${LIBFSM_DIR} --no-print-directory
+
 ${OBJS_DIR}%.o: ${SRCS_DIR}%.c
 	@${PROGRESS}
 	@${CC} ${CFLAGS} ${INCS} -c $< -o $@
@@ -95,6 +108,8 @@ clean:
 	@${MAKE} clean -C ${LIBVECTOR_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBPQUEUE_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBHASHSET_DIR} --no-print-directory
+	@${MAKE} clean -C ${LIBHASHMAP_DIR} --no-print-directory
+	@${MAKE} clean -C ${LIBFSM_DIR} --no-print-directory
 
 
 #: Remove all object and executable files.
@@ -105,6 +120,8 @@ fclean:	clean
 	${RM} ${LIBVECTOR}
 	${RM} ${LIBPQUEUE}
 	${RM} ${LIBHASHSET}
+	${RM} ${LIBHASHMAP}
+	${RM} ${LIBFSM}
 
 #: Remove and recompile all.
 re: fclean
