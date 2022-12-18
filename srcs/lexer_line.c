@@ -11,30 +11,33 @@
  */
 void	handle_state(char c, t_state *cur_state)
 {
+	if (c == '\0')
+	{
+		*cur_state == STATE_NORMAL;
+		return ;
+	}
 	if (*cur_state == STATE_NORMAL)
 	{
 		if (c == '\'')
-		{
 			*cur_state = STATE_SINGLE_QUOTE;
-		}
 		else if (c == '\"')
-		{
 			*cur_state = STATE_DOUBLE_QUOTE;
-		}
 	}
-	else if ((*cur_state == STATE_DOUBLE_QUOTE && c == '"')
+	else if ((*cur_state == STATE_DOUBLE_QUOTE && (c == '"'))
 		|| (*cur_state == STATE_SINGLE_QUOTE && c == '\''))
-	{
 		*cur_state = STATE_NORMAL;
-	}
 }
 
-void check_token(char c)
+void	check_token(char c)
 {
 	printf("%c", c);
 	return ;
 }
 
+bool	is_separator(char c)
+{
+
+}
 
 /**
  * @brief 文字列を走査し、トークンを見つけたら切り出して動的配列に格納する
@@ -45,26 +48,26 @@ void check_token(char c)
  */
 void	scan_line(t_vector *str, char *line)
 {
-	char	*top;
-	size_t	i;
-	static	t_state cur_state = STATE_NORMAL;
+	static t_state	cur_state = STATE_NORMAL;
+	char			*top;
+	size_t			i;
 
 	top = line;
 	i = 0;
-	while (line[i])
+	while (true)
 	{
 		handle_state(line[i], &cur_state);
-		printf("%d\n", cur_state);
-		if (cur_state == STATE_NORMAL && line[i] == ' ' || line[i] == '\0')
+		if (cur_state == STATE_NORMAL)
 		{
 			check_token(line[i]);
 			line[i] = '\0';
 			ft_vector_push_back(str, strdup(top));
 			top = &line[i+1];
+			if (line[i] == '\0')
+				break ;
 		}
 		i++;
 	}
-	ft_vector_push_back(str, strdup(top));
 	cur_state = STATE_NORMAL;
 }
 
