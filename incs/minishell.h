@@ -15,6 +15,16 @@ typedef struct s_key_value {
 	char *value;
 } t_key_value;
 
+typedef enum e_value_type {
+	CHAR_QUOTE = '\'',
+	CHAR_DQUOTE = '\"',
+}	t_value_type;
+
+struct s_token {
+	char			*value;
+	t_value_type	type;
+}	t_token;
+
 void	lexer_line(char *line);
 void	sort_environs(t_key_value *env);
 
