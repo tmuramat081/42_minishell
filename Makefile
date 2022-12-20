@@ -7,7 +7,8 @@ SRCS_DIR := srcs/
 SRCS := \
 	main.c \
 	lexer_line.c \
-	builtin/export.c
+	builtin/export.c \
+	debug/print_token.c
 
 OBJS_DIR := objs/
 OBJS := ${addprefix ${OBJS_DIR},${SRCS:.c=.o}}

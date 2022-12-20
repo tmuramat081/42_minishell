@@ -4,6 +4,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <assert.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft.h"
@@ -26,7 +27,4 @@ struct s_token {
 }	t_token;
 
 void	lexer_line(char *line);
-void	sort_environs(t_key_value *env);
-
-
 #endif
