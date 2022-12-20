@@ -1,7 +1,6 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-
 typedef enum {
 	STATE_NORMAL,
 	STATE_SINGLE_QUOTE,
@@ -25,6 +24,12 @@ typedef struct s_data {
 	t_data_type	data_type;
 }	t_data;
 
+typedef struct s_tokenizer {
+	char 	*str;
+	char 	*pos;
+} 	t_tokenizer;
+
+bool	is_equal_character(void *ch, void *event);
 typedef void		transition_func_t(void *data);
 typedef t_state		state_func_t(void *data);
 
