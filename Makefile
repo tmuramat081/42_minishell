@@ -4,8 +4,13 @@ CC := gcc -w -g
 CFLAGS := -Wall -Wextra -Werror
 
 SRCS_DIR := srcs/
-SRCS := main.c \
-	lexer_line.c
+SRCS := \
+	main.c \
+	lexer_line.c \
+	builtin/export.c \
+	split_envp.c \
+	init_environs.c \
+	builtin/unset.c
 
 OBJS_DIR := objs/
 OBJS := ${addprefix ${OBJS_DIR},${SRCS:.c=.o}}
@@ -44,7 +49,7 @@ INCS := \
 	-I./${LIBHASHMAP_DIR}incs/ \
 	-I./${LIBFSM_DIR}incs/
 
-# Print variables
+# Print variab
 PRINTF := printf
 DEFAULT := \033[0;39m
 BLUE := \033[0;94m
