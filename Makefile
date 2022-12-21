@@ -9,6 +9,9 @@ SRCS := \
 	lexer_line.c \
 	builtin/export.c \
 	debug/print_token.c
+	split_envp.c \
+	init_environs.c \
+	builtin/unset.c
 
 OBJS_DIR := objs/
 OBJS := ${addprefix ${OBJS_DIR},${SRCS:.c=.o}}
@@ -35,7 +38,7 @@ LIBHASHMAP := ${LIBHASHMAP_DIR}libhashmap.a
 LIBREADLINE := -lreadline
 
 INCS := -I./incs/ -I./${LIBFT_DIR}incs/ -I./${LIBDEQUE_DIR}incs/ \
-	-I./${LIBVECTOR_DIR}incs/ -I./${LIBPQUEUE_DIR}incs/ -I./${LIBHASHSET_DIR}incs/ -I./${LIBHASHMAP_DIR}
+	-I./${LIBVECTOR_DIR}incs/ -I./${LIBPQUEUE_DIR}incs/ -I./${LIBHASHSET_DIR}incs/ -I./${LIBHASHMAP_DIR}incs/
 
 # Print variables
 PRINTF := printf
@@ -98,6 +101,7 @@ clean:
 	@${MAKE} clean -C ${LIBVECTOR_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBPQUEUE_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBHASHSET_DIR} --no-print-directory
+	@${MAKE} clean -C ${LIBHASHMAP_DIR} --no-print-directory
 
 
 #: Remove all object and executable files.
@@ -108,6 +112,7 @@ fclean:	clean
 	${RM} ${LIBVECTOR}
 	${RM} ${LIBPQUEUE}
 	${RM} ${LIBHASHSET}
+	${RM} ${LIBHASHMAP}
 
 #: Remove and recompile all.
 re: fclean
