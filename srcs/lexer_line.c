@@ -5,7 +5,8 @@
 
 bool	is_separator(char c)
 {
-	if (c == ' ' || c == '&' || c == '<' || c == '>' || c == '\0')
+	if (c == ' ' || c == '&' || c == '<' || c == '>'
+		|| c == '|' || c == ';' || c == '\0')
 		return (true);
 	return (false);
 }
@@ -16,11 +17,20 @@ char	*get_next_token(t_tokenizer *tokenizer)
 	char *endptr;
 	char *token;
 
-	assert(tokenizer);
 	if (!tokenizer)
 		return (NULL);
 	if (tokenizer->pos == '\0')
 		return (NULL);
+	if (is_separator(*startptr) == true)
+	{
+		if (*startptr == '\0')
+			return (NULL);
+		token = (char *)malloc(2);
+		token[0] = *startptr;
+		token[1] = '\0';
+		tokenizer->pos++;
+		return (token);
+	}
 	if (*startptr == '\0')
 		return (NULL);
 	endptr = startptr;
