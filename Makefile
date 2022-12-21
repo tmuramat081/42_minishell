@@ -8,6 +8,7 @@ SRCS := \
 	main.c \
 	lexer_line.c \
 	builtin/export.c \
+	debug/print_token.c
 	split_envp.c \
 	init_environs.c \
 	builtin/unset.c
