@@ -51,6 +51,8 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-Doxyfile
+# My settings
 html/
 latex/
+Doxyfile
+.DS_Store

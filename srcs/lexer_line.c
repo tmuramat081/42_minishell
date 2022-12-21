@@ -3,95 +3,86 @@
 
 #define INIT_SIZE 36
 
-/**
- * @brief 3つの読み取り状態を遷移させる
- *
- * @param c
- * @param cur_state
- */
-void	handle_state(char c, t_state *cur_state)
+bool	is_separator(char c)
 {
-	if (*cur_state == STATE_NORMAL)
+	if (c == ' ' || c == '&' || c == '<' || c == '>'
+		|| c == '|' || c == ';' || c == '\0')
+		return (true);
+	return (false);
+}
+
+char	*get_next_token(t_tokenizer *tokenizer)
+{
+	char *startptr = tokenizer->pos;
+	char *endptr;
+	char *token;
+
+	if (!tokenizer)
+		return (NULL);
+	if (tokenizer->pos == '\0')
+		return (NULL);
+	if (is_separator(*startptr) == true)
 	{
-		if (c == '\'')
-		{
-			*cur_state = STATE_SINGLE_QUOTE;
-		}
-		else if (c == '\"')
-		{
-			*cur_state = STATE_DOUBLE_QUOTE;
-		}
+		if (*startptr == '\0')
+			return (NULL);
+		token = (char *)malloc(2);
+		token[0] = *startptr;
+		token[1] = '\0';
+		tokenizer->pos++;
+		return (token);
 	}
-	else if ((*cur_state == STATE_DOUBLE_QUOTE && c == '"')
-		|| (*cur_state == STATE_SINGLE_QUOTE && c == '\''))
+	if (*startptr == '\0')
+		return (NULL);
+	endptr = startptr;
+	while (true)
 	{
-		*cur_state = STATE_NORMAL;
-	}
-}
-
-void check_token(char c)
-{
-	printf("%c", c);
-	return ;
-}
-
-
-/**
- * @brief 文字列を走査し、トークンを見つけたら切り出して動的配列に格納する
- *
- * @param str 切り出した文字を格納するバッファ
- * @param line 走査する文字列
- * @return
- */
-void	scan_line(t_vector *str, char *line)
-{
-	char	*top;
-	size_t	i;
-	static	t_state cur_state = STATE_NORMAL;
-
-	top = line;
-	i = 0;
-	while (line[i])
-	{
-		handle_state(line[i], &cur_state);
-		printf("%d\n", cur_state);
-		if (cur_state == STATE_NORMAL && line[i] == ' ' || line[i] == '\0')
+		if (is_separator(*(endptr + 1)) == true)
 		{
-			check_token(line[i]);
-			line[i] = '\0';
-			ft_vector_push_back(str, strdup(top));
-			top = &line[i+1];
+			token = (char *)malloc((endptr - startptr) + 2);
+			memcpy(token, startptr, (endptr - startptr) + 1);
+			token[(endptr - startptr) + 1] = '\0';
+			tokenizer->pos = endptr + 1;
+			while (isspace(*tokenizer->pos))
+				tokenizer->pos++;
+			return (token);
 		}
-		i++;
+		endptr++;
 	}
-	ft_vector_push_back(str, strdup(top));
-	cur_state = STATE_NORMAL;
+	return (NULL);
 }
 
-/**
- * @brief デバッグ出力
- *
- * @param data
- */
-void print_chunk(void	*data)
+t_tokenizer	*init_tokenizer(char *line)
 {
-	char *chunk = data;
-	printf("%s\n", chunk);
+	t_tokenizer *tk;
+
+	tk = malloc(sizeof(t_tokenizer));
+	tk->str = line;
+	tk->pos = line;
+	return (tk);
 }
 
-/**
- * @brief 入力された文字列を解析（字句解析）する
- *
- * @param line 入力された文字列
- */
+void	print_token(void *void_str)
+{
+	char *str = void_str;
+	printf("%s\n", str);
+}
+
 void	lexer_line(char *line)
 {
-	t_vector	*str;
-	t_deque *token;
+	t_tokenizer	*tk;
+	t_vector	*vec;
+	char		*token;
 
-	str = ft_vector_init(sizeof(char *), INIT_SIZE);
-	token = ft_deque_init(sizeof(t_token), INIT_SIZE);
-	scan_line(str, line);
-	ft_vector_foreach(str, print_chunk);
+	tk = init_tokenizer(line);
+	vec = ft_vector_init(sizeof(char *), 10);
+	while (true)
+	{
+		token = get_next_token(&tk);
+		if (!token)
+			break ;
+		ft_vector_push_back(vec, token);
+		free(token);
+	}
+	ft_vector_foreach(vec, print_token);
 	//token = tokenizer(str);
 }

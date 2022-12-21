@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 07:17:03 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/17 16:41:19 by kkohki           ###   ########.fr       */
+/*   Updated: 2022/12/18 02:33:36 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,13 @@ static unsigned long _crc32(const unsigned char *s, unsigned int len)
 	return (crc32val);
 }
 
-size_t hashmap_hash_int(const void *data)
+size_t	hashmap_hash_int(const void *data)
 {
-	const char *keystring = (char *)data;
-    unsigned long key = _crc32((unsigned char*)(keystring), ft_strlen(keystring));
+	const char			*keystring;
+	unsigned long		key;
 
+	keystring = (char *)data;
+	key = _crc32((unsigned char*)(keystring), ft_strlen(keystring));
 	key += (key << 12);
 	key ^= (key >> 22);
 	key += (key << 4);

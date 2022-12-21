@@ -1,37 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_hashmap_iterate.c                               :+:      :+:    :+:   */
+/*   fsm_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/17 16:42:19 by kkohki            #+#    #+#             */
-/*   Updated: 2022/12/18 02:30:22 by tmuramat         ###   ########.fr       */
+/*   Created: 2022/12/18 10:22:20 by tmuramat          #+#    #+#             */
+/*   Updated: 2022/12/18 10:24:15 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_hashmap.h"
+#include "libfsm.h"
 
-int	ft_hashmap_iterate(t_hashmap *map, int(*f)(t_hashmap_data *, void *),
-	void *item)
+void	fsm_init(t_state_machine *fsm, t_state *init_state, t_state *err_state)
 {
-	size_t			i;
-	int				status;
-	t_hashmap_data	data;
-
-	i = 0;
-	while (i < map->cap)
-	{
-		if (map->data[i].in_use == true)
-		{
-			data = map->data[i];
-			status = f(&data, item);
-			if (status != HASHMAP_SUCCESS)
-			{
-				return (status);
-			}
-		}
-		i++;
-	}
-	return (HASHMAP_SUCCESS);
+	if (!fsm)
+		return ;
+	fsm->current_state = init_state;
+	fsm->previous_state = NULL;
+	fsm->error_state = err_state;
 }

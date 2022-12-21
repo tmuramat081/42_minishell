@@ -12,7 +12,8 @@
 
 #include "ft_hashmap.h"
 
-static void	_hash_reinsert(t_hashmap *map, t_hashmap_data *new_data, t_hashmap_data data)
+static void	_hash_reinsert(t_hashmap *map, t_hashmap_data *new_data,
+	t_hashmap_data data)
 {
 	size_t	i;
 	size_t	hashed_key;

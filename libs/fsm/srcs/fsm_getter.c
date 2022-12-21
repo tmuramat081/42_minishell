@@ -1,37 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_hashmap_iterate.c                               :+:      :+:    :+:   */
+/*   fsm_getter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/17 16:42:19 by kkohki            #+#    #+#             */
-/*   Updated: 2022/12/18 02:30:22 by tmuramat         ###   ########.fr       */
+/*   Created: 2022/12/18 10:21:21 by tmuramat          #+#    #+#             */
+/*   Updated: 2022/12/18 10:31:54 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_hashmap.h"
+#include "libfsm.h"
 
-int	ft_hashmap_iterate(t_hashmap *map, int(*f)(t_hashmap_data *, void *),
-	void *item)
+t_state	*fsm_current_state(t_state_machine *fsm)
 {
-	size_t			i;
-	int				status;
-	t_hashmap_data	data;
+	if (!fsm)
+		return (NULL);
+	return (fsm->current_state);
+}
 
-	i = 0;
-	while (i < map->cap)
-	{
-		if (map->data[i].in_use == true)
-		{
-			data = map->data[i];
-			status = f(&data, item);
-			if (status != HASHMAP_SUCCESS)
-			{
-				return (status);
-			}
-		}
-		i++;
-	}
-	return (HASHMAP_SUCCESS);
+t_state	*fsm_previus_state(t_state_machine *fsm)
+{
+	if (!fsm)
+		return (NULL);
+	return (fsm->previous_state);
+}
+
+bool	fsm_stopped(t_state_machine *fsm)
+{
+	if (!fsm)
+		return (true);
+	return (fsm->current_state->num_transitions == 0);
 }
