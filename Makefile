@@ -6,12 +6,13 @@ CFLAGS := -Wall -Wextra -Werror
 SRCS_DIR := srcs/
 SRCS := \
 	main.c \
-	lexer_line.c \
+	terminal/boot.c \
+	terminal/init_envs.c \
 	builtin/export.c \
+	builtin/unset.c \
+	builtin/echo.c \
+	lexer/tokenizer.c \
 	debug/print_token.c
-	split_envp.c \
-	init_environs.c \
-	builtin/unset.c
 
 OBJS_DIR := objs/
 OBJS := ${addprefix ${OBJS_DIR},${SRCS:.c=.o}}

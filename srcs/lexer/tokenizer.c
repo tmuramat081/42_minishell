@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/22 08:57:12 by tmuramat          #+#    #+#             */
+/*   Updated: 2022/12/22 08:57:14 by tmuramat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "lexer.h"
 
@@ -13,9 +25,9 @@ bool	is_separator(char c)
 
 char	*get_next_token(t_tokenizer *tokenizer)
 {
-	char *startptr = tokenizer->pos;
-	char *endptr;
-	char *token;
+	char	*startptr = tokenizer->pos;
+	char	*endptr;
+	char	*token;
 
 	if (!tokenizer)
 		return (NULL);
@@ -53,7 +65,7 @@ char	*get_next_token(t_tokenizer *tokenizer)
 
 t_tokenizer	*init_tokenizer(char *line)
 {
-	t_tokenizer *tk;
+	t_tokenizer	*tk;
 
 	tk = malloc(sizeof(t_tokenizer));
 	tk->str = line;
@@ -61,13 +73,7 @@ t_tokenizer	*init_tokenizer(char *line)
 	return (tk);
 }
 
-void	print_token(void *void_str)
-{
-	char *str = void_str;
-	printf("%s\n", str);
-}
-
-void	lexer_line(char *line)
+void	tokenizer(char *line)
 {
 	t_tokenizer	*tk;
 	t_vector	*vec;
