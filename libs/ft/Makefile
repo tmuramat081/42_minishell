@@ -11,11 +11,13 @@ CHR_SRCS = ft_isalpha.c \
 		ft_isprint.c \
 		ft_isspace.c
 STR_SRCS = ft_strlen.c \
+		ft_strnlen.c \
 		ft_split.c \
 		ft_strchr.c \
 		ft_strspn.c \
 		ft_strcspn.c \
 		ft_strdup.c \
+		ft_strndup.c \
 		ft_striteri.c \
 		ft_strjoin.c \
 		ft_strlcat.c \
