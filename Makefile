@@ -12,6 +12,7 @@ SRCS := \
 	builtin/unset.c \
 	builtin/echo.c \
 	lexer/tokenizer.c \
+	lexer/tokenizer_utils.c \
 	debug/print_token.c
 
 OBJS_DIR := objs/
