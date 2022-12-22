@@ -1,29 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/22 08:59:01 by tmuramat          #+#    #+#             */
+/*   Updated: 2022/12/22 08:59:03 by tmuramat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-
-/** コマンド入力を待機 */
-void	boot_minishell(char **envp)
-{
-	char	*line;
-
-	(void)envp;
-	line = NULL;
-	while (42)
-	{
-		line = readline("> ");
-		add_history(line);
-		lexer_line(line);
-		free(line);
-	}
-}
-
-/**
- * @brief 起動時バナーの表示（仮）
- *
- */
-void	put_banner(void)
-{
-	ft_putendl_fd("DEVELOPMENT TEST", 1);
-}
 
 /**
  ***************************************************************
@@ -38,6 +25,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
+	init_envs(envp);
 	put_banner();
 	boot_minishell(envp);
 	return (0);

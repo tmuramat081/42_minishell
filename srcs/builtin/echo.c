@@ -1,4 +1,4 @@
-#include <libc.h>
+#include "minishell.h"
 
 int	is_opn(char *s);
 
@@ -55,7 +55,7 @@ int	is_opn(char *s)
 }
 
 
-//bad pattern: [n 
+//bad pattern: [n
 //入力待ち: / ( \
 //parse error near: )
 //zsh: not found: =n

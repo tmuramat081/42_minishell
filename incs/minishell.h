@@ -13,27 +13,24 @@
 # include "ft_hashmap.h"
 
 typedef struct s_key_value {
-	char *key;
-	char *value;
-} t_key_value;
+	char	*key;
+	char	*value;
+}	t_env;
 
-typedef enum e_value_type {
-	CHAR_QUOTE = '\'',
-	CHAR_DQUOTE = '\"',
-}	t_value_type;
+/************* terinal ***************/
+void		boot_minishell(char	**envp);
+void		put_bunner(void);
+t_hashmap	*init_envs(char **envp);
+void		sort_environs(t_env *env);
 
-struct s_token {
-	char			*value;
-	t_value_type	type;
-}	t_token;
+/************* lexer ***************/
+void		tokenizer(char *line);
 
-void	lexer_line(char *line);
-void	sort_environs(t_key_value *env);
-t_key_value 	*split_envp(char **envp);
-t_hashmap	*init_environs(char **envp);
+/********** builtin command ********/
+void		unset(char **arg, t_hashmap *map);
+t_env		*split_envp(char **envp);
 
-
-/***** builtin command *******/
-void unset(char *arg, t_hashmap *map);
+/********** debug command ********/
+void		print_token(void *void_str);
 
 #endif
