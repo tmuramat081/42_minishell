@@ -17,13 +17,12 @@ bool	is_delimiter(t_tokenizer *tokenizer, char c)
 		return (true);
 	else if (is_metacharacter(c) == true && tokenizer->state == STATE_NORMAL)
 		return (true);
-	else if (c == '' )
 	return (false);
 }
 
 void	handle_state(t_tokenizer *tk)
 {
-	if (!*tk->pos)
+	if (*tk->pos == '\0')
 		tk->state = STATE_NORMAL;
 	else if (tk->state == STATE_NORMAL)
 	{
@@ -47,7 +46,7 @@ char	*get_next_token(t_tokenizer *tokenizer)
 	startptr = tokenizer->pos;
 	if (tokenizer->pos == '\0')
 		return (NULL);
-	if (is_metacharacter(*startptr) == true)
+	if (is_delimiter(tokenizer, *startptr) == true)
 	{
 		if (*startptr == '\0')
 			return (NULL);
@@ -60,10 +59,10 @@ char	*get_next_token(t_tokenizer *tokenizer)
 	endptr = startptr;
 	while (true)
 	{
-		if (is_delimiter(tokenizer, *(endptr + 1)))
+		if (is_delimiter(tokenizer, *endptr) == true)
 		{
-			token = ft_strndup(startptr, (endptr - startptr) + 1);
-			tokenizer->pos = endptr + 1;
+			token = ft_strndup(startptr, endptr - startptr);
+			tokenizer->pos = endptr;
 			while (ft_isspace(*tokenizer->pos))
 				tokenizer->pos++;
 			return (token);
@@ -76,17 +75,17 @@ char	*get_next_token(t_tokenizer *tokenizer)
 void	tokenizer(char *line)
 {
 	t_tokenizer	*tk;
-	char		*token;
+	t_token		*token;
 
 	tk = init_tokenizer(line);
 	while (true)
 	{
-		handle_state(tk);
-		token = get_next_token(tk);
-		if (!token)
+		token = malloc(sizeof(t_token));
+		token->value = get_next_token(tk);
+		if (!token->value|| !*token->value)
 			break ;
 		ft_vector_push_back(tk->tokens, token);
-		free(token);
+		token->value = NULL;
 	}
 	ft_vector_foreach(tk->tokens, print_token);
 	delete_tokenizer(tk);

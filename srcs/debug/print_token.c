@@ -3,6 +3,8 @@
 
 void	print_token(void *void_str)
 {
-	char *str = void_str;
-	printf("%s\n", str);
+	t_token *token;
+
+	token = void_str;
+	printf("%s\n", token->value);
 }

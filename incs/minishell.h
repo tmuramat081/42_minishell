@@ -17,6 +17,11 @@ typedef struct s_env {
 	char	*value;
 }	t_env;
 
+typedef struct s_token {
+	char *value;
+	int type;
+}	t_token;
+
 /************* terinal ***************/
 void		boot_minishell(char	**envp);
 void		put_bunner(void);
