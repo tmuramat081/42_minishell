@@ -12,7 +12,7 @@
 # include "ft_vector.h"
 # include "ft_hashmap.h"
 
-typedef struct s_key_value {
+typedef struct s_env {
 	char	*key;
 	char	*value;
 }	t_env;
@@ -28,6 +28,7 @@ void		tokenizer(char *line);
 
 /********** builtin command ********/
 void		unset(char **arg, t_hashmap *map);
+void		export(char **args, t_hashmap *map);
 t_env		*split_envp(char **envp);
 
 /********** debug command ********/
