@@ -28,6 +28,7 @@ void		tokenizer(char *line);
 
 /********** builtin command ********/
 void		unset(char **arg, t_hashmap *map);
+void		export(char **args, t_hashmap *map);
 t_env		*split_envp(char **envp);
 
 /********** debug command ********/
