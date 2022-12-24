@@ -12,7 +12,7 @@
 # include "ft_vector.h"
 # include "ft_hashmap.h"
 
-typedef struct s_key_value {
+typedef struct s_env {
 	char	*key;
 	char	*value;
 }	t_env;
