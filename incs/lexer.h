@@ -11,7 +11,6 @@ typedef struct s_tokenizer {
 	char		*str;
 	char		*pos;
 	t_state		state;
-	t_vector	*tokens;
 }	t_tokenizer;
 
 typedef void		transition_func_t(void *data);

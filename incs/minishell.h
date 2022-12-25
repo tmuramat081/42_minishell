@@ -18,9 +18,13 @@ typedef struct s_env {
 }	t_env;
 
 typedef struct s_token {
-	char *value;
-	int type;
+	char	*value;
+	int		type;
 }	t_token;
+
+typedef struct s_shell {
+	t_hashmap	*envs;
+}	t_shell;
 
 /************* terinal ***************/
 void		boot_minishell(char	**envp);
@@ -28,15 +32,18 @@ void		put_bunner(void);
 t_hashmap	*init_envs(char **envp);
 void		sort_environs(t_env *env);
 
-/************* lexer ***************/
-void		tokenizer(char *line);
+//************* lexer ***************/
+t_vector	*tokenizer(char *line);
 
-/********** builtin command ********/
+//************* lexer ***************/
+void		parser(t_vector *tokens, t_shell *msh);
+
+//********** builtin command ********/
 void		unset(char **arg, t_hashmap *map);
 void		export(char **args, t_hashmap *map);
 t_env		*split_envp(char **envp);
 
-/********** debug command ********/
+//********** debug command ********/
 void		print_token(void *void_str);
 
 #endif
