@@ -1,39 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   boot.c                                             :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/25 14:56:20 by tmuramat         ###   ########.fr       */
+/*   Created: 2022/12/25 10:11:44 by tmuramat          #+#    #+#             */
+/*   Updated: 2022/12/25 10:11:53 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-/**
- * @brief 起動時バナーの表示（仮）
- *
- */
-void	put_banner(void)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	ft_putendl_fd("DEVELOPMENT TEST", 1);
-}
-
-/** コマンド入力を待機 */
-void	boot_minishell(char **envp)
-{
-	char		*line;
-	t_vector	*tokens;
-
-	line = NULL;
-	while (42)
+	while (*s1 == *s2++)
 	{
-		line = readline("> ");
-		add_history(line);
-		tokens = tokenizer(line);
-		parser(tokens, NULL);
-		free(line);
+		if (*s1++ == 0)
+			return (0);
 	}
+	return (*(unsigned char *)s1 - *(unsigned char *)--s2);
 }

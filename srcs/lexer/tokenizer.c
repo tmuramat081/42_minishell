@@ -72,21 +72,23 @@ char	*get_next_token(t_tokenizer *tokenizer)
 	return (NULL);
 }
 
-void	tokenizer(char *line)
+t_vector	*tokenizer(char *line)
 {
-	t_tokenizer	*tk;
+	t_tokenizer	*tokenizer;
 	t_token		*token;
+	t_vector	*tokens;
 
-	tk = init_tokenizer(line);
+	tokens = ft_vector_init(sizeof(t_token), 16);
+	tokenizer = init_tokenizer(line);
 	while (true)
 	{
 		token = malloc(sizeof(t_token));
-		token->value = get_next_token(tk);
-		if (!token->value|| !*token->value)
+		token->value = get_next_token(tokenizer);
+		if (!token->value || !*token->value)
 			break ;
-		ft_vector_push_back(tk->tokens, token);
+		ft_vector_push_back(tokens, token);
 		token->value = NULL;
 	}
-	ft_vector_foreach(tk->tokens, print_token);
-	delete_tokenizer(tk);
+	return (tokens);
+//	delete_tokenizer(tk);
 }
