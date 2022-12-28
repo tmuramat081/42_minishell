@@ -42,6 +42,7 @@ void		parser(t_vector *tokens, t_shell *msh);
 void		unset(char **arg, t_hashmap *map);
 void		export(char **args, t_hashmap *map);
 t_env		*split_envp(char **envp);
+void		env(char **args, t_hashmap *map);
 
 //********** debug command ********/
 void		print_token(void *void_str);
