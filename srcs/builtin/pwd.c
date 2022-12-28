@@ -1,9 +1,10 @@
 #include <libc.h>
+#include "minishell.h"
 
-int main(int argc, char *argv[])
+int pwd(char **arg, t_hashmap *map)
 {
 	char buf[BUFSIZ];
 	if (getcwd(buf, sizeof(buf)) != NULL)
-		printf("%s\n", buf);
+		ft_printf("%s\n", buf);
 	return (0);
 }
