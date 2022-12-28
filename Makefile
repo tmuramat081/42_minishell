@@ -2,6 +2,7 @@
 NAME := minishell
 CC := gcc -w -g
 CFLAGS := -Wall -Wextra -Werror
+DFLAGS := -D DEBUG
 
 SRCS_DIR := srcs/
 SRCS := \
@@ -11,8 +12,8 @@ SRCS := \
 	builtin/export.c \
 	builtin/unset.c \
 	builtin/echo.c \
-	lexer/tokenizer.c \
-	lexer/tokenizer_utils.c \
+	lexer/lexer.c \
+	lexer/lexer_utils.c \
 	parser/parser.c \
 	debug/print_token.c
 
@@ -76,7 +77,7 @@ PROGRESS = ${eval SRC_CNT = ${shell expr ${SRC_CNT} + 1}} \
 
 # Main commands
 ${NAME}: ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBHASHMAP} ${LIBFSM} ${OBJS}
-	@${CC} ${CFLAGS} ${INCS} ${OBJS} ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBREADLINE} ${LIBHASHMAP} ${LIBFSM} -o $@
+	@${CC} ${CFLAGS} ${DFLAGS} ${INCS} ${OBJS} ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBREADLINE} ${LIBHASHMAP} ${LIBFSM} -o $@
 	@echo "\n${BLUE}--- ${NAME} is up to date! ---${DEFAULT}"
 
 ${LIBFT}:

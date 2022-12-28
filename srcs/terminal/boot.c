@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   boot.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/25 14:56:20 by tmuramat         ###   ########.fr       */
+/*   Updated: 2022/12/27 22:25:29 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@ void	boot_minishell(char **envp)
 	char		*line;
 	t_vector	*tokens;
 
+	put_banner();
 	line = NULL;
 	while (42)
 	{
 		line = readline("> ");
 		add_history(line);
-		tokens = tokenizer(line);
+		tokens = lexer(line);
 		parser(tokens, NULL);
 		free(line);
 	}

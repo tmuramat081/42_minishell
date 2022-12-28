@@ -72,7 +72,7 @@ char	*get_next_token(t_tokenizer *tokenizer)
 	return (NULL);
 }
 
-t_vector	*tokenizer(char *line)
+t_vector	*lexer(char *line)
 {
 	t_tokenizer	*tokenizer;
 	t_token		*token;
@@ -90,5 +90,4 @@ t_vector	*tokenizer(char *line)
 		token->value = NULL;
 	}
 	return (tokens);
-//	delete_tokenizer(tk);
 }

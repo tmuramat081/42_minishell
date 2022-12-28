@@ -33,7 +33,7 @@ t_hashmap	*init_envs(char **envp);
 void		sort_environs(t_env *env);
 
 //************* lexer ***************/
-t_vector	*tokenizer(char *line);
+t_vector	*lexer(char *line);
 
 //************* lexer ***************/
 void		parser(t_vector *tokens, t_shell *msh);

@@ -1,49 +1,39 @@
 #ifndef LIBAST_H
 # define LIBAST_H
 
-# include <stdio.h.>
-# include <stdbool.h>
+#define NODETYPE(a) (a & (~NODE_DATA))	// get the type of the nodes
 
-struct s_value {
-	void
-}	t_value;
+typedef enum e_node_type {
+    NODE_PIPE 			= (1 << 0),
+    NODE_BCKGRND 		= (1 << 1),
+    NODE_SEQ 			= (1 << 2),
+    NODE_REDIRECT_IN 	= (1 << 3),
+    NODE_REDIRECT_OUT 	= (1 << 4),
+    NODE_CMDPATH		= (1 << 5),
+    NODE_ARGUMENT		= (1 << 6),
+    NODE_DATA 			= (1 << 7),
+} t_node_type;
 
-typedef s_binary_tree t_binary_tree;
-struct s_binary_tree {
-	t_binary_tree	*left;
-	t_binary_tree	*right;
-	t_value			*value;
-};
+typedef struct s_ast_node
+{
+    int     type;
+    char*   szData;
+    struct  t_ast_node* left;
+    struct  t_ast_node* right;
+} t_ast_node;
 
-typedef enum e_dtype {
-  AST_DTYPE_BOOL,
-  AST_DTYPE_INT,
-  AST_DTYPE_LONG,
-  AST_DTYPE_FLOAT,
-  AST_DTYPE_DOUBLE,
-  AST_DTYPE_STRING,
-} t_dtype;
-
-
-typedef struct s_ast{
-  t_dtype dtype;
-  long nvar;
-  void *var;
-  long *vidx;
-  char *exp;
-  void *ast;
-  void *error;
+typedef struct s_ast
+{
+  t_ast_node  root;
+  int         error;
 } t_ast;
 
 
-
-ast_t *ast_init(void);
-
-
-int ast_build(ast_t *ast, const char *str, const ast_dtype_t dtype, const bool eval);
-int ast_set_var(ast_t *ast, const long idx, const void *value, const size_t size, const ast_dtype_t dtype);
-int ast_eval(ast_t *ast, void *value);
-void ast_perror(const ast_t *ast, FILE *fp, const char *msg);
-void ast_destroy(ast_t *ast);
+void ast_attach_binary_branch (t_ast_node* root , t_ast_node* leftNode , t_ast_node* rightNode);
+void ast_node_set_type (t_ast_node* node , t_node_type nodetype );
+void ast_node_set_data (t_ast_node* node , char * data );
+void ast_node_delete (t_ast_node* node );
+t_ast *ast_init(void);
+void *ast_delete(t_ast **ast);
 
 #endif
