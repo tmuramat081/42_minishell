@@ -1,32 +1,32 @@
 #include "minishell.h"
 #include "lexer.h"
 #include "parser.h"
+#include "ft_printf.h"
 
 char *convert_type_to_str(t_token_type type)
 {
 	if (type == TOKEN_STR)
-		return ("STRING");
+		return ("[STRING]");
 	if (type == TOKEN_RDIR)
-		return (">");
+		return ("[OUTPUT_RDR]");
 	if (type == TOKEN_RRDIR)
-		return (">>");
+		return ("[APPEND_OUTPUT_RDR]");
 	if (type == TOKEN_LDIR)
-		return ("<");
+		return ("[INPUR_RDR]");
 	if (type == TOKEN_LLDIR)
-		return ("<<");
+		return ("[HEREDOC_RDR]");
 	if (type == TOKEN_SPACE)
-		return (" ");
+		return ("[SPACE]");
 	if (type == TOKEN_PIPELINE)
-		return ("|");
+		return ("[PIPELINE]");
 	if (type == TOKEN_AMPERSAND)
-		return ("&");
+		return ("[AMPERSAND]");
 	if (type == TOKEN_SEMICOLON)
-		return (";");
+		return ("[SEMICOLON]");
 	if (type == TOKEN_NULL)
 		return ("[EOL]");
 	return ("NONE");
 }
-
 
 void	print_token(void *p_str, void *p_index)
 {
@@ -47,7 +47,7 @@ void	print_tokens(t_vector *tokens)
 
 	index = 0;
 	ft_printf("============================\n");
-	ft_printf("%s %*s %*s\n", "No. ", 20, "command", 20, "type");
+	ft_printf("%s %*s %*s\n", "No. ", 20, "TOKEN", 20, "TYPE");
 	ft_printf("----------------------------\n");
 	ft_vector_foreach(tokens, print_token, &index);
 	ft_printf("============================\n");

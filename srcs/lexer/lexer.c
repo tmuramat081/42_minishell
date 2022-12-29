@@ -3,15 +3,6 @@
 
 #define INIT_SIZE 36
 
-
-bool	is_metacharacter(char c)
-{
-	if (c == ' ' || c == '\t' || c == '&' || c == '<'
-		|| c == '>' || c == '|' || c == ';')
-return (true);
-	return (false);
-}
-
 bool	is_delimiter(t_tokenizer *tokenizer, char c)
 {
 	if (c == '\0')
@@ -83,9 +74,10 @@ t_vector	*lexer(char *line)
 	tokenizer = init_tokenizer(line);
 	while (true)
 	{
-		token = malloc(sizeof(t_token));
+		handle_state(tokenizer);
+		token = ft_xmalloc(sizeof(t_token));
 		token->data = get_next_token(tokenizer);
-		if (!token->data)
+		if (!token->data || !*token->data)
 			break ;
 		token->type = get_token_type(token->data);
 		ft_vector_push_back(tokens, token);

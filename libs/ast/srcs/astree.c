@@ -26,7 +26,7 @@ void ast_node_set_data(t_ast_node* node, char* data)
     }
 }
 
-void ast_node_delete(t_ast_node* node)
+void ast_node_delete(t_ast_node *node)
 {
     if (!node)
         return;

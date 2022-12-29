@@ -1,6 +1,15 @@
 #ifndef LEXER_H
 # define LEXER_H
 
+# define STR_RDIR ">"
+# define STR_RRDIR ">>"
+# define STR_LDIR "<"
+# define STR_LLDIR "<<"
+# define STR_SPACE " "
+# define STR_PIPELINE "|"
+# define STR_AMPERSAND "&"
+# define STR_SEMICOLON ";"
+
 #include <libc.h>
 #include <stdbool.h>
 
@@ -17,8 +26,25 @@ typedef struct s_tokenizer {
 	t_state		state;
 }	t_tokenizer;
 
-t_tokenizer	*init_tokenizer(char *line);
-void		delete_tokenizer(t_tokenizer *tokenizer);
-bool		is_equal_character(void *ch, void *event);
+typedef enum e_token_type {
+	TOKEN_NONE,
+	TOKEN_STR,
+	TOKEN_RDIR,
+	TOKEN_RRDIR,
+	TOKEN_LDIR,
+	TOKEN_LLDIR,
+	TOKEN_SPACE,
+	TOKEN_PIPELINE,
+	TOKEN_AMPERSAND,
+	TOKEN_SEMICOLON,
+	TOKEN_NULL,
+	TOKEN_END
+}	t_token_type;
+
+t_tokenizer		*init_tokenizer(char *line);
+void			delete_tokenizer(t_tokenizer *tokenizer);
+bool			is_metacharacter(char c);
+bool			is_quotation(char c);
+t_token_type	get_token_type(char *token_value);
 
 #endif

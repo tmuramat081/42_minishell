@@ -17,6 +17,8 @@
 # include "ft_deque.h"
 # include "ft_vector.h"
 # include "ft_hashmap.h"
+# include "libast.h"
+# include "lexer.h"
 
 typedef struct s_env {
 	char	*key;
@@ -24,8 +26,8 @@ typedef struct s_env {
 }	t_env;
 
 typedef struct s_token {
-	char	*data;
-	int		type;
+	char			*data;
+	t_token_type	type;
 }	t_token;
 
 typedef struct s_shell {
@@ -42,8 +44,7 @@ void		sort_environs(t_env *env);
 t_vector	*lexer(char *line);
 
 //************* lexer ***************/
-void		parser(t_vector *tokens, t_shell *msh);
-int			parse(t_vector *tokens);
+t_ast		*parser(t_vector *tokens, t_shell *msh);
 
 //********** builtin command ********/
 void		unset(char **arg, t_hashmap *map);
@@ -54,5 +55,6 @@ void		env(char **args, t_hashmap *map);
 //********** debug command ********/
 void		print_token(void *p_str, void *p_index);
 void		print_tokens(t_vector *tokens);
+void		print_nodes(t_ast *ast);
 
 #endif

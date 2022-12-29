@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   boot.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/27 22:25:29 by kkohki           ###   ########.fr       */
+/*   Updated: 2022/12/29 23:21:03 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libast.h"
 
 /**
  * @brief 起動時バナーの表示（仮）
@@ -26,7 +27,9 @@ void	boot_minishell(char **envp)
 {
 	char		*line;
 	t_vector	*tokens;
+	t_ast		*ast;
 
+	(void)envp;
 	put_banner();
 	line = NULL;
 	while (42)
@@ -34,7 +37,7 @@ void	boot_minishell(char **envp)
 		line = readline("> ");
 		add_history(line);
 		tokens = lexer(line);
-		parser(tokens, NULL);
+		ast = parser(tokens, NULL);
 		free(line);
 	}
 }

@@ -6,47 +6,39 @@
 #define DOT_FILE_NAME	"ast.dot"
 #define DOT_INDENT		"    "
 
-void	print_edge(t_ast_node *left, t_ast_node *right, int fd)
+void	print_edge(t_ast_node *left, t_ast_node *right)
 {
-	ft_putstr_fd(DOT_INDENT"NODE_", fd);
-	ft_putstr_fd(" -> NODE_", fd);
-	ft_putendl_fd(";", fd);
+	(void)left;
+	(void)right;
+//	printf(DOT_INDENT"NODE_");
+//	printf(" -> NODE_");
+//	printf(";");
 }
 
-/*
-** print node and edge definitions
-**     NODE_{node} [label="{node->type}\n{args}\n{redirects}"];
-**     NODE_{node} -> NODE_{node->left;}
-**     NODE_{node} -> NODE_{node->right;}
-*/
-
-void	print_node(t_ast_node *node, int fd)
+void	print_node(t_ast_node *node)
 {
-	ft_putstr_fd(DOT_INDENT"NODE_", fd);
+	printf("%s\n", node->data);
 	if (node->left)
 	{
-		print_edge(node, node->left, fd);
+		print_edge(node, node->left);
 	}
 	if (node->right)
 	{
-		print_edge(node, node->right, fd);
+		print_edge(node, node->right);
 	}
 }
 
-void	print_nodes_rec(t_ast_node *node, int fd)
+void	print_nodes_rec(t_ast_node *node)
 {
 	if (!node)
 		return ;
-	print_node(node, fd);
-	print_nodes_rec(node->left, fd);
-	print_nodes_rec(node->right, fd);
+	print_node(node);
+	print_nodes_rec(node->left);
+	print_nodes_rec(node->right);
 }
 
-void	print_nodes(t_ast_node *node)
+void	print_nodes(t_ast *ast)
 {
-	int	fd;
-
-	printf("digraph AST {\n");
-	print_nodes_rec(node, fd);
-	ft_putstr_fd("}\n", fd);
+	print_nodes_rec(ast->ast);
+	printf("============================\n");
 }
