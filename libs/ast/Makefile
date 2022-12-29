@@ -3,6 +3,7 @@ NAME := libast.a
 CC := gcc
 
 SRCS := \
+	astree.c
 
 SRC_DIR := srcs/
 OBJ_DIR := objs/

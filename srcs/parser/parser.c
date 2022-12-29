@@ -1,7 +1,6 @@
 #include "minishell.h"
 #include "parser.h"
 
-
 t_token_type	get_token_type(char *token_value)
 {
 	if (!ft_strcmp(STR_RDIR, token_value))
@@ -28,10 +27,8 @@ void	set_token_types(void *p_token)
 	t_token	*token;
 
 	token = (t_token *)p_token;
-	token->type = get_token_type(token->value);
+	token->type = get_token_type(token->data);
 }
-
 void	parser(t_vector *tokens, t_shell *msh)
 {
-	ft_vector_foreach(tokens, set_token_types);
 }

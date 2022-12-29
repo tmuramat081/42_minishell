@@ -3,11 +3,12 @@
 
 #define INIT_SIZE 36
 
+
 bool	is_metacharacter(char c)
 {
 	if (c == ' ' || c == '\t' || c == '&' || c == '<'
 		|| c == '>' || c == '|' || c == ';')
-		return (true);
+return (true);
 	return (false);
 }
 
@@ -83,11 +84,14 @@ t_vector	*lexer(char *line)
 	while (true)
 	{
 		token = malloc(sizeof(t_token));
-		token->value = get_next_token(tokenizer);
-		if (!token->value || !*token->value)
+		token->data = get_next_token(tokenizer);
+		if (!token->data)
 			break ;
+		token->type = get_token_type(token->data);
 		ft_vector_push_back(tokens, token);
-		token->value = NULL;
+		token = NULL;
 	}
+	if (DEBUG)
+		print_tokens(tokens);
 	return (tokens);
 }

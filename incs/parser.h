@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 10:21:31 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/25 14:45:49 by tmuramat         ###   ########.fr       */
+/*   Updated: 2022/12/29 11:09:53 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@
 # define STR_AMPERSAND "&"
 # define STR_SEMICOLON ";"
 
+
+# include "libast.h"
+# include "libft.h"
+
 typedef enum e_token_type {
 	TOKEN_NONE,
 	TOKEN_STR,
@@ -33,7 +37,10 @@ typedef enum e_token_type {
 	TOKEN_PIPELINE,
 	TOKEN_AMPERSAND,
 	TOKEN_SEMICOLON,
+	TOKEN_NULL,
 	TOKEN_END
 }	t_token_type;
+
+void		print_nodes(t_ast_node *tokens);
 
 #endif
