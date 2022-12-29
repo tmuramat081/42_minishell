@@ -28,6 +28,7 @@ void	boot_minishell(char **envp)
 	t_vector	*tokens;
 
 	line = NULL;
+	ignore_signal();
 	while (42)
 	{
 		line = readline("> ");

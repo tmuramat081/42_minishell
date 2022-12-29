@@ -8,6 +8,7 @@ SRCS := \
 	main.c \
 	terminal/boot.c \
 	terminal/init_envs.c \
+	terminal/ignore_signal.c \
 	builtin/export.c \
 	builtin/unset.c \
 	builtin/echo.c \
@@ -15,7 +16,8 @@ SRCS := \
 	lexer/tokenizer.c \
 	lexer/tokenizer_utils.c \
 	parser/parser.c \
-	debug/print_token.c
+	debug/print_token.c 
+
 
 OBJS_DIR := objs/
 OBJS := ${addprefix ${OBJS_DIR},${SRCS:.c=.o}}
