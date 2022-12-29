@@ -54,6 +54,5 @@ dkms.conf
 # My settings
 html/
 latex/
-Doxyfile
 .DS_Store
 minishell
