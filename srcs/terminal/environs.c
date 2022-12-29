@@ -1,44 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_envs.c                                        :+:      :+:    :+:   */
+/*   environs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:18:28 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/29 23:22:08 by tmuramat         ###   ########.fr       */
+/*   Updated: 2022/12/30 01:12:34 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	split_str_to_env(char *str)
+/**
+ * @brief 環境変数の文字列を'='で分割する
+ *
+ * @param str_env
+ * @return t_env
+ */
+t_env	parse_envp(char *str_env)
 {
 	t_env	env;
 	size_t	i;
 
 	i = 0;
-	while (str[i] != '\0' && str[i] != '=')
+	while (str_env[i] != '\0' && str_env[i] != '=')
 		i++;
-	str[i] = '\0';
-	env.key = &str[0];
-	env.value = &str[i + 1];
+	str_env[i] = '\0';
+	env.key = &str_env[0];
+	env.value = &str_env[i + 1];
 	return (env);
 }
 
-t_hashmap	*init_envs(char **envp)
+/**
+ * @brief グローバル変数'environ'から環境変数を取得する
+ *
+ * @return t_hashmap*
+ */
+t_hashmap	*init_environ()
 {
-	t_hashmap	*envs;
+	extern char	**environ;
+	t_hashmap	*env_table;
 	t_env		env;
 	size_t		i;
 
-	envs = ft_hashmap_init(NULL);
+	env_table = ft_hashmap_init(NULL);
 	i = 0;
-	while (envp[i])
+	while (environ[i])
 	{
-		env = split_str_to_env(envp[i]);
-		ft_hashmap_insert(envs, env.key, (void *)env.value);
+		env = parse_envp(environ[i]);
+		ft_hashmap_insert(env_table, env.key, (void *)env.value);
 		i++;
 	}
-	return (envs);
+	return (env_table);
 }

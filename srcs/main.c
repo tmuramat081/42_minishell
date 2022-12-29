@@ -3,29 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:59:01 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/27 22:25:34 by kkohki           ###   ########.fr       */
+/*   Updated: 2022/12/30 01:08:57 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
+ * @brief Initialize structure
+ *
+ * @return t_shell*
+ */
+t_shell	*init_minishell(void)
+{
+	t_shell *msh;
+
+	msh = (t_shell *)ft_xmalloc(sizeof(t_shell));
+	msh->envs = init_environ();
+	msh->prompt = get_prompt();
+	return (msh);
+}
+
+/**
  ***************************************************************
  *	function: main
  *
- * @params[argc] コマンドライン引数の数
- * @params[argv] コマンドライン引数の配列
- * @params[envp] 環境変数へのポインタ
+ *  An implemention of Linux Bash shell.
  ***************************************************************
 */
-int	main(int argc, char **argv, char **envp)
+int	main(void)
 {
-	(void)argc;
-	(void)argv;
-	init_envs(envp);
-	boot_minishell(envp);
+	t_shell	*msh;
+
+	msh = init_minishell();
+	boot_minishell(msh);
 	return (0);
 }

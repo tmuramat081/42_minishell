@@ -32,12 +32,15 @@ typedef struct s_token {
 
 typedef struct s_shell {
 	t_hashmap	*envs;
+	char		*prompt;
 }	t_shell;
 
 /************* terinal ***************/
-void		boot_minishell(char	**envp);
+t_shell		*init_minishell(void);
+t_hashmap	*init_environ(void);
+char		*get_prompt(void);
+void		boot_minishell(t_shell *msh);
 void		put_bunner(void);
-t_hashmap	*init_envs(char **envp);
 void		sort_environs(t_env *env);
 void		ignore_signal(void);
 

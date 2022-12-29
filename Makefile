@@ -7,8 +7,9 @@ DFLAGS := -D DEBUG
 SRCS_DIR := srcs/
 SRCS := \
 	main.c \
+	terminal/environs.c \
+	terminal/prompt.c \
 	terminal/boot.c \
-	terminal/init_envs.c \
 	terminal/ignore_signal.c \
 	builtin/export.c \
 	builtin/unset.c \
