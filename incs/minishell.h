@@ -39,6 +39,7 @@ void		boot_minishell(char	**envp);
 void		put_bunner(void);
 t_hashmap	*init_envs(char **envp);
 void		sort_environs(t_env *env);
+void		ignore_signal(void);
 
 //************* lexer ***************/
 t_vector	*lexer(char *line);

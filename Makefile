@@ -9,6 +9,7 @@ SRCS := \
 	main.c \
 	terminal/boot.c \
 	terminal/init_envs.c \
+	terminal/ignore_signal.c \
 	builtin/export.c \
 	builtin/unset.c \
 	builtin/echo.c \

@@ -32,6 +32,7 @@ void	boot_minishell(char **envp)
 	(void)envp;
 	put_banner();
 	line = NULL;
+	ignore_signal();
 	while (42)
 	{
 		line = readline("> ");
