@@ -3,14 +3,6 @@
 
 #define INIT_SIZE 36
 
-bool	is_metacharacter(char c)
-{
-	if (c == ' ' || c == '\t' || c == '&' || c == '<'
-		|| c == '>' || c == '|' || c == ';')
-		return (true);
-	return (false);
-}
-
 bool	is_delimiter(t_tokenizer *tokenizer, char c)
 {
 	if (c == '\0')
@@ -72,7 +64,7 @@ char	*get_next_token(t_tokenizer *tokenizer)
 	return (NULL);
 }
 
-t_vector	*tokenizer(char *line)
+t_vector	*lexer(char *line)
 {
 	t_tokenizer	*tokenizer;
 	t_token		*token;
@@ -82,13 +74,16 @@ t_vector	*tokenizer(char *line)
 	tokenizer = init_tokenizer(line);
 	while (true)
 	{
-		token = malloc(sizeof(t_token));
-		token->value = get_next_token(tokenizer);
-		if (!token->value || !*token->value)
+		handle_state(tokenizer);
+		token = ft_xmalloc(sizeof(t_token));
+		token->data = get_next_token(tokenizer);
+		if (!token->data || !*token->data)
 			break ;
+		token->type = get_token_type(token->data);
 		ft_vector_push_back(tokens, token);
-		token->value = NULL;
+		token = NULL;
 	}
+	if (DEBUG)
+		print_tokens(tokens);
 	return (tokens);
-//	delete_tokenizer(tk);
 }
