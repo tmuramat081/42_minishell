@@ -6,14 +6,13 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/22 08:58:20 by tmuramat         ###   ########.fr       */
+/*   Updated: 2022/12/29 23:22:51 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "ft_printf.h"
 #include <libc.h>
-#include <libc.h>
-#include "minishell.h"
 
 int	compare_key(const void *p_data1, const void *p_data2)
 {
@@ -61,7 +60,7 @@ void insert_env(char **args, t_hashmap *map)
 {
 	size_t i;
 	t_env env;
-	
+
 	i = 0;
 	while (args[i] != NULL)
 	{
@@ -77,7 +76,7 @@ void export(char **args, t_hashmap *map)
 	{
 		print_envs(map);
 	}
-	else 
+	else
 	{
 		insert_env(args, map);
 	}

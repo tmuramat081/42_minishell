@@ -16,3 +16,18 @@ void	delete_tokenizer(t_tokenizer *tokenizer)
 {
 	free(tokenizer);
 }
+
+bool	is_metacharacter(char c)
+{
+	if (c == ' ' || c == '\t' || c == '&' || c == '<'
+		|| c == '>' || c == '|' || c == ';')
+		return (true);
+	return (false);
+}
+
+bool	is_quotation(char c)
+{
+	if (c == '\'' || c == '\"')
+		return (true);
+	return (false);
+}

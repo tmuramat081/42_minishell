@@ -1,7 +1,8 @@
 # Compile variables
 NAME := minishell
-CC := gcc -w -g
+CC := gcc -g
 CFLAGS := -Wall -Wextra -Werror
+DFLAGS := -D DEBUG
 
 SRCS_DIR := srcs/
 SRCS := \
@@ -13,11 +14,17 @@ SRCS := \
 	builtin/unset.c \
 	builtin/echo.c \
 	builtin/env.c \
-	lexer/tokenizer.c \
-	lexer/tokenizer_utils.c \
+	lexer/lexer.c \
+	lexer/token.c \
+	lexer/lexer_utils.c \
 	parser/parser.c \
-	debug/print_token.c 
-
+	parser/parse_line.c \
+	parser/parse_io.c \
+	parser/parse_pipe.c \
+	parser/parse_cmd.c \
+	parser/parse_token.c \
+	debug/print_token.c \
+	debug/print_tree.c
 
 OBJS_DIR := objs/
 OBJS := ${addprefix ${OBJS_DIR},${SRCS:.c=.o}}
@@ -41,8 +48,8 @@ LIBHASHSET := ${LIBHASHSET_DIR}libhashset.a
 LIBHASHMAP_DIR := libs/hashmap/
 LIBHASHMAP := ${LIBHASHMAP_DIR}libhashmap.a
 
-LIBFSM_DIR := libs/fsm/
-LIBFSM := ${LIBFSM_DIR}libfsm.a
+LIBAST_DIR := libs/ast/
+LIBAST := ${LIBAST_DIR}libast.a
 
 LIBREADLINE := -lreadline
 
@@ -54,7 +61,7 @@ INCS := \
 	-I./${LIBPQUEUE_DIR}incs/ \
 	-I./${LIBHASHSET_DIR}incs/ \
 	-I./${LIBHASHMAP_DIR}incs/ \
-	-I./${LIBFSM_DIR}incs/
+	-I./${LIBAST_DIR}incs/
 
 # Print variab
 PRINTF := printf
@@ -74,12 +81,12 @@ endif
 SRC_CNT := 0
 SRC_PCT = ${shell expr 100 \* ${SRC_CNT} / ${SRC_TOT}}
 PROGRESS = ${eval SRC_CNT = ${shell expr ${SRC_CNT} + 1}} \
-	${PRINTF} "${DEL}${GREEN}[ %d/%d (%d%%) ] ${CC} ${CFLAGS} $< ...${DEFAULT}${CR}" \
+	${PRINTF} "${DEL}${GREEN}[ %d/%d (%d%%) ] ${CC} ${CFLAGS} ${DFLAGS} $< ...${DEFAULT}${CR}" \
 	$(SRC_CNT) $(SRC_TOT) $(SRC_PCT)
 
 # Main commands
-${NAME}: ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBHASHMAP} ${LIBFSM} ${OBJS}
-	@${CC} ${CFLAGS} ${INCS} ${OBJS} ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBREADLINE} ${LIBHASHMAP} ${LIBFSM} -o $@
+${NAME}: ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBHASHMAP} ${LIBAST} ${OBJS}
+	@${CC} ${CFLAGS} ${DFLAGS} ${INCS} ${OBJS} ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBREADLINE} ${LIBHASHMAP} ${LIBAST} -o $@
 	@echo "\n${BLUE}--- ${NAME} is up to date! ---${DEFAULT}"
 
 ${LIBFT}:
@@ -100,12 +107,12 @@ ${LIBHASHSET}:
 ${LIBHASHMAP}:
 	@${MAKE} -C ${LIBHASHMAP_DIR} --no-print-directory
 
-${LIBFSM}:
-	@${MAKE} -C ${LIBFSM_DIR} --no-print-directory
+${LIBAST}:
+	@${MAKE} -C ${LIBAST_DIR} --no-print-directory
 
 ${OBJS_DIR}%.o: ${SRCS_DIR}%.c
 	@${PROGRESS}
-	@${CC} ${CFLAGS} ${INCS} -c $< -o $@
+	@${CC} ${CFLAGS} ${DFLAGS} ${INCS} -c $< -o $@
 
 -include ${DEPS}
 
@@ -121,7 +128,7 @@ clean:
 	@${MAKE} clean -C ${LIBPQUEUE_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBHASHSET_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBHASHMAP_DIR} --no-print-directory
-	@${MAKE} clean -C ${LIBFSM_DIR} --no-print-directory
+	@${MAKE} clean -C ${LIBAST_DIR} --no-print-directory
 
 
 #: Remove all object and executable files.
@@ -133,7 +140,7 @@ fclean:	clean
 	${RM} ${LIBPQUEUE}
 	${RM} ${LIBHASHSET}
 	${RM} ${LIBHASHMAP}
-	${RM} ${LIBFSM}
+	${RM} ${LIBAST}
 
 #: Remove and recompile all.
 re: fclean

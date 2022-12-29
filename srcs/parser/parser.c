@@ -1,36 +1,33 @@
-#include "minishell.h"
 #include "parser.h"
+#include "lexer.h"
+#include "libast.h"
+#include "minishell.h"
 
-t_token_type	get_token_type(char *token_value)
+bool term(t_vector *tokens, t_token_type toketype, t_token **curr, char **buff)
 {
-	if (ft_strcmp(STR_RDIR, token_value) == 0)
-		return (TOKEN_RDIR);
-	if (ft_strcmp(STR_RRDIR, token_value) == 0)
-		return (TOKEN_RRDIR);
-	if (ft_strcmp(STR_LDIR, token_value) == 0)
-		return (TOKEN_LDIR);
-	if (ft_strcmp(STR_LLDIR, token_value) == 0)
-		return (TOKEN_LLDIR);
-	if (ft_strcmp(STR_SPACE, token_value) == 0)
-		return (TOKEN_SPACE);
-	if (ft_strcmp(STR_PIPELINE, token_value) == 0)
-		return (TOKEN_PIPELINE);
-	if (ft_strcmp(STR_AMPERSAND, token_value) == 0)
-		return (TOKEN_AMPERSAND);
-	if (ft_strcmp(STR_SEMICOLON, token_value) == 0)
-		return (TOKEN_SEMICOLON);
-	return (TOKEN_STR);
+	if (!curr || !*curr)
+		return (false);
+    if ((*curr)->type == toketype)
+    {
+		if (buff)
+			*buff = ft_strdup((*curr)->data);
+		*curr = (t_token *)ft_vector_next(tokens, *curr, 1);;
+        return (true);
+    }
+	*curr = (t_token *)ft_vector_next(tokens, *curr, 1);;
+    return (false);
 }
 
-void	set_token_types(void *p_token)
+t_ast	*parser(t_vector *tokens, t_shell *msh)
 {
-	t_token	*token;
+	t_ast	*syntax_tree;
+	t_token	*curr_token;
 
-	token = (t_token *)p_token;
-	token->type = get_token_type(token->value);
-}
-
-void	parser(t_vector *tokens, t_shell *msh)
-{
-	ft_vector_foreach(tokens, set_token_types);
+	(void)msh;
+	curr_token = ft_vector_front(tokens);
+	syntax_tree = ast_init();
+	syntax_tree->ast = parse_command_line(tokens, curr_token);
+	if (DEBUG)
+		print_nodes(syntax_tree);
+	return (syntax_tree);
 }

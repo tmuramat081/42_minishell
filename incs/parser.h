@@ -6,34 +6,25 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 10:21:31 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/25 14:45:49 by tmuramat         ###   ########.fr       */
+/*   Updated: 2022/12/29 19:59:11 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# define STR_RDIR ">"
-# define STR_RRDIR ">>"
-# define STR_LDIR "<"
-# define STR_LLDIR "<<"
-# define STR_SPACE " "
-# define STR_PIPELINE "|"
-# define STR_AMPERSAND "&"
-# define STR_SEMICOLON ";"
+# include "libast.h"
+# include "libft.h"
+# include "parser.h"
+# include "lexer.h"
+# include "minishell.h"
 
-typedef enum e_token_type {
-	TOKEN_NONE,
-	TOKEN_STR,
-	TOKEN_RDIR,
-	TOKEN_RRDIR,
-	TOKEN_LDIR,
-	TOKEN_LLDIR,
-	TOKEN_SPACE,
-	TOKEN_PIPELINE,
-	TOKEN_AMPERSAND,
-	TOKEN_SEMICOLON,
-	TOKEN_END
-}	t_token_type;
+
+t_ast_node	*parse_command_line(t_vector *tokens, t_token *curr_token);
+t_ast_node	*parse_job(t_vector *tokens, t_token *curr_token);
+t_ast_node	*parse_command(t_vector *tokens, t_token *curr_token);
+t_ast_node	*parse_simple_command(t_vector *tokens, t_token *curr_token);
+t_ast_node	*parse_token_list(t_vector *tokens, t_token *curr_token);
+bool		term(t_vector *tokens, t_token_type toketype, t_token **curr_token, char **buff);
 
 #endif
