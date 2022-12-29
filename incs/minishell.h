@@ -42,6 +42,7 @@ char		*get_prompt(void);
 void		boot_minishell(t_shell *msh);
 void		put_bunner(void);
 void		sort_environs(t_env *env);
+void		ignore_signal(void);
 
 //************* lexer ***************/
 t_vector	*lexer(char *line);

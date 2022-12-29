@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/30 01:09:45 by tmuramat         ###   ########.fr       */
+/*   Updated: 2022/12/30 01:47:15 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	boot_minishell(t_shell	*msh)
 	t_ast		*ast;
 
 	line = NULL;
+	ignore_signal();
 	put_banner();
 	while (47)
 	{

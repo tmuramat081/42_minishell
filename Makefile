@@ -10,6 +10,7 @@ SRCS := \
 	terminal/environs.c \
 	terminal/prompt.c \
 	terminal/boot.c \
+	terminal/ignore_signal.c \
 	builtin/export.c \
 	builtin/unset.c \
 	builtin/echo.c \
