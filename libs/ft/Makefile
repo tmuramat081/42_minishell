@@ -137,10 +137,12 @@ ${OBJ_DIR}%.o: %.c
 all: ${NAME}
 
 clean:
-	${RM} ${ALL_OBJS}
+	@${RM} ${ALL_OBJS}
+	@${PRINTF} "${RED}Cleaned up object files in ${NAME}${DEFAULT}\n"
 
 fclean: clean
-	${RM} ${NAME}
+	@${RM} ${NAME}
+	@${PRINTF} "${RED}Removed object and executable files in ${NAME}${DEFAULT}\n"
 
 re: fclean
 	@${MAKE} -s all

@@ -86,9 +86,6 @@ PROGRESS = ${eval SRC_CNT = ${shell expr ${SRC_CNT} + 1}} \
 	${PRINTF} "${CR}%100s${CR}${GREEN}[ %d/%d (%d%%) ] ${CC} ${CFLAGS} ${DFLAGS} $< ...${DEFAULT}" "" \
 	$(SRC_CNT) $(SRC_TOT) $(SRC_PCT)
 
-create_dir:
-	@mkdir -p ${OBJS_DIR}
-
 # Main commands
 ${NAME}: ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBHASHMAP} ${LIBAST} ${OBJS}
 	@${CC} ${CFLAGS} ${DFLAGS} ${INCS} ${OBJS} ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBREADLINE} ${LIBHASHMAP} ${LIBAST} -o $@
@@ -125,7 +122,7 @@ all: ${NAME}
 
 #: Remove all object files.
 clean:
-	${RM} ${OBJS} ${DEPS}
+	@${RM} ${OBJS} ${DEPS}
 	@${MAKE} clean -C ${LIBFT_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBDEQUE_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBVECTOR_DIR} --no-print-directory
@@ -133,19 +130,19 @@ clean:
 	@${MAKE} clean -C ${LIBHASHSET_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBHASHMAP_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBAST_DIR} --no-print-directory
-	@${PRINTF} "$(RED)Cleaned up object files in ${NAME}.$(DEFAULT)\n"
+	@${PRINTF} "${RED}Cleaned up object files in ${NAME}${DEFAULT}\n"
 
 #: Remove all object and executable files.
 fclean:	clean
-	${RM} ${NAME}
-	${RM} ${LIBFT}
-	${RM} ${LIBDEQUE}
-	${RM} ${LIBVECTOR}
-	${RM} ${LIBPQUEUE}
-	${RM} ${LIBHASHSET}
-	${RM} ${LIBHASHMAP}
-	${RM} ${LIBAST}
-	@${PRINTF} "${RED}Removed object and executable files in ${NAME}${DEFAULT}.\n"
+	@${RM} ${NAME}
+	@${RM} ${LIBFT}
+	@${RM} ${LIBDEQUE}
+	@${RM} ${LIBVECTOR}
+	@${RM} ${LIBPQUEUE}
+	@${RM} ${LIBHASHSET}
+	@${RM} ${LIBHASHMAP}
+	@${RM} ${LIBAST}
+	@${PRINTF} "${RED}Removed object and executable files in ${NAME}${DEFAULT}\n"
 
 #: Remove and recompile all.
 re: fclean
