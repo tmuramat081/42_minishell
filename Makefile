@@ -19,11 +19,11 @@ SRCS := \
 	lexer/token.c \
 	lexer/lexer_utils.c \
 	parser/parser.c \
-	parser/parse_line.c \
-	parser/parse_io.c \
-	parser/parse_pipe.c \
-	parser/parse_cmd.c \
-	parser/parse_token.c \
+	parser/parse_separator.c \
+	parser/parse_pipeline.c \
+	parser/parse_redirection.c \
+	parser/parse_command.c \
+	parser/parse_argument.c \
 	debug/print_token.c \
 	debug/print_tree.c
 

@@ -1,5 +1,12 @@
 #include <libc.h>
 
+/**
+* @file ignore_signal.c
+* @brief SIGINT, SIGTSTP, SIGQUITのシグナルを無効化する
+* @author tmuramat
+* @date 2022.12.30
+*/
+
 void ignore_signal(void)
 {
 	// ignore "Ctrl-C" キーボードからの割り込みシグナル

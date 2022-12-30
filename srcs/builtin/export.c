@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/30 07:41:38 by tmuramat         ###   ########.fr       */
+/*   Updated: 2022/12/30 09:24:39 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,7 @@ void insert_env(char **args, t_hashmap *map)
 void builtin_export(char **args, t_shell *msh)
 {
 	if (!args || !*args)
-	{
 		print_envs(msh->envs);
-	}
 	else
-	{
 		insert_env(args, msh->envs);
-	}
 }
