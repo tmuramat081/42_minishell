@@ -55,6 +55,7 @@ void		unset(char **arg, t_hashmap *map);
 void		export(char **args, t_hashmap *map);
 t_env		*split_envp(char **envp);
 void		env(char **args, t_hashmap *map);
+void		builtin_exit(char **args);
 
 //********** debug command ********/
 void		print_token(void *p_str, void *p_index);

@@ -15,6 +15,7 @@ SRCS := \
 	builtin/unset.c \
 	builtin/echo.c \
 	builtin/env.c \
+	builtin/exit.c \
 	lexer/lexer.c \
 	lexer/token.c \
 	lexer/lexer_utils.c \
