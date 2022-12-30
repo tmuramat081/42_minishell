@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 10:21:31 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/29 19:59:11 by tmuramat         ###   ########.fr       */
+/*   Updated: 2022/12/30 14:29:34 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 
 t_ast_node	*parse_command_line(t_vector *tokens, t_token *curr_token);
-t_ast_node	*parse_job(t_vector *tokens, t_token *curr_token);
+t_ast_node	*parse_pipe(t_vector *tokens, t_token *curr_token);
 t_ast_node	*parse_command(t_vector *tokens, t_token *curr_token);
 t_ast_node	*parse_simple_command(t_vector *tokens, t_token *curr_token);
 t_ast_node	*parse_token_list(t_vector *tokens, t_token *curr_token);

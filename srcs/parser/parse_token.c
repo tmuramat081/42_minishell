@@ -34,6 +34,7 @@ t_ast_node* parse_token_list(t_vector *tokens, t_token *curr)
 {
     t_ast_node* node;
 
+//	puts("token");
 	node = parse_token_list1(tokens, curr);
 	if (curr && node)
         return (node);

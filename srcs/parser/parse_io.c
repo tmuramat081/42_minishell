@@ -14,17 +14,18 @@ t_ast_node	*parse_command2(t_vector *tokens, t_token *curr)
 {
     t_ast_node	*simplecmdNode;
     t_ast_node	*result;
+	char		*filename;
 
     simplecmdNode = parse_simple_command(tokens, curr);
 	if (!simplecmdNode)
         return (NULL);
+	puts("-------ok-------");
+	printf("%s\n", curr->data);
     if (!term(tokens, TOKEN_RDIR, &curr, NULL))
 	{
 		ast_node_delete(simplecmdNode);
 		return (NULL);
 	}
-
-	char* filename;
 	if (!term(tokens, TOKEN_NONE, &curr, &filename))
 	{
 		free(filename);
@@ -43,16 +44,18 @@ t_ast_node	*parse_command1(t_vector *tokens, t_token *curr)
 {
 	t_ast_node	*simplecmdNode;
 	t_ast_node	*result;
+	char		*filename;
 
 	simplecmdNode = parse_simple_command(tokens, curr);
 	if (!simplecmdNode)
 		return (NULL);
-	if (!term(tokens, TOKEN_LDIR, &curr, NULL)) {
+	if (!term(tokens, TOKEN_LDIR, &curr, NULL))
+	{
 		ast_node_delete(simplecmdNode);
 		return (NULL);
 	}
-	char* filename;
-	if (!term(tokens, TOKEN_NONE, &curr, &filename)) {
+	if (!term(tokens, TOKEN_NONE, &curr, &filename))
+	{
 		free(filename);
 		ast_node_delete(simplecmdNode);
 		return (NULL);
@@ -68,7 +71,11 @@ t_ast_node	*parse_command(t_vector *tokens, t_token *curr)
 {
 	t_ast_node* node;
 
+	//puts("parse_command");
 	node = parse_command1(tokens, curr);
+	if (curr && node)
+		return (node);
+	node = parse_command2(tokens, curr);
 	if (curr && node)
 		return (node);
 	node = parse_command3(tokens, curr);

@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/30 01:47:15 by tmuramat         ###   ########.fr       */
+/*   Updated: 2022/12/30 08:25:54 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 #include "libast.h"
 #include "ft_snprintf.h"
 #include "constant.h"
+
+/*６ｙｙ
+* @file boot.c
+* @brief コマンドラインの待機状態
+* @author tmuramat
+* @date 2022.12.30
+*/
 
 /**
  * @brief 起動時バナーを表示する
