@@ -6,11 +6,18 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:59:01 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/30 01:08:57 by tmuramat         ###   ########.fr       */
+/*   Updated: 2022/12/30 07:54:34 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+* @file main.c
+* @brief main function.
+* @author tmuramat
+* @date 2022.12.30
+*/
 
 /**
  * @brief Initialize structure
@@ -31,7 +38,7 @@ t_shell	*init_minishell(void)
  ***************************************************************
  *	function: main
  *
- *  An implemention of Linux Bash shell.
+ *  A re-implemention of Linux Bash shell.
  ***************************************************************
 */
 int	main(void)

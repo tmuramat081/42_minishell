@@ -1,48 +1,7 @@
 #include "minishell.h"
+#include "ft_printf.h"
 
-int	is_opn(char *s);
-
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < n)
-	{
-		if (s1[i] != s2[i] || !s1[i] || !s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
-	}
-	return (0);
-}
-
-int	execute_echo(int argc, char *argv[])
-{
-	size_t	i;
-	int		not_work;
-
-	if (argc == 1)
-		return (printf("\n") * 0);
-	i = 1;
-	not_work = 0;
-	while (argv[i] && is_opn(argv[i]))
-	{
-		not_work = 1;
-		i++;
-	}
-	while ((int)i < argc)
-	{
-		printf("%s", argv[i]);
-		i++;
-		if ((int)i < argc)
-			printf(" ");
-	}
-	if (!not_work)
-		printf("\n");
-	return (0);
-}
-
-int	is_opn(char *s)
+int	is_n_option(const char *s)
 {
 	if (ft_strncmp(s, "-n", 2))
 		return (0);
@@ -54,8 +13,31 @@ int	is_opn(char *s)
 	return (0);
 }
 
+int	builtin_echo(const char **args, t_shell *msh)
+{
+	size_t	i;
+	size_t	len;
+	bool	not_work;
 
-//bad pattern: [n
-//入力待ち: / ( \
-//parse error near: )
-//zsh: not found: =n
+	(void)msh;
+	len = ft_matrixlen(args);
+	if (len == 1)
+		return (ft_printf("\n") * 0);
+	i = 1;
+	not_work = false;
+	while (args[i] && is_n_option(args[i]))
+	{
+		not_work = true;
+		i++;
+	}
+	while (i < len)
+	{
+		ft_printf("%s", args[i]);
+		i++;
+		if (i < len)
+			ft_printf(" ");
+	}
+	if (not_work == false)
+		ft_printf("\n");
+	return (0);
+}

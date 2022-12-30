@@ -3,7 +3,7 @@
 #include "parser.h"
 #include "ft_printf.h"
 
-char *convert_type_to_str(t_token_type type)
+char *get_type_name(t_token_type type)
 {
 	if (type == TOKEN_STR)
 		return ("[STRING]");
@@ -36,7 +36,7 @@ void	print_token(void *p_str, void *p_index)
 
 	index = p_index;
 	token = p_str;
-	type = convert_type_to_str(token->type);
+	type = get_type_name(token->type);
 	ft_printf("[%*d] %*s %*s\n", 2, *index, 20, token->data, 20, type);
 	(*index)++;
 }
