@@ -39,11 +39,15 @@ t_ast_node	*parse_argument1(t_vector *tokens, t_token **curr)
  */
 t_ast_node	*parse_argument(t_vector *tokens, t_token **curr)
 {
+	t_token *save;
 	t_ast_node* node;
 
+	save = *curr;
+	*curr = save;
 	node = parse_argument1(tokens, curr);
 	if (node)
 		return (node);
+	*curr = save;
 	node = parse_argument2(tokens, curr);
 	if (node)
 		return (node);

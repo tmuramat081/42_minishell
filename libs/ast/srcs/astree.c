@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-void ast_attach_binary_branch(t_ast_node* root, t_ast_node* leftNode, t_ast_node* rightNode)
+void ast_attach_binary_branch(t_ast_node *root, t_ast_node *leftNode, t_ast_node *rightNode)
 {
 	if (!root)
 		return ;
@@ -11,7 +11,7 @@ void ast_attach_binary_branch(t_ast_node* root, t_ast_node* leftNode, t_ast_node
     root->right = rightNode;
 }
 
-void ast_node_set_type(t_ast_node* node, t_node_type type)
+void ast_node_set_type(t_ast_node *node, t_node_type type)
 {
 	if (!node)
 		return ;

@@ -48,10 +48,14 @@ t_ast_node	*parse_pipeline1(t_vector *tokens, t_token **curr)
 t_ast_node	*parse_pipeline(t_vector *tokens, t_token **curr)
 {
     t_ast_node	*node;
+	t_token *save;
 
+	save = *curr;
+	*curr = save;
     node = parse_pipeline1(tokens, curr);
 	if (node)
 		return (node);
+	*curr = save;
     node = parse_pipeline2(tokens, curr);
 	if (node)
 		return (node);

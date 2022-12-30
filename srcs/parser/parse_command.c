@@ -45,11 +45,15 @@ t_ast_node	*parse_command1(t_vector *tokens, t_token **curr)
  */
 t_ast_node	*parse_command(t_vector *tokens, t_token **curr)
 {
-	t_ast_node *node;
+	t_ast_node	*node;
+	t_token		*save;
 
+	save = *curr;
+	*curr = save;
 	node = parse_command1(tokens, curr);
 	if (node)
 		return (node);
+	*curr = save;
 	node = parse_command2(tokens, curr);
 	if (node)
 		return (node);
