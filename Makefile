@@ -75,21 +75,24 @@ MOVE := \033[1F
 CR := \033[1G
 
 # Progress variables
-SRC_TOT := ${shell expr ${words ${SRCS}} - ${shell ls -l ${OBJS_DIR} | grep .o$ | wc -l} + 1}
-ifndef ${SRC_TOT}
-	SRC_TOT := ${words ${SRCS}}
+SRC_TOT := $(shell expr $(shell echo -n ${SRCS} | wc -w) - $(shell ls -l ${OBJ_DIR} 2>&1 | grep ".o" | wc -l) + 1)
+ifeq ($(shell test ${SRC_TOT} -le 0; echo $$?),0)
+	SRC_TOT := $(shell echo -n ${SRCS} | wc -w)
 endif
 SRC_CNT := 0
 SRC_PCT = ${shell expr 100 \* ${SRC_CNT} / ${SRC_TOT}}
+
 PROGRESS = ${eval SRC_CNT = ${shell expr ${SRC_CNT} + 1}} \
-	${PRINTF} "${DEL}${GREEN}[ %d/%d (%d%%) ] ${CC} ${CFLAGS} ${DFLAGS} $< ...${DEFAULT}${CR}" \
+	${PRINTF} "${CR}%100s${CR}${GREEN}[ %d/%d (%d%%) ] ${CC} ${CFLAGS} ${DFLAGS} $< ...${DEFAULT}" "" \
 	$(SRC_CNT) $(SRC_TOT) $(SRC_PCT)
+
+create_dir:
+	@mkdir -p ${OBJS_DIR}
 
 # Main commands
 ${NAME}: ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBHASHMAP} ${LIBAST} ${OBJS}
 	@${CC} ${CFLAGS} ${DFLAGS} ${INCS} ${OBJS} ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBREADLINE} ${LIBHASHMAP} ${LIBAST} -o $@
 	@echo "\n${BLUE}--- ${NAME} is up to date! ---${DEFAULT}"
-
 ${LIBFT}:
 	@${MAKE} -C ${LIBFT_DIR} --no-print-directory
 
@@ -130,7 +133,7 @@ clean:
 	@${MAKE} clean -C ${LIBHASHSET_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBHASHMAP_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBAST_DIR} --no-print-directory
-
+	@${PRINTF} "$(RED)Cleaned up object files in ${NAME}.$(DEFAULT)\n"
 
 #: Remove all object and executable files.
 fclean:	clean
@@ -142,6 +145,7 @@ fclean:	clean
 	${RM} ${LIBHASHSET}
 	${RM} ${LIBHASHMAP}
 	${RM} ${LIBAST}
+	@${PRINTF} "${RED}Removed object and executable files in ${NAME}${DEFAULT}.\n"
 
 #: Remove and recompile all.
 re: fclean
@@ -157,6 +161,10 @@ git:
 	git commit
 	git push origin feature
 
+norm:
+	@${PRINTF} "${RED}\nChecking norm for ${NAME}...${DEFAULT}\n"
+	@norminette ${SRC_DIR} inc/ libs/
+
 #: Display all commands.
 help:
 	@grep -A1 -E "^#:" --color=auto Makefile \
@@ -168,12 +176,3 @@ help:
 
 .PHONY:
 	all clean fclean re debug git help
-
-credit:
-	@echo "███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     "
-	@echo "████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     "
-	@echo "██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     "
-	@echo "██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     "
-	@echo "██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗"
-	@echo "╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝"
-	@echo "         Made with love by : \033[1;91mzjamali\033[m and \033[1;91mmbari\033[m"
