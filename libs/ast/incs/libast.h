@@ -26,7 +26,7 @@ typedef struct s_ast_node
 
 typedef struct s_ast
 {
-	t_ast_node	*ast;
+	t_ast_node	*root;
 	size_t		len;
 	int			error;
 }	t_ast;

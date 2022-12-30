@@ -3,9 +3,6 @@
 #include "minishell.h"
 #include "parser.h"
 
-#define DOT_FILE_NAME	"ast.dot"
-#define DOT_INDENT		"    "
-
 void	print_edge(t_ast_node *left, t_ast_node *right)
 {
 	(void)left;
@@ -17,7 +14,7 @@ void	print_edge(t_ast_node *left, t_ast_node *right)
 
 void	print_node(t_ast_node *node)
 {
-	printf("%s\n", node->data);
+	printf("%p: %s\n", node, node->data);
 	if (node->left)
 	{
 		print_edge(node, node->left);
@@ -39,6 +36,6 @@ void	print_nodes_rec(t_ast_node *node)
 
 void	print_nodes(t_ast *ast)
 {
-	print_nodes_rec(ast->ast);
+	print_nodes_rec(ast->root);
 	printf("============================\n");
 }

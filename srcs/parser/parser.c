@@ -10,6 +10,27 @@
 * @date 2022.12.30
 */
 
+/**		Backus-Naur Form(NBF)
+ *
+	<command_line>	::= <pipeline> ';' <command_line>
+					|	<pipeline> ';'
+					|	<pipeline>
+
+	<pipeline>		::=	<redirection> '|' <pipeline>
+					|	<redirection>
+
+	<redirection>	::=	<command> '<' <filename>
+					|	<command> '>' <filename>
+					|	<command>
+
+	<command>		::=	<pathname> <token_list>
+					|	<pathname>
+
+	<token_list>	::=	<token> <token_list>
+					|	(EMPTY)
+ *
+**/
+
 /**
  * @brief 解析しているトークンの種類が一致するか判定し、次のトークンを取得する
  *
@@ -20,7 +41,7 @@
  * @return true
  * @return false
  */
-bool term(t_vector *tokens, t_token_type toketype, t_token **curr, char **buff)
+bool consume_token(t_vector *tokens, t_token_type toketype, t_token **curr, char **buff)
 {
 	if (!curr || !*curr)
 		return (false);
@@ -50,7 +71,7 @@ t_ast	*parser(t_vector *tokens, t_shell *msh)
 	(void)msh;
 	curr_token = ft_vector_front(tokens);
 	syntax_tree = ast_init();
-	syntax_tree->ast = parse_command_line(tokens, curr_token);
+	syntax_tree->root = parse_separator(tokens, &curr_token);
 	if (DEBUG)
 		print_nodes(syntax_tree);
 	return (syntax_tree);

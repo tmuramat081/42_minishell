@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 10:21:31 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/30 14:29:34 by tmuramat         ###   ########.fr       */
+/*   Updated: 2022/12/30 18:31:59 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 # include "minishell.h"
 
 
-t_ast_node	*parse_command_line(t_vector *tokens, t_token *curr_token);
-t_ast_node	*parse_pipe(t_vector *tokens, t_token *curr_token);
-t_ast_node	*parse_command(t_vector *tokens, t_token *curr_token);
-t_ast_node	*parse_simple_command(t_vector *tokens, t_token *curr_token);
-t_ast_node	*parse_token_list(t_vector *tokens, t_token *curr_token);
-bool		term(t_vector *tokens, t_token_type toketype, t_token **curr_token, char **buff);
+t_ast_node	*parse_separator(t_vector *tokens, t_token **curr);
+t_ast_node	*parse_pipeline(t_vector *tokens, t_token **curr);
+t_ast_node	*parse_redirection(t_vector *tokens, t_token **curr);
+t_ast_node	*parse_command(t_vector *tokens, t_token **curr);
+t_ast_node	*parse_argument(t_vector *tokens, t_token **curr);
+bool		consume_token(t_vector *tokens, t_token_type toketype, t_token **curr, char **buff);
 
 #endif
