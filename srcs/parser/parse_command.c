@@ -30,7 +30,7 @@ t_ast_node	*parse_command1(t_vector *tokens, t_token **curr)
 		return (NULL);
 	rhs_node = parse_argument(tokens, curr);
 	node = ft_xmalloc(sizeof(t_ast_node));
-	ast_node_set_type(node, NODE_CMDPATH);
+	ast_node_set_type(node, NODE_COMMAND);
 	ast_node_set_data(node, pathname);
 	ast_attach_binary_branch(node, NULL, rhs_node);
 	return (node);

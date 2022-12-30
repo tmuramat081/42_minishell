@@ -17,7 +17,7 @@ char	*get_node_type(t_node_type	type)
 	else if (type & NODE_REDIRECT_OUT)
 		return("[REDIRECT_OUT]");
 	else if (type & NODE_COMMAND)
-		return("[CMDPATH]");
+		return("[COMMAND]");
 	else if (type & NODE_ARGUMENT)
 		return("[ARGUMENT]");
 	else if (type & NODE_DATA)
@@ -50,6 +50,7 @@ void	print_nodes_rec(t_ast_node *node, int depth)
 
 void	print_nodes(t_ast *ast)
 {
+	printf("\n===============================================\n");
 	print_nodes_rec(ast->root, 0);
-	printf("============================\n");
+	printf("===============================================\n\n");
 }

@@ -17,11 +17,12 @@ t_ast_node	*parse_pipeline1(t_vector *tokens, t_token **curr)
 	t_ast_node	*lhs_node;
 	t_ast_node	*rhs_node;
 	t_ast_node	*node;
+	char		*pipeline;
 
 	lhs_node = parse_redirection(tokens, curr);
 	if (!lhs_node)
 		return (NULL);
-	if (!consume_token(tokens, TOKEN_PIPELINE, curr, NULL))
+	if (!consume_token(tokens, TOKEN_PIPELINE, curr, &pipeline))
 	{
 		ast_node_delete(lhs_node);
 		return (NULL);
@@ -33,7 +34,8 @@ t_ast_node	*parse_pipeline1(t_vector *tokens, t_token **curr)
 		return (NULL);
 	}
 	node = ft_xmalloc(sizeof(t_ast_node));
-	ast_node_set_type(node, NODE_PIPE);
+	ast_node_set_type(node, NODE_PIPELINE);
+	ast_node_set_data(node, pipeline);
 	ast_attach_binary_branch(node, lhs_node, rhs_node);
 	return (node);
 }
