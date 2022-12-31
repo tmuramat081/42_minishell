@@ -22,7 +22,10 @@ int	builtin_echo(const char **args, t_shell *msh)
 	(void)msh;
 	len = ft_matrixlen(args);
 	if (len == 1)
-		return (ft_printf("\n") * 0);
+	{
+		ft_printf("\n");
+		return (0);
+	}
 	i = 1;
 	not_work = false;
 	while (args[i] && is_n_option(args[i]))

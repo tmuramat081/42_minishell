@@ -11,10 +11,6 @@ SRCS := \
 	terminal/prompt.c \
 	terminal/boot.c \
 	terminal/ignore_signal.c \
-	builtin/export.c \
-	builtin/unset.c \
-	builtin/echo.c \
-	builtin/env.c \
 	lexer/lexer.c \
 	lexer/token.c \
 	lexer/lexer_utils.c \
@@ -24,6 +20,15 @@ SRCS := \
 	parser/parse_redirection.c \
 	parser/parse_command.c \
 	parser/parse_argument.c \
+	execution/execute.c \
+	execution/command.c \
+	builtin/export.c \
+	builtin/unset.c \
+	builtin/echo.c \
+	builtin/env.c \
+	builtin/cd.c \
+	builtin/pwd.c \
+	builtin/exit.c \
 	debug/print_token.c \
 	debug/print_tree.c
 
