@@ -12,6 +12,7 @@ SRCS := \
 	builtin/unset.c \
 	builtin/echo.c \
 	builtin/env.c \
+	builtin/pwd.c \
 	lexer/tokenizer.c \
 	debug/print_token.c
 
