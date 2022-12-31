@@ -27,7 +27,7 @@ int	input_args(char *arg)
 	return ((int)long_num);
 }
 
-void builtin_exit(char **args)
+void	builtin_exit(char **args)
 {
 	size_t	i;
 	int		status;
