@@ -1,9 +1,10 @@
 # Compile variables
 NAME := minishell
 CC := gcc -g
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -MMD
+#ifdef FOR_DEBUG
 DFLAGS := -D DEBUG
-
+#endif
 SRCS_DIR := srcs/
 SRCS := \
 	main.c \
@@ -27,7 +28,6 @@ SRCS := \
 	builtin/echo.c \
 	builtin/env.c \
 	builtin/pwd.c \
-	lexer/tokenizer.c \
 	builtin/cd.c \
 	builtin/exit.c \
 	debug/print_token.c \
@@ -96,6 +96,7 @@ PROGRESS = ${eval SRC_CNT = ${shell expr ${SRC_CNT} + 1}} \
 ${NAME}: ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBHASHMAP} ${LIBAST} ${OBJS}
 	@${CC} ${CFLAGS} ${DFLAGS} ${INCS} ${OBJS} ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBREADLINE} ${LIBHASHMAP} ${LIBAST} -o $@
 	@echo "\n${BLUE}--- ${NAME} is up to date! ---${DEFAULT}"
+
 ${LIBFT}:
 	@${MAKE} -C ${LIBFT_DIR} --no-print-directory
 
@@ -136,7 +137,7 @@ clean:
 	@${MAKE} clean -C ${LIBHASHSET_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBHASHMAP_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBAST_DIR} --no-print-directory
-	@${PRINTF} "${RED}Cleaned up object files in ${NAME}${DEFAULT}\n"
+	@${PRINTF} "${RED}Cleaned up object files in ${basename ${NAME}} ${DEFAULT}\n"
 
 #: Remove all object and executable files.
 fclean:	clean
@@ -148,7 +149,7 @@ fclean:	clean
 	@${RM} ${LIBHASHSET}
 	@${RM} ${LIBHASHMAP}
 	@${RM} ${LIBAST}
-	@${PRINTF} "${RED}Removed object and executable files in ${NAME}${DEFAULT}\n"
+	@${PRINTF} "${RED}Removed object and executable files in ${NAME} ${DEFAULT}\n"
 
 #: Remove and recompile all.
 re: fclean
@@ -156,7 +157,7 @@ re: fclean
 
 #: [debug] Print debug info.
 dev: clean
-	@${MAKE} ${NAME_DEV} FOR_DEBUG=1 --no-print-directory
+	@${MAKE} FOR_DEBUG=1 --no-print-directory
 
 #: Push to git repository.
 git:
@@ -165,7 +166,7 @@ git:
 	git push origin feature
 
 norm:
-	@${PRINTF} "${RED}\nChecking norm for ${NAME}...${DEFAULT}\n"
+	@${PRINTF} "${RED}\nChecking norm for ${NAME}...${DEFAULT}\n "
 	@norminette ${SRC_DIR} inc/ libs/
 
 #: Display all commands.

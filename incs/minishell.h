@@ -47,15 +47,10 @@ void		ignore_signal(void);
 //************* lexer ***************/
 t_vector	*lexer(char *line);
 
-//************* lexer ***************/
+//************* parer ***************/
 t_ast		*parser(t_vector *tokens, t_shell *msh);
 
 //********** builtin command ********/
-void		unset(char **arg, t_hashmap *map);
-void		export(char **args, t_hashmap *map);
-t_env		*split_envp(char **envp);
-void		env(char **args, t_hashmap *map);
-void		builtin_exit(char **args);
 
 void execute_syntax_tree(t_ast *syntax_tree, t_shell *msh);
 

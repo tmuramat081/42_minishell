@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/31 15:43:44 by tmuramat         ###   ########.fr       */
+/*   Updated: 2022/12/31 18:36:05 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libast.h"
 #include "ft_snprintf.h"
 #include "constant.h"
+#include "ft_printf.h"
 
 /*
 * @file boot.c
@@ -28,7 +29,10 @@
  */
 void	put_banner(void)
 {
-	ft_putendl_fd("DEVELOPMENT TEST", 1);
+	if (DEBUG)
+		ft_printf("%s%s%s\n", RED, BANNER_DEV, DEFAULT);
+	else
+		ft_printf("%s\n", BANNER);
 }
 
 /** コマンド入力を待機 */
