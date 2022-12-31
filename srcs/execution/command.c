@@ -3,7 +3,6 @@
 #include "parser.h"
 #include "libast.h"
 
-
 void	execute_external_command(char **args, t_shell *msh)
 {
 	(void)args;
@@ -33,5 +32,4 @@ void	execute_builtin_command(char **args, t_shell *msh)
 	else if (!ft_strcmp(args[0], "exit"))
 		builtin_exit(args, msh);
 	execute_external_command(args, msh);
-
 }

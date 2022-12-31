@@ -1,11 +1,13 @@
 #include "minishell.h"
 #include "ft_printf.h"
+#include "execution.h"
 
-int	pwd(char **arg, t_hashmap *map)
+int	builtin_pwd(char **arg, t_shell *msh)
 {
 	char	buf[BUFSIZ];
 
-	(void)map;
+	(void)msh;
+	(void)arg;
 	if (getcwd(buf, sizeof(buf)) != NULL)
 		ft_printf("%s\n", buf);
 	return (0);

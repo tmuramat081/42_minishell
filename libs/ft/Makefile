@@ -138,11 +138,11 @@ all: ${NAME}
 
 clean:
 	@${RM} ${ALL_OBJS}
-	@${PRINTF} "${RED}Cleaned up object files in ${NAME}${DEFAULT}\n"
+	@${PRINTF} "${RED}Cleaned up object files in ${basename ${NAME}}${DEFAULT}\n"
 
 fclean: clean
 	@${RM} ${NAME}
-	@${PRINTF} "${RED}Removed object and executable files in ${NAME}${DEFAULT}\n"
+	@${PRINTF} "${RED}Removed object and executable files in ${basename ${NAME}}${DEFAULT}\n"
 
 re: fclean
 	@${MAKE} -s all
