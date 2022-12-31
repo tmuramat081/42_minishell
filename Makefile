@@ -1,20 +1,37 @@
 # Compile variables
 NAME := minishell
-CC := gcc -w -g
+CC := gcc -g
 CFLAGS := -Wall -Wextra -Werror
+DFLAGS := -D DEBUG
 
 SRCS_DIR := srcs/
 SRCS := \
 	main.c \
+	terminal/environs.c \
+	terminal/prompt.c \
 	terminal/boot.c \
-	terminal/init_envs.c \
+	terminal/ignore_signal.c \
+	lexer/lexer.c \
+	lexer/token.c \
+	lexer/lexer_utils.c \
+	parser/parser.c \
+	parser/parse_separator.c \
+	parser/parse_pipeline.c \
+	parser/parse_redirection.c \
+	parser/parse_command.c \
+	parser/parse_argument.c \
+	execution/execute.c \
+	execution/command.c \
 	builtin/export.c \
 	builtin/unset.c \
 	builtin/echo.c \
 	builtin/env.c \
 	builtin/pwd.c \
 	lexer/tokenizer.c \
-	debug/print_token.c
+	builtin/cd.c \
+	builtin/exit.c \
+	debug/print_token.c \
+	debug/print_tree.c
 
 OBJS_DIR := objs/
 OBJS := ${addprefix ${OBJS_DIR},${SRCS:.c=.o}}
@@ -38,8 +55,8 @@ LIBHASHSET := ${LIBHASHSET_DIR}libhashset.a
 LIBHASHMAP_DIR := libs/hashmap/
 LIBHASHMAP := ${LIBHASHMAP_DIR}libhashmap.a
 
-LIBFSM_DIR := libs/fsm/
-LIBFSM := ${LIBFSM_DIR}libfsm.a
+LIBAST_DIR := libs/ast/
+LIBAST := ${LIBAST_DIR}libast.a
 
 LIBREADLINE := -lreadline
 
@@ -51,7 +68,7 @@ INCS := \
 	-I./${LIBPQUEUE_DIR}incs/ \
 	-I./${LIBHASHSET_DIR}incs/ \
 	-I./${LIBHASHMAP_DIR}incs/ \
-	-I./${LIBFSM_DIR}incs/
+	-I./${LIBAST_DIR}incs/
 
 # Print variab
 PRINTF := printf
@@ -64,21 +81,21 @@ MOVE := \033[1F
 CR := \033[1G
 
 # Progress variables
-SRC_TOT := ${shell expr ${words ${SRCS}} - ${shell ls -l ${OBJS_DIR} | grep .o$ | wc -l} + 1}
-ifndef ${SRC_TOT}
-	SRC_TOT := ${words ${SRCS}}
+SRC_TOT := $(shell expr $(shell echo -n ${SRCS} | wc -w) - $(shell ls -l ${OBJ_DIR} 2>&1 | grep ".o" | wc -l) + 1)
+ifeq ($(shell test ${SRC_TOT} -le 0; echo $$?),0)
+	SRC_TOT := $(shell echo -n ${SRCS} | wc -w)
 endif
 SRC_CNT := 0
 SRC_PCT = ${shell expr 100 \* ${SRC_CNT} / ${SRC_TOT}}
+
 PROGRESS = ${eval SRC_CNT = ${shell expr ${SRC_CNT} + 1}} \
-	${PRINTF} "${DEL}${GREEN}[ %d/%d (%d%%) ] ${CC} ${CFLAGS} $< ...${DEFAULT}${CR}" \
+	${PRINTF} "${CR}%100s${CR}${GREEN}[ %d/%d (%d%%) ] ${CC} ${CFLAGS} ${DFLAGS} $< ...${DEFAULT}" "" \
 	$(SRC_CNT) $(SRC_TOT) $(SRC_PCT)
 
 # Main commands
-${NAME}: ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBHASHMAP} ${LIBFSM} ${OBJS}
-	@${CC} ${CFLAGS} ${INCS} ${OBJS} ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBREADLINE} ${LIBHASHMAP} ${LIBFSM} -o $@
+${NAME}: ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBHASHMAP} ${LIBAST} ${OBJS}
+	@${CC} ${CFLAGS} ${DFLAGS} ${INCS} ${OBJS} ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBREADLINE} ${LIBHASHMAP} ${LIBAST} -o $@
 	@echo "\n${BLUE}--- ${NAME} is up to date! ---${DEFAULT}"
-
 ${LIBFT}:
 	@${MAKE} -C ${LIBFT_DIR} --no-print-directory
 
@@ -97,12 +114,12 @@ ${LIBHASHSET}:
 ${LIBHASHMAP}:
 	@${MAKE} -C ${LIBHASHMAP_DIR} --no-print-directory
 
-${LIBFSM}:
-	@${MAKE} -C ${LIBFSM_DIR} --no-print-directory
+${LIBAST}:
+	@${MAKE} -C ${LIBAST_DIR} --no-print-directory
 
 ${OBJS_DIR}%.o: ${SRCS_DIR}%.c
 	@${PROGRESS}
-	@${CC} ${CFLAGS} ${INCS} -c $< -o $@
+	@${CC} ${CFLAGS} ${DFLAGS} ${INCS} -c $< -o $@
 
 -include ${DEPS}
 
@@ -111,26 +128,27 @@ all: ${NAME}
 
 #: Remove all object files.
 clean:
-	${RM} ${OBJS} ${DEPS}
+	@${RM} ${OBJS} ${DEPS}
 	@${MAKE} clean -C ${LIBFT_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBDEQUE_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBVECTOR_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBPQUEUE_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBHASHSET_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBHASHMAP_DIR} --no-print-directory
-	@${MAKE} clean -C ${LIBFSM_DIR} --no-print-directory
-
+	@${MAKE} clean -C ${LIBAST_DIR} --no-print-directory
+	@${PRINTF} "${RED}Cleaned up object files in ${NAME}${DEFAULT}\n"
 
 #: Remove all object and executable files.
 fclean:	clean
-	${RM} ${NAME}
-	${RM} ${LIBFT}
-	${RM} ${LIBDEQUE}
-	${RM} ${LIBVECTOR}
-	${RM} ${LIBPQUEUE}
-	${RM} ${LIBHASHSET}
-	${RM} ${LIBHASHMAP}
-	${RM} ${LIBFSM}
+	@${RM} ${NAME}
+	@${RM} ${LIBFT}
+	@${RM} ${LIBDEQUE}
+	@${RM} ${LIBVECTOR}
+	@${RM} ${LIBPQUEUE}
+	@${RM} ${LIBHASHSET}
+	@${RM} ${LIBHASHMAP}
+	@${RM} ${LIBAST}
+	@${PRINTF} "${RED}Removed object and executable files in ${NAME}${DEFAULT}\n"
 
 #: Remove and recompile all.
 re: fclean
@@ -146,6 +164,10 @@ git:
 	git commit
 	git push origin feature
 
+norm:
+	@${PRINTF} "${RED}\nChecking norm for ${NAME}...${DEFAULT}\n"
+	@norminette ${SRC_DIR} inc/ libs/
+
 #: Display all commands.
 help:
 	@grep -A1 -E "^#:" --color=auto Makefile \
@@ -157,12 +179,3 @@ help:
 
 .PHONY:
 	all clean fclean re debug git help
-
-credit:
-	@echo "███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     "
-	@echo "████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     "
-	@echo "██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     "
-	@echo "██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     "
-	@echo "██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗"
-	@echo "╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝"
-	@echo "         Made with love by : \033[1;91mzjamali\033[m and \033[1;91mmbari\033[m"

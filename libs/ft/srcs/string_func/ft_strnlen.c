@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   ft_strnlen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/22 08:58:29 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/31 15:35:56 by tmuramat         ###   ########.fr       */
+/*   Created: 2022/12/22 22:45:01 by tmuramat          #+#    #+#             */
+/*   Updated: 2022/12/22 22:48:19 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_hashmap.h"
-#include "minishell.h"
+#include "libft.h"
 
-int	builtin_unset(char **arg, t_shell *msh)
+size_t	ft_strnlen(const char *c, size_t n)
 {
-	size_t	i;
+	size_t	cnt;
 
-	i = 0;
-	while (arg[i])
-	{
-		ft_hashmap_remove(msh->envs, arg[i]);
-		i++;
-	}
-	return (0);
+	cnt = 0;
+	while (*c++ != '\0')
+		cnt += 1;
+	if (n < cnt)
+		return (n);
+	return (cnt);
 }
