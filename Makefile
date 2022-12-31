@@ -26,8 +26,9 @@ SRCS := \
 	builtin/unset.c \
 	builtin/echo.c \
 	builtin/env.c \
-	builtin/cd.c \
 	builtin/pwd.c \
+	lexer/tokenizer.c \
+	builtin/cd.c \
 	builtin/exit.c \
 	debug/print_token.c \
 	debug/print_tree.c
