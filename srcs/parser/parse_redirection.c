@@ -3,8 +3,15 @@
 #include "libast.h"
 #include "minishell.h"
 
+/**
+* @file parse_redirection.c
+* @brief 構文解析その3：リダイレクト">">>"<"<<"
+* @author tmuramat
+* @date 2022.12.30
+*/
+
 // <command>
-t_ast_node *parse_redirection3(t_vector *tokens, t_token **curr)
+static t_ast_node *parse_redirection3(t_vector *tokens, t_token **curr)
 {
 	t_ast_node *node;
 
@@ -13,7 +20,7 @@ t_ast_node *parse_redirection3(t_vector *tokens, t_token **curr)
 }
 
 // <command> '>' <filename>
-t_ast_node	*parse_redirection2(t_vector *tokens, t_token **curr)
+static t_ast_node	*parse_redirection2(t_vector *tokens, t_token **curr)
 {
     t_ast_node	*rhs_node;
     t_ast_node	*result;
@@ -41,7 +48,7 @@ t_ast_node	*parse_redirection2(t_vector *tokens, t_token **curr)
 }
 
 // <command> '<' <filename>
-t_ast_node	*parse_redirection1(t_vector *tokens, t_token **curr)
+static t_ast_node	*parse_redirection1(t_vector *tokens, t_token **curr)
 {
 	t_ast_node	*rhs_node;
 	t_ast_node	*result;
@@ -68,6 +75,13 @@ t_ast_node	*parse_redirection1(t_vector *tokens, t_token **curr)
 	return (result);
 }
 
+/**
+ * @brief  リダイレクトの解析
+ *
+ * @param tokens
+ * @param curr
+ * @return t_ast_node*
+ */
 t_ast_node	*parse_redirection(t_vector *tokens, t_token **curr)
 {
 	t_token		*save;

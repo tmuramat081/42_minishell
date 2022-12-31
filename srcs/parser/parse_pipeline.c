@@ -3,7 +3,14 @@
 #include "libast.h"
 #include "minishell.h"
 
-t_ast_node	*parse_pipeline2(t_vector *tokens, t_token **curr)
+/**
+* @file parse_pipeline.c
+* @brief 構文解析その2：パイプライン"|"
+* @author tmuramat
+* @date 2022.12.30
+*/
+
+static t_ast_node	*parse_pipeline2(t_vector *tokens, t_token **curr)
 {
 	t_ast_node *node;
 
@@ -12,7 +19,7 @@ t_ast_node	*parse_pipeline2(t_vector *tokens, t_token **curr)
 }
 
 // <command> '|' <pipeline>
-t_ast_node	*parse_pipeline1(t_vector *tokens, t_token **curr)
+static t_ast_node	*parse_pipeline1(t_vector *tokens, t_token **curr)
 {
 	t_ast_node	*lhs_node;
 	t_ast_node	*rhs_node;

@@ -5,7 +5,7 @@
 
 /**
 * @file parser.c
-* @brief 構文解析（パーサー）のエントリーポイント
+* @brief 構文解析のエントリーポイント
 * @author tmuramat
 * @date 2022.12.30
 */

@@ -1,6 +1,8 @@
 #include "minishell.h"
 #include "lexer.h"
 
+
+
 t_token_type	get_token_type(char *token_value)
 {
 	if (!ft_strcmp(STR_RDIR, token_value))
