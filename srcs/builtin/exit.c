@@ -41,3 +41,4 @@ void	builtin_exit(char **args)
 	status = input_args(args[i]);
 	exit(status);
 }
+a
