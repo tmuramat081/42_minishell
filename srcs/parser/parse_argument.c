@@ -3,6 +3,12 @@
 #include "libast.h"
 #include "minishell.h"
 
+/**
+* @file parse_argument.c
+* @brief 構文解析その5：引数 ex."-n", "hello"
+* @author tmuramat
+* @date 2022.12.30
+*/
 t_ast_node	*parse_argument(t_vector *, t_token **);
 
 // [empty]

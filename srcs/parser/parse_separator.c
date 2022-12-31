@@ -1,6 +1,14 @@
 #include "minishell.h"
 #include "parser.h"
 
+/**
+* @file parse_separator.c
+* @brief 構文解析その1：セミコロン";"
+* @author tmuramat
+* @date 2022.12.30
+*/
+
+
 // <pipeline>
 static t_ast_node	*parse_separator3(t_vector *tokens, t_token **curr)
 {

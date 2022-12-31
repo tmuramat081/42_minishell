@@ -15,4 +15,3 @@ char	*get_prompt(void)
 	ft_snprintf(prompt, PROMPT_LEN, "%s > ", PROMPT_NAME);
 	return (prompt);
 }
-

@@ -6,13 +6,13 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/30 09:24:39 by tmuramat         ###   ########.fr       */
+/*   Updated: 2022/12/31 16:46:09 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "ft_printf.h"
-#include <libc.h>
+#include "libft.h"
 
 /*
 
@@ -73,10 +73,14 @@ void insert_env(char **args, t_hashmap *map)
 	}
 }
 
-void builtin_export(char **args, t_shell *msh)
+int	builtin_export(char **args, t_shell *msh)
 {
-	if (!args || !*args)
+	int	argc;
+
+	argc = ft_matrixlen((const char **)args);
+	if (argc == 1)
 		print_envs(msh->envs);
 	else
-		insert_env(args, msh->envs);
+		insert_env(&args[1], msh->envs);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/30 07:33:23 by tmuramat         ###   ########.fr       */
+/*   Updated: 2022/12/31 15:48:32 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ static void	print_envs(t_hashmap *map)
 	ft_hashmap_iterate(map, print_env, NULL);
 }
 
-void builtin_env(char **args, t_shell *msh)
+int	builtin_env(char **args, t_shell *msh)
 {
-	if (!args || !*args)
+	if (!args[1] || !*args[1])
 	{
 		print_envs(msh->envs);
 	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/30 15:39:10 by tmuramat         ###   ########.fr       */
+/*   Updated: 2022/12/31 15:43:44 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	boot_minishell(t_shell	*msh)
 		add_history(line);
 		lexed_tokens = lexer(line);
 		syntax_tree = parser(lexed_tokens, msh);
+		execute_syntax_tree(syntax_tree, msh);
 		free(line);
 	}
 }

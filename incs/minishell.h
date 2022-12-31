@@ -56,6 +56,8 @@ void		export(char **args, t_hashmap *map);
 t_env		*split_envp(char **envp);
 void		env(char **args, t_hashmap *map);
 
+void execute_syntax_tree(t_ast *syntax_tree, t_shell *msh);
+
 //********** debug command ********/
 void		print_token(void *p_str, void *p_index);
 void		print_tokens(t_vector *tokens);

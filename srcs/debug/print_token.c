@@ -7,25 +7,25 @@ char *get_type_name(t_token_type type)
 {
 	if (type == TOKEN_STR)
 		return ("[STRING]");
-	if (type == TOKEN_RDIR)
+	else if (type == TOKEN_RDIR)
 		return ("[OUTPUT_RDR]");
-	if (type == TOKEN_RRDIR)
+	else if (type == TOKEN_RRDIR)
 		return ("[APPEND_OUTPUT_RDR]");
-	if (type == TOKEN_LDIR)
+	else if (type == TOKEN_LDIR)
 		return ("[INPUR_RDR]");
-	if (type == TOKEN_LLDIR)
+	else if (type == TOKEN_LLDIR)
 		return ("[HEREDOC_RDR]");
-	if (type == TOKEN_SPACE)
+	else if (type == TOKEN_SPACE)
 		return ("[SPACE]");
-	if (type == TOKEN_PIPELINE)
+	else if (type == TOKEN_PIPELINE)
 		return ("[PIPELINE]");
-	if (type == TOKEN_AMPERSAND)
+	else if (type == TOKEN_AMPERSAND)
 		return ("[AMPERSAND]");
-	if (type == TOKEN_SEMICOLON)
+	else if (type == TOKEN_SEMICOLON)
 		return ("[SEMICOLON]");
-	if (type == TOKEN_NULL)
+	else if (type == TOKEN_NULL)
 		return ("[EOL]");
-	return ("NONE");
+	return ("[N/A]");
 }
 
 void	print_token(void *p_str, void *p_index)

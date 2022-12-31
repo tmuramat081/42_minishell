@@ -4,10 +4,11 @@
 #include "minishell.h"
 
 /**
- * @brie　コマンドの構文解析
- *
- * @return t_ast_node*
- */
+* @file parse_command.c
+* @brief 構文解析その4：コマンド（パス）ex."echo", "./bin/doxygen"
+* @author tmuramat
+* @date 2022.12.30
+*/
 
 t_ast_node	*parse_command(t_vector *, t_token **);
 
