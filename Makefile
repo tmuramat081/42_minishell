@@ -11,20 +11,24 @@ SRCS := \
 	terminal/prompt.c \
 	terminal/boot.c \
 	terminal/ignore_signal.c \
-	builtin/export.c \
-	builtin/unset.c \
-	builtin/echo.c \
-	builtin/env.c \
-	builtin/exit.c \
 	lexer/lexer.c \
 	lexer/token.c \
 	lexer/lexer_utils.c \
 	parser/parser.c \
-	parser/parse_line.c \
-	parser/parse_io.c \
-	parser/parse_pipe.c \
-	parser/parse_cmd.c \
-	parser/parse_token.c \
+	parser/parse_separator.c \
+	parser/parse_pipeline.c \
+	parser/parse_redirection.c \
+	parser/parse_command.c \
+	parser/parse_argument.c \
+	execution/execute.c \
+	execution/command.c \
+	builtin/export.c \
+	builtin/unset.c \
+	builtin/echo.c \
+	builtin/env.c \
+	builtin/cd.c \
+	builtin/pwd.c \
+	builtin/exit.c \
 	debug/print_token.c \
 	debug/print_tree.c
 
@@ -76,21 +80,21 @@ MOVE := \033[1F
 CR := \033[1G
 
 # Progress variables
-SRC_TOT := ${shell expr ${words ${SRCS}} - ${shell ls -l ${OBJS_DIR} | grep .o$ | wc -l} + 1}
-ifndef ${SRC_TOT}
-	SRC_TOT := ${words ${SRCS}}
+SRC_TOT := $(shell expr $(shell echo -n ${SRCS} | wc -w) - $(shell ls -l ${OBJ_DIR} 2>&1 | grep ".o" | wc -l) + 1)
+ifeq ($(shell test ${SRC_TOT} -le 0; echo $$?),0)
+	SRC_TOT := $(shell echo -n ${SRCS} | wc -w)
 endif
 SRC_CNT := 0
 SRC_PCT = ${shell expr 100 \* ${SRC_CNT} / ${SRC_TOT}}
+
 PROGRESS = ${eval SRC_CNT = ${shell expr ${SRC_CNT} + 1}} \
-	${PRINTF} "${DEL}${GREEN}[ %d/%d (%d%%) ] ${CC} ${CFLAGS} ${DFLAGS} $< ...${DEFAULT}${CR}" \
+	${PRINTF} "${CR}%100s${CR}${GREEN}[ %d/%d (%d%%) ] ${CC} ${CFLAGS} ${DFLAGS} $< ...${DEFAULT}" "" \
 	$(SRC_CNT) $(SRC_TOT) $(SRC_PCT)
 
 # Main commands
 ${NAME}: ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBHASHMAP} ${LIBAST} ${OBJS}
 	@${CC} ${CFLAGS} ${DFLAGS} ${INCS} ${OBJS} ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBREADLINE} ${LIBHASHMAP} ${LIBAST} -o $@
 	@echo "\n${BLUE}--- ${NAME} is up to date! ---${DEFAULT}"
-
 ${LIBFT}:
 	@${MAKE} -C ${LIBFT_DIR} --no-print-directory
 
@@ -123,7 +127,7 @@ all: ${NAME}
 
 #: Remove all object files.
 clean:
-	${RM} ${OBJS} ${DEPS}
+	@${RM} ${OBJS} ${DEPS}
 	@${MAKE} clean -C ${LIBFT_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBDEQUE_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBVECTOR_DIR} --no-print-directory
@@ -131,18 +135,19 @@ clean:
 	@${MAKE} clean -C ${LIBHASHSET_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBHASHMAP_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBAST_DIR} --no-print-directory
-
+	@${PRINTF} "${RED}Cleaned up object files in ${NAME}${DEFAULT}\n"
 
 #: Remove all object and executable files.
 fclean:	clean
-	${RM} ${NAME}
-	${RM} ${LIBFT}
-	${RM} ${LIBDEQUE}
-	${RM} ${LIBVECTOR}
-	${RM} ${LIBPQUEUE}
-	${RM} ${LIBHASHSET}
-	${RM} ${LIBHASHMAP}
-	${RM} ${LIBAST}
+	@${RM} ${NAME}
+	@${RM} ${LIBFT}
+	@${RM} ${LIBDEQUE}
+	@${RM} ${LIBVECTOR}
+	@${RM} ${LIBPQUEUE}
+	@${RM} ${LIBHASHSET}
+	@${RM} ${LIBHASHMAP}
+	@${RM} ${LIBAST}
+	@${PRINTF} "${RED}Removed object and executable files in ${NAME}${DEFAULT}\n"
 
 #: Remove and recompile all.
 re: fclean
@@ -158,6 +163,10 @@ git:
 	git commit
 	git push origin feature
 
+norm:
+	@${PRINTF} "${RED}\nChecking norm for ${NAME}...${DEFAULT}\n"
+	@norminette ${SRC_DIR} inc/ libs/
+
 #: Display all commands.
 help:
 	@grep -A1 -E "^#:" --color=auto Makefile \
@@ -169,12 +178,3 @@ help:
 
 .PHONY:
 	all clean fclean re debug git help
-
-credit:
-	@echo "███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     "
-	@echo "████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     "
-	@echo "██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     "
-	@echo "██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     "
-	@echo "██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗"
-	@echo "╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝"
-	@echo "         Made with love by : \033[1;91mzjamali\033[m and \033[1;91mmbari\033[m"

@@ -6,13 +6,15 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/29 23:22:51 by tmuramat         ###   ########.fr       */
+/*   Updated: 2022/12/31 16:46:09 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "ft_printf.h"
-#include <libc.h>
+#include "libft.h"
+
+/*
 
 int	compare_key(const void *p_data1, const void *p_data2)
 {
@@ -27,6 +29,7 @@ void sort_environs(t_env *env)
 	ft_qsort(env, 5, sizeof(env[0]), compare_key);
 
 }
+*/
 
 int print_env(t_hashmap_data *map_data, void *data)
 {
@@ -70,14 +73,14 @@ void insert_env(char **args, t_hashmap *map)
 	}
 }
 
-void export(char **args, t_hashmap *map)
+int	builtin_export(char **args, t_shell *msh)
 {
-	if (!args || !*args)
-	{
-		print_envs(map);
-	}
+	int	argc;
+
+	argc = ft_matrixlen((const char **)args);
+	if (argc == 1)
+		print_envs(msh->envs);
 	else
-	{
-		insert_env(args, map);
-	}
+		insert_env(&args[1], msh->envs);
+	return (0);
 }

@@ -8,7 +8,9 @@ bool	is_delimiter(t_tokenizer *tokenizer, char c)
 	if (c == '\0')
 		return (true);
 	else if (is_metacharacter(c) == true && tokenizer->state == STATE_NORMAL)
+	{
 		return (true);
+	}
 	return (false);
 }
 
