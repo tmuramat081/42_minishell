@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/01 13:29:11 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/01 17:39:59 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,18 @@ int	compare_key(const void *p_data1, const void *p_data2)
 {
 	const t_env	*env1 = p_data1;
 	const t_env	*env2 = p_data2;
+	int			res;
 
-	return (ft_strcmp(env1->key, env2->key));
+	res = ft_strcmp(env1->key, env2->key);
+	if (res > 0)
+		return (1);
+	else if (res < 0)
+		return (-1);
+	return (0);
 }
 
 /**
- * @brief ハッシュテーブルの値を優先度付きキューに格納する 
+ * @brief ハッシュテーブルの値を優先度付きキューに格納する
  *
  *
 */
@@ -63,8 +69,8 @@ void	sort_envs(t_hashmap *envs)
 	ft_hashmap_iterate(envs, set_priority_queue, pqueue);
 	while (!ft_priority_queue_is_empty(pqueue))
 	{
-		env = ft_priority_queue_pop(pqueue);
-		ft_printf("declare -x %s=\"%s\"\n", env->key, env->value);
+		ft_priority_queue_pop(pqueue, (void **)&env);
+		ft_printf("dexlare - x %s=\"%s\"\n", env->key, env->value);
 	}
 }
 
