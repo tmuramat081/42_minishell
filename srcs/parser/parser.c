@@ -1,14 +1,18 @@
+
+/**
+ * @file parser.c
+ * @author tmuramat (tmuramat@student.42tokyo.jp)
+ * @brief 構文解析のエントリーポイント
+ * @version 0.1
+ * @date 2023-01-01
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #include "parser.h"
 #include "lexer.h"
 #include "libast.h"
 #include "minishell.h"
-
-/**
-* @file parser.c
-* @brief 構文解析のエントリーポイント
-* @author tmuramat
-* @date 2022.12.30
-*/
 
 /**		Backus-Naur Form(NBF)
  *

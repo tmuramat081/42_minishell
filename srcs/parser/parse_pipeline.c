@@ -1,14 +1,17 @@
+/**
+ * @file parse_pipeline.c
+ * @author tmuramat (tmuramat@student.42tokyo.jp)
+ * @brief 構文解析その2：パイプライン "|"
+ * @version 0.1
+ * @date 2023-01-01
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #include "parser.h"
 #include "lexer.h"
 #include "libast.h"
 #include "minishell.h"
-
-/**
-* @file parse_pipeline.c
-* @brief 構文解析その2：パイプライン"|"
-* @author tmuramat
-* @date 2022.12.30
-*/
 
 static t_ast_node	*parse_pipeline2(t_vector *tokens, t_token **curr)
 {

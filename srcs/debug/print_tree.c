@@ -1,3 +1,13 @@
+/**
+ * @file print_tree.c
+ * @author tmuramat (tmuramat@student.42tokyo.jp)
+ * @brief 構文解析デバッグ用のAST出力
+ * @version 0.1
+ * @date 2023-01-01
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #include <fcntl.h>
 #include "lexer.h"
 #include "minishell.h"

@@ -6,9 +6,20 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:18:28 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/30 01:12:34 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/01 13:42:25 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+ * @file environs.c
+ * @author tmuramat (tmuramat@student.42tokyo.jp)
+ * @brief 環境変数の初期化
+ * @version 0.1
+ * @date 2023-01-01
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 
 #include "minishell.h"
 

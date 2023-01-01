@@ -1,8 +1,25 @@
+/**
+ * @file execute.c
+ * @author tmuramat (tmuramat@student.42tokyo.jp)
+ * @brief 抽象構文木を操作し実行処理に渡す
+ * @version 0.1
+ * @date 2023-01-01
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #include "libast.h"
 #include "parser.h"
 #include "minishell.h"
 #include "execution.h"
 
+/**
+ * @brief　コマンド引数ノードから文字列の配列を生成
+ * @detail TODO:メモリ確保は現状決め打ち
+ * @param node
+ * @param msh
+ * @return char**
+ */
 char	**init_arguments(t_ast_node *node, t_shell *msh)
 {
 	char	**args;
@@ -51,6 +68,12 @@ void	execute_separator(t_ast_node *node, t_shell *msh)
 {
 	if (!node)
 		return ;
+	if (node->type & NODE_SEQUENCE)
+	{
+		execute_redirection(node->left, msh);
+		execute_separator(node->right, msh);
+		return ;
+	}
 	execute_redirection(node, msh);
 }
 

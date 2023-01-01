@@ -1,14 +1,17 @@
+/**
+ * @file parse_redirection.c
+ * @author tmuramat (tmuramat@student.42tokyo.jp)
+ * @brief 構文解析その3：リダイレクト ">, >>, <, <<"
+ * @version 0.1
+ * @date 2023-01-01
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #include "parser.h"
 #include "lexer.h"
 #include "libast.h"
 #include "minishell.h"
-
-/**
-* @file parse_redirection.c
-* @brief 構文解析その3：リダイレクト">">>"<"<<"
-* @author tmuramat
-* @date 2022.12.30
-*/
 
 // <command>
 static t_ast_node *parse_redirection3(t_vector *tokens, t_token **curr)
