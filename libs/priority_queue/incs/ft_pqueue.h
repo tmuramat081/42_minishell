@@ -32,7 +32,7 @@ void		ft_priority_queue_delete(t_pqueue **queue, void (*del)(void *));
 
 // ********** Modifier ********** //
 int			ft_priority_queue_push(t_pqueue *queue, void *data);
-void		*ft_priority_queue_pop(t_pqueue *queue);
+int			ft_priority_queue_pop(t_pqueue *queue, void **data);
 
 // ********** Other Utils ********** //
 bool		ft_priority_queue_empty(t_pqueue *queue);

@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/01 13:29:11 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/01 17:39:59 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,34 +23,61 @@
 #include "minishell.h"
 #include "ft_printf.h"
 #include "libft.h"
-
-/*
+#include "ft_pqueue.h"
+#include "ft_hashmap.h"
 
 int	compare_key(const void *p_data1, const void *p_data2)
 {
-	const t_env	*p_str1 = p_data1;
-	const t_env	*p_str2 = p_data2;
+	const t_env	*env1 = p_data1;
+	const t_env	*env2 = p_data2;
+	int			res;
 
-	return (strcmp(p_str1->key, p_str2->key));
+	res = ft_strcmp(env1->key, env2->key);
+	if (res > 0)
+		return (1);
+	else if (res < 0)
+		return (-1);
+	return (0);
 }
 
-void sort_environs(t_env *env)
-{
-	ft_qsort(env, 5, sizeof(env[0]), compare_key);
-
-}
+/**
+ * @brief ハッシュテーブルの値を優先度付きキューに格納する
+ *
+ *
 */
-
-int print_env(t_hashmap_data *map_data, void *data)
+int	set_priority_queue(t_hashmap_data *hash_data, void *p_pqueue)
 {
-	(void)data;
-	ft_printf("declare -x %s=\"%s\"\n", map_data->key, map_data->value);
-	return (1);
+	t_env		*env;
+	t_pqueue	*pqueue;
+
+	pqueue = (t_pqueue *)p_pqueue;
+	env = (t_env *)malloc(sizeof(t_env));
+	if (!env)
+		return (HASHMAP_FAILURE);
+	env->key = hash_data->key;
+	env->value = hash_data->value;
+	ft_priority_queue_push(pqueue, env);
+	return (HASHMAP_SUCCESS);
 }
 
-void	print_envs(t_hashmap *map)
+void	sort_envs(t_hashmap *envs)
 {
-	ft_hashmap_iterate(map, print_env, NULL);
+	t_env		*env;
+	t_pqueue	*pqueue;
+
+	pqueue = ft_priority_queue_init(32, compare_key);
+	ft_hashmap_iterate(envs, set_priority_queue, pqueue);
+	while (!ft_priority_queue_is_empty(pqueue))
+	{
+		ft_priority_queue_pop(pqueue, (void **)&env);
+		ft_printf("dexlare - x %s=\"%s\"\n", env->key, env->value);
+	}
+}
+
+
+void	print_envs(t_hashmap *envs)
+{
+	sort_envs(envs);
 }
 
 t_env	split_envptr(char *envp)

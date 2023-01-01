@@ -20,11 +20,9 @@ int	ft_priority_queue_push(t_pqueue *queue, void *data)
 	return (PQUEUE_SUCCESS);
 }
 
-void	*ft_priority_queue_pop(t_pqueue *queue)
+int	ft_priority_queue_pop(t_pqueue *queue, void **data)
 {
-	void	*data;
-
-	if (ft_heap_pop(queue->heap, &data) == HEAP_FAILURE)
+	if (ft_heap_pop(queue->heap, data) == HEAP_FAILURE)
 		return (PQUEUE_FAILURE);
-	return (data);
+	return (PQUEUE_SUCCESS);
 }
