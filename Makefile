@@ -23,6 +23,7 @@ SRCS := \
 	parser/parse_argument.c \
 	execution/execute.c \
 	execution/command.c \
+	execution/utils.c \
 	builtin/export.c \
 	builtin/unset.c \
 	builtin/echo.c \
