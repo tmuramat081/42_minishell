@@ -6,22 +6,26 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/31 18:36:05 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/01 13:42:08 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+ * @file boot.c
+ * @author tmuramat (tmuramat@student.42tokyo.jp)
+ * @brief コマンド入力の待機状態
+ * @version 0.1
+ * @date 2023-01-01
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 
 #include "minishell.h"
 #include "libast.h"
 #include "ft_snprintf.h"
 #include "constant.h"
 #include "ft_printf.h"
-
-/*
-* @file boot.c
-* @brief コマンドラインの待機状態
-* @author tmuramat
-* @date 2022.12.30
-*/
 
 /**
  * @brief 起動時バナーを表示する

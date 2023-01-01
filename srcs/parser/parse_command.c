@@ -1,14 +1,17 @@
+/**
+ * @file parse_command.c
+ * @author tmuramat (tmuramat@student.42tokyo.jp)
+ * @brief 構文解析その4：コマンドパス ex."echo", "./bin/ls*""
+ * @version 0.1
+ * @date 2023-01-01
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #include "parser.h"
 #include "lexer.h"
 #include "libast.h"
 #include "minishell.h"
-
-/**
-* @file parse_command.c
-* @brief 構文解析その4：コマンド（パス）ex."echo", "./bin/doxygen"
-* @author tmuramat
-* @date 2022.12.30
-*/
 
 t_ast_node	*parse_command(t_vector *, t_token **);
 

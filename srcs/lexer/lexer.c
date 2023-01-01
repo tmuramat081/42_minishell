@@ -1,3 +1,13 @@
+/**
+ * @file lexer.c
+ * @author tmuramat (tmuramat@student.42tokyo.jp)
+ * @brief 字句解析のエントリーポイント
+ * @version 0.1
+ * @date 2023-01-01
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #include "minishell.h"
 #include "lexer.h"
 
@@ -66,6 +76,12 @@ char	*get_next_token(t_tokenizer *tokenizer)
 	return (NULL);
 }
 
+/**
+ * @brief 字句解析のエントリーポイント
+ *
+ * @param line
+ * @return t_vector*
+ */
 t_vector	*lexer(char *line)
 {
 	t_tokenizer	*tokenizer;

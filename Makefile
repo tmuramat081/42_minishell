@@ -1,7 +1,7 @@
 # Compile variables
 NAME := minishell
 CC := gcc -g
-CFLAGS := -Wall -Wextra -Werror -MMD
+CFLAGS := -Wall -Wextra -Werror -MMD -MP
 #ifdef FOR_DEBUG
 DFLAGS := -D DEBUG
 #endif
@@ -11,7 +11,7 @@ SRCS := \
 	terminal/environs.c \
 	terminal/prompt.c \
 	terminal/boot.c \
-	terminal/ignore_signal.c \
+	terminal/signal.c \
 	lexer/lexer.c \
 	lexer/token.c \
 	lexer/lexer_utils.c \

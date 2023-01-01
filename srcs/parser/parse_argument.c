@@ -1,14 +1,19 @@
+/**
+ * @file parse_argument.c
+ * @author tmuramat (tmuramat@student.42tokyo.jp)
+ * @brief 構文解析その5：引数 ex."-n", "hello"
+ * @version 0.1
+ * @date 2023-01-01
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
+
 #include "parser.h"
 #include "lexer.h"
 #include "libast.h"
 #include "minishell.h"
 
-/**
-* @file parse_argument.c
-* @brief 構文解析その5：引数 ex."-n", "hello"
-* @author tmuramat
-* @date 2022.12.30
-*/
 t_ast_node	*parse_argument(t_vector *, t_token **);
 
 // [empty]

@@ -6,10 +6,20 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/31 16:46:09 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/01 13:29:11 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/**
+ * @file export.c
+ * @author tmuramat (tmuramat@student.42tokyo.jp)
+ * @brief ビルトイン - exportコマンド
+ * @version 0.1
+ * @date 2023-01-01
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #include "minishell.h"
 #include "ft_printf.h"
 #include "libft.h"

@@ -1,7 +1,16 @@
+/**
+ * @file token.c
+ * @author tmuramat (tmuramat@student.42tokyo.jp)
+ * @brief トークンの取得
+ * @version 0.1
+ * @date 2023-01-01
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
+
 #include "minishell.h"
 #include "lexer.h"
-
-
 
 t_token_type	get_token_type(char *token_value)
 {

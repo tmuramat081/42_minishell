@@ -1,13 +1,15 @@
+/**
+ * @file parse_separator.c
+ * @author tmuramat (tmuramat@student.42tokyo.jp)
+ * @brief 構文解析その1：セミコロン ";"
+ * @version 0.1
+ * @date 2023-01-01
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #include "minishell.h"
 #include "parser.h"
-
-/**
-* @file parse_separator.c
-* @brief 構文解析その1：セミコロン";"
-* @author tmuramat
-* @date 2022.12.30
-*/
-
 
 // <pipeline>
 static t_ast_node	*parse_separator3(t_vector *tokens, t_token **curr)
@@ -19,20 +21,22 @@ static t_ast_node	*parse_separator3(t_vector *tokens, t_token **curr)
 t_ast_node	*parse_separator2(t_vector *tokens, t_token **curr)
 {
     t_ast_node	*lhs_node;
-    t_ast_node	*result;
+    t_ast_node	*node;
+	char		*semicolon;
 
     lhs_node = parse_pipeline(tokens, curr);
 	if (!lhs_node)
 		return (NULL);
-	if (!consume_token(tokens, TOKEN_SEMICOLON, curr, NULL))
+	if (!consume_token(tokens, TOKEN_SEMICOLON, curr, &semicolon))
 	{
 		ast_node_delete(lhs_node);
 		return (NULL);
 	}
-	result = ft_xmalloc(sizeof(t_ast_node));
-	ast_node_set_type(result, NODE_SEQUENCE);
-	ast_attach_binary_branch(result, lhs_node, NULL);
-	return (result);
+	node = ft_xmalloc(sizeof(t_ast_node));
+	ast_node_set_type(node, NODE_SEQUENCE);
+	ast_node_set_data(node, semicolon);
+	ast_attach_binary_branch(node, lhs_node, NULL);
+	return (node);
 }
 
 // <pipeline> ';' <command_line>
@@ -40,12 +44,13 @@ static t_ast_node	*parse_separator1(t_vector *tokens, t_token **curr)
 {
 	t_ast_node	*lhs_node;
 	t_ast_node	*rhs_node;
-	t_ast_node	*result;
+	t_ast_node	*node;
+	char		*semicolon;
 
 	lhs_node = parse_pipeline(tokens, curr);
 	if (!lhs_node)
 		return (NULL);
-	if (!consume_token(tokens, TOKEN_SEMICOLON, curr, NULL))
+	if (!consume_token(tokens, TOKEN_SEMICOLON, curr, &semicolon))
 	{
 		ast_node_delete(lhs_node);
 		return (NULL);
@@ -56,10 +61,11 @@ static t_ast_node	*parse_separator1(t_vector *tokens, t_token **curr)
 		ast_node_delete(rhs_node);
 		return (NULL);
 	}
-	result = ft_xmalloc(sizeof(t_ast_node));
-	ast_node_set_type(result, NODE_SEQUENCE);
-	ast_attach_binary_branch(result, lhs_node, rhs_node);
-	return (result);
+ 	node = ft_xmalloc(sizeof(t_ast_node));
+	ast_node_set_type(node, NODE_SEQUENCE);
+	ast_node_set_data(node, semicolon);
+	ast_attach_binary_branch(node, lhs_node, rhs_node);
+	return (node);
 }
 
 /**
