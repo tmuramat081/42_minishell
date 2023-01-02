@@ -14,9 +14,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft.h"
-# include "ft_deque.h"
-# include "ft_vector.h"
+# include "constant.h"
 # include "ft_hashmap.h"
+# include "ft_vector.h"
 # include "libast.h"
 # include "lexer.h"
 
@@ -24,11 +24,6 @@ typedef struct s_env {
 	char	*key;
 	char	*value;
 }	t_env;
-
-typedef struct s_token {
-	char			*data;
-	t_token_type	type;
-}	t_token;
 
 typedef struct s_shell {
 	t_hashmap	*envs;
@@ -44,19 +39,9 @@ void		put_bunner(void);
 void		sort_environs(t_env *env);
 void		ignore_signal(void);
 
-//************* lexer ***************/
-t_vector	*lexer(char *line);
-
-//************* parer ***************/
-t_ast		*parser(t_vector *tokens, t_shell *msh);
-
-//********** builtin command ********/
-
-void execute_syntax_tree(t_ast *syntax_tree, t_shell *msh);
-
 //********** debug command ********/
-void		print_token(void *p_str, void *p_index);
 void		print_tokens(t_vector *tokens);
 void		print_nodes(t_ast *ast);
+void		print_output(void);
 
 #endif

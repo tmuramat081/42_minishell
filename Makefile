@@ -1,9 +1,9 @@
 # Compile variables
 NAME := minishell
-CC := gcc -g
+CC := gcc
 CFLAGS := -Wall -Wextra -Werror -MMD -MP
 #ifdef FOR_DEBUG
-DFLAGS := -D DEBUG
+DFLAGS := -g -D DEBUG -fsanitize=address
 #endif
 SRCS_DIR := srcs/
 SRCS := \
@@ -24,6 +24,7 @@ SRCS := \
 	execution/execute.c \
 	execution/command.c \
 	execution/execvpe.c \
+	execution/exec_utils.c \
 	builtin/export.c \
 	builtin/unset.c \
 	builtin/echo.c \
@@ -32,7 +33,8 @@ SRCS := \
 	builtin/cd.c \
 	builtin/exit.c \
 	debug/print_token.c \
-	debug/print_tree.c
+	debug/print_tree.c \
+	debug/print_output.c
 
 OBJS_DIR := objs/
 OBJS := ${addprefix ${OBJS_DIR},${SRCS:.c=.o}}
@@ -90,7 +92,7 @@ SRC_CNT := 0
 SRC_PCT = ${shell expr 100 \* ${SRC_CNT} / ${SRC_TOT}}
 
 PROGRESS = ${eval SRC_CNT = ${shell expr ${SRC_CNT} + 1}} \
-	${PRINTF} "${CR}%100s${CR}${GREEN}[ %d/%d (%d%%) ] ${CC} ${CFLAGS} ${DFLAGS} $< ...${DEFAULT}" "" \
+	${PRINTF} "${CR}%100s${CR}${GREEN}[ %d/%d (%d%%) ] ${CC} ${CFLAGS} $< ...${DEFAULT}" "" \
 	$(SRC_CNT) $(SRC_TOT) $(SRC_PCT)
 
 # Main commands

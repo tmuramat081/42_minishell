@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/01 13:42:08 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/02 22:45:55 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 #include "ft_snprintf.h"
 #include "constant.h"
 #include "ft_printf.h"
+#include "parser.h"
+#include "execution.h"
 
 /**
  * @brief 起動時バナーを表示する

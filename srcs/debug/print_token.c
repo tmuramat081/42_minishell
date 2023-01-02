@@ -38,7 +38,7 @@ char *get_type_name(t_token_type type)
 	return ("[N/A]");
 }
 
-void	print_token(void *p_str, void *p_index)
+static void	print_token(void *p_str, void *p_index)
 {
 	t_token *token;
 	int		*index;
@@ -56,9 +56,10 @@ void	print_tokens(t_vector *tokens)
 	int	index;
 
 	index = 0;
-	ft_printf("\n===============================================\n");
+	ft_printf("\n%s<<<< LEXER >>>>\n", MAGENTA);
+	ft_printf("===============================================\n");
 	ft_printf("%s %*s %*s\n", "No. ", 20, "TOKEN", 20, "TYPE");
 	ft_printf("-----------------------------------------------\n");
 	ft_vector_foreach(tokens, print_token, &index);
-	ft_printf("===============================================\n");
+	ft_printf("===============================================%s\n", DEFAULT);
 }
