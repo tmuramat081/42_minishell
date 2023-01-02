@@ -8,7 +8,8 @@
  * @copyright Copyright (c) 2023
  *
  */
-#include <libc.h>
+
+#include <minishell.h>
 
 /**
 * @file ignore_signal.c

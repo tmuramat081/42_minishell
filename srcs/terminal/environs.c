@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:18:28 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/02 17:13:40 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/02 21:58:30 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@
 t_env	parse_envp(char *str_env)
 {
 	t_env	env;
-	char	**splited;
+	char	**splitted;
 
-	splited =  ft_split(str_env, '=');
-	env.key = splited[0];
-	env.value = splited[1];
+	splitted =  ft_split(str_env, '=');
+	env.key = splitted[0];
+	env.value = splitted[1];
 	return (env);
 }
 

@@ -6,11 +6,11 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 19:27:58 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/02 19:28:02 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/02 20:01:40 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lbift.h"
+#include "libft.h"
 
 void	*ft_mempcpy(void *dst, const void *src, size_t n)
 {

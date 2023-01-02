@@ -34,13 +34,11 @@ void	execute_external_command(char **args, t_shell *msh)
 	{
 		ft_execvpe(args[0], args, construct_environ(msh->envs));
 		ft_printf("command not found\n");
+		exit (1);
 	}
 	else if (pid < 0)
 		exit(EXIT_FAILURE);
-	else
-	{
-		while (waitpid(pid, NULL, 0) <= 0);
-	}
+	while (waitpid(pid, NULL, 0) <= 0);
 	return ;
 }
 
@@ -52,6 +50,8 @@ void	execute_external_command(char **args, t_shell *msh)
  */
 void	execute_builtin_command(char **args, t_shell *msh)
 {
+	if (DEBUG)
+		print_output();
 	if (!ft_strcmp(args[0], "echo"))
 		builtin_echo(args, msh);
 	else if (!ft_strcmp(args[0], "env"))

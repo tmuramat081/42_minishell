@@ -10,9 +10,8 @@
 # define STR_AMPERSAND "&"
 # define STR_SEMICOLON ";"
 
-#include <libc.h>
 #include <stdbool.h>
-
+#include "ft_vector.h"
 
 typedef enum e_state {
 	STATE_NORMAL,
@@ -25,6 +24,7 @@ typedef struct s_tokenizer {
 	char		*pos;
 	t_state		state;
 }	t_tokenizer;
+
 
 typedef enum e_token_type {
 	TOKEN_NONE,
@@ -41,6 +41,12 @@ typedef enum e_token_type {
 	TOKEN_END
 }	t_token_type;
 
+typedef struct s_token {
+	char			*data;
+	t_token_type	type;
+}	t_token;
+
+t_vector		*lexer(char *line);
 t_tokenizer		*init_tokenizer(char *line);
 void			delete_tokenizer(t_tokenizer *tokenizer);
 bool			is_metacharacter(char c);

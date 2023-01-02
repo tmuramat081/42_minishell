@@ -1,5 +1,5 @@
 /**
- * @file utils.c
+ * @file execvpe.c
  * @author tmuramat (tmuramat@student.42tokyo.jp)
  * @brief execvpeの再実装。環境変数PATHを参照し、該当のプログラムをコマンドとして実行する。
  * @version 0.1
@@ -14,56 +14,8 @@
 #include "ft_snprintf.h"
 #include "ft_hashmap.h"
 
-int	set_env(t_hashmap_data *map_data, void *p_envs)
-{
-	t_vector	*envs;
-	t_env		*env;
-
-	env = (t_env *)malloc(sizeof(t_env));
-	envs = (t_vector *)p_envs;
-	env->key = map_data->key;
-	env->value = map_data->value;
-	ft_vector_push_back(envs, env);
-	return(1);
-}
-
-
-char	**convert_vector_to_array(t_vector *src)
-{
-	char	**arr;
-	size_t	len;
-	t_env	env;
-	size_t	i;
-
-	arr = (char **)ft_xmalloc(sizeof(char *) * (ft_vector_size(src) + 1));
-	i = 0;
-	while (!ft_vector_is_empty(src))
-	{
-		ft_vector_pop_back(src, &env);
-		len = ft_strlen(env.key) + ft_strlen(env.value) + 1 + 1;
-		arr[i] = (char *)ft_xmalloc(sizeof(char) * len);
-		ft_snprintf(arr[i], len, "%s=%s", env.key, env.value);
-		i++;
-	}
-	arr[i] = NULL;
-	return (arr);
-}
-
-char	**construct_environ(t_hashmap *envs)
-{
-	t_vector	*tmp_envs;
-	char		**envp;
-
-	tmp_envs = ft_vector_init(sizeof(t_env), 32);
-	ft_hashmap_iterate(envs, set_env, tmp_envs);
-	envp = convert_vector_to_array(tmp_envs);
-	ft_vector_delete(&tmp_envs);
-	return (envp);
-}
-
-
 /**
- * @brief 環境変数テーブルからPATHの値を取得する
+ * @brief 環境変数テーブルからPATHの値を取得する。
  *
  * @param envp
  * @return char*
@@ -85,12 +37,12 @@ char 	*get_environ_value(char *const envp[], char *key)
 }
 
 /**
- * @brief 実行可能なエラーかどうかを判定する
- *
- * @return true
- * @return false
+ * @brief 実行可能なエラーかどうかを判定する。
+ * @detail EACEESS:アクセス権限がない, ENOENT:パスが存在しない, ESTALE:ファイルハンドルが古い, ENOTDIR: ディレクトリではない, ENODEV: デバイスが存在しない, ETIMEDOUT: 操作がタイムアウトした
+ * @return true　上記のエラーである場合
+ * @return false 上記以外のエラーである場合
  */
-bool is_expected_error()
+static bool is_expected_error()
 {
 	if (errno == EACCES || errno == ENOENT
 		|| errno == ESTALE || errno == ENOTDIR
