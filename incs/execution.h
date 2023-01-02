@@ -15,6 +15,7 @@ int		builtin_pwd(char **args, t_shell *msh);
 void	execute_syntax_tree(t_ast *syntax_tree, t_shell *msh);
 void	execute_builtin_command(char **args, t_shell *msh);
 
+char	**construct_environ(t_hashmap *map);
 int	ft_execvpe(const char *file, char *const argv[], char *const envp[]);
 
 #endif
