@@ -12,6 +12,9 @@
 #include "execution.h"
 #include "parser.h"
 #include "libast.h"
+#include "ft_printf.h"
+
+extern char **environ;
 
 /**
  * @brief 外部コマンドを実行する
@@ -29,7 +32,8 @@ void	execute_external_command(char **args, t_shell *msh)
 	pid = fork();
 	if (pid == 0)
 	{
-		ft_execvpe(args[0], args, NULL);
+		ft_execvpe(args[0], args, construct_environ(msh->envs));
+		ft_printf("command not found\n");
 	}
 	else if (pid < 0)
 		exit(EXIT_FAILURE);
@@ -62,5 +66,6 @@ void	execute_builtin_command(char **args, t_shell *msh)
 		builtin_pwd(args, msh);
 	else if (!ft_strcmp(args[0], "exit"))
 		builtin_exit(args, msh);
-	execute_external_command(args, msh);
+	else
+		execute_external_command(args, msh);
 }

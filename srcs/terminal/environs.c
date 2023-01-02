@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:18:28 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/01 13:42:25 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/02 17:13:40 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #include "minishell.h"
 
 /**
- * @brief 環境変数の文字列を'='で分割する
+ * @brief 環境変数の文字列を'='で分割し、ハッシュテーブルに変換する
  *
  * @param str_env
  * @return t_env
@@ -32,14 +32,11 @@
 t_env	parse_envp(char *str_env)
 {
 	t_env	env;
-	size_t	i;
+	char	**splited;
 
-	i = 0;
-	while (str_env[i] != '\0' && str_env[i] != '=')
-		i++;
-	str_env[i] = '\0';
-	env.key = &str_env[0];
-	env.value = &str_env[i + 1];
+	splited =  ft_split(str_env, '=');
+	env.key = splited[0];
+	env.value = splited[1];
 	return (env);
 }
 
