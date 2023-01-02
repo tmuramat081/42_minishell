@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/01 17:39:59 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/01 17:58:01 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ void	sort_envs(t_hashmap *envs)
 	{
 		ft_priority_queue_pop(pqueue, (void **)&env);
 		ft_printf("dexlare - x %s=\"%s\"\n", env->key, env->value);
+		free(env);
 	}
 }
-
 
 void	print_envs(t_hashmap *envs)
 {

@@ -13,10 +13,31 @@
 #include "parser.h"
 #include "libast.h"
 
+/**
+ * @brief 外部コマンドを実行する
+ *
+ * @param args
+ * @param msh
+ */
 void	execute_external_command(char **args, t_shell *msh)
 {
-	(void)args;
+	pid_t	pid;
+	char 	*filepath;
 	(void)msh;
+
+	filepath = args[1];
+	pid = fork();
+	if (pid == 0)
+	{
+		ft_execvpe(args[0], args, NULL);
+	}
+	else if (pid < 0)
+		exit(EXIT_FAILURE);
+	else
+	{
+		while (waitpid(pid, NULL, 0) <= 0);
+	}
+	return ;
 }
 
 /**

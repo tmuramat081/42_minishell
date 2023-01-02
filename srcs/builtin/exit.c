@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2023
  *
  */
- 
+
 #include "minishell.h"
 #include "libft.h"
 
@@ -46,7 +46,6 @@ void	builtin_exit(char **args)
 	i = 1;
 	size_t res;
 	res = ft_matrixlen((const char**)args);
-	printf("%zu\n", res);
 	if (res > 2)
 		put_error("too many arguments", NULL);
 	status = input_args(args[i]);
