@@ -44,8 +44,7 @@ static t_ast_node	*parse_redirection2(t_vector *tokens, t_token **curr)
         return (NULL);
     }
     result = ft_xmalloc(sizeof(t_ast_node));
-    ast_node_set_type(result, NODE_REDIRECT_IN);
-    ast_node_set_data(result, filename);
+    ast_node_set(result, NODE_REDIRECT_IN, filename);
     ast_attach_binary_branch(result, NULL, rhs_node);
 	return (result);
 }
@@ -72,8 +71,7 @@ static t_ast_node	*parse_redirection1(t_vector *tokens, t_token **curr)
 		return (NULL);
 	}
 	result = ft_xmalloc(sizeof(t_ast_node));
-	ast_node_set_type(result, NODE_REDIRECT_IN);
-	ast_node_set_data(result, filename);
+	ast_node_set(result, NODE_REDIRECT_IN, filename);
 	ast_attach_binary_branch(result, NULL, rhs_node);
 	return (result);
 }

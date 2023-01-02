@@ -32,8 +32,9 @@ typedef struct s_ast
 
 
 void		ast_attach_binary_branch (t_ast_node* root , t_ast_node* leftNode , t_ast_node* rightNode);
-void		ast_node_set_type (t_ast_node* node , t_node_type nodetype );
-void		ast_node_set_data (t_ast_node* node , char * data );
+void		ast_node_set_type (t_ast_node* node , t_node_type nodetype);
+void		ast_node_set_data (t_ast_node* node , char * data);
+void		ast_node_set(t_ast_node *node, t_node_type type, char *data);
 void		ast_node_delete (t_ast_node* node );
 t_ast		*ast_init(void);
 void		*ast_delete(t_ast **ast);

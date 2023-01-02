@@ -10,11 +10,9 @@
  */
 
 #include "minishell.h"
-#include "libft.h"
 
 void	put_error(char *message, char *arg)
 {
-	//printf("%s\n", message);
 	int fd = 0;
 	ft_putstr_fd("exit: ", fd);
 	if (arg)
@@ -29,6 +27,8 @@ int	input_args(char *arg)
 	long	long_num;
 
 	errno = 0;
+	if (!arg)
+		return (0);
 	endptr = NULL;
 	long_num = ft_strtol_d(arg, &endptr);
 	if( (long_num == LONG_MIN || long_num == LONG_MAX) && errno == ERANGE)
@@ -38,17 +38,17 @@ int	input_args(char *arg)
 	return ((int)long_num);
 }
 
-void	builtin_exit(char **args)
+void	builtin_exit(char **argv)
 {
 	size_t	i;
 	int		status;
+	size_t 	argc;
 
 	i = 1;
-	size_t res;
-	res = ft_matrixlen((const char**)args);
-	if (res > 2)
+	argc = ft_matrixlen((const char**)argv);
+	if (argc > 2)
 		put_error("too many arguments", NULL);
-	status = input_args(args[i]);
+	status = input_args(argv[i]);
 	exit(status);
 }
 
