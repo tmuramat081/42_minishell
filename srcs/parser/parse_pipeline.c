@@ -44,8 +44,7 @@ static t_ast_node	*parse_pipeline1(t_vector *tokens, t_token **curr)
 		return (NULL);
 	}
 	node = ft_xmalloc(sizeof(t_ast_node));
-	ast_node_set_type(node, NODE_PIPELINE);
-	ast_node_set_data(node, pipeline);
+	ast_node_set(node, NODE_PIPELINE, pipeline);
 	ast_attach_binary_branch(node, lhs_node, rhs_node);
 	return (node);
 }

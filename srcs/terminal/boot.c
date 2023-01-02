@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/02 22:45:55 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/03 05:24:43 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,11 @@ void	boot_minishell(t_shell	*msh)
 	line = NULL;
 	ignore_signal();
 	put_banner();
-	while (47)
+	while (true)
 	{
 		line = readline(msh->prompt);
+		if (!line || !*line)
+			break ;
 		add_history(line);
 		lexed_tokens = lexer(line);
 		syntax_tree = parser(lexed_tokens, msh);

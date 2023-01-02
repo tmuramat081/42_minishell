@@ -158,6 +158,10 @@ fclean:	clean
 re: fclean
 	@${MAKE} -s all
 
+
+run: ${NAME}
+	@./${NAME}
+
 #: [debug] Print debug info.
 dev: clean
 	@${MAKE} FOR_DEBUG=1 --no-print-directory
