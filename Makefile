@@ -17,8 +17,9 @@ SRCS := \
 	lexer/lex_string.c \
 	lexer/lex_whitespace.c \
 	lexer/lex_quote.c \
-	lexer/lex_eof.c \
-	lexer/lex_error.c \
+	lexer/lex_delimiter.c \
+	lexer/lex_redirect.c \
+	lexer/lex_end.c \
 	lexer/lexer_utils.c \
 	parser/parser.c \
 	parser/parse_separator.c \

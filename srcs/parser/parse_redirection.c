@@ -59,7 +59,7 @@ static t_ast_node	*parse_redirection1(t_vector *tokens, t_token **curr)
 	rhs_node = parse_command(tokens, curr);
 	if (!rhs_node)
 		return (NULL);
-	if (!consume_token(tokens, TOKEN_LDIR, curr, NULL))
+	if (!consume_token(tokens, TOKEN_RDIR, curr, NULL))
 	{
 		ast_node_delete(rhs_node);
 		return (NULL);

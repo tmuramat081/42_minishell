@@ -3,7 +3,6 @@
 
 void	*lex_general(t_tokenizer *tokenizer)
 {
-	printf("GENERAL\n");
 	char next_c;
 
 	next_c = peek(tokenizer);
@@ -19,10 +18,18 @@ void	*lex_general(t_tokenizer *tokenizer)
 	{
 		return (lex_quote);
 	}
+	else if (is_redirection(next_c) == true)
+	{
+		return (lex_redirect);
+	}
+	else if (is_delimiter(next_c) == true)
+	{
+		return (lex_delimiter);
+	}
 	else
 	{
 		return (lex_string);
 	}
-	emit(tokenizer, TOKEN_NULL);
+	emit(tokenizer, TOKEN_NONE);
 	return (NULL);
 }

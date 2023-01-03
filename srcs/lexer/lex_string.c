@@ -2,7 +2,6 @@
 
 void	*lex_string(t_tokenizer *tokenizer)
 {
-	printf("STRING\n");
 	char next_c;
 
 	next_c = peek(tokenizer);

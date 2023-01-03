@@ -8,6 +8,5 @@ void	*lex_whitespace(t_tokenizer *tokenizer)
 	{
 		next(tokenizer);
 	}
-	emit(tokenizer, TOKEN_SPACE);
 	return (lex_general);
 }

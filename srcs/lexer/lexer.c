@@ -21,25 +21,23 @@
  */
 char	next(t_tokenizer *tokenizer)
 {
-	puts("NEXT");
-	char next_c;
+	char current_c;
 
 	if (*(tokenizer->pos) == CHAR_NULL)
 		return ('\0');
-	next_c = *tokenizer->pos;
+	current_c = *tokenizer->pos;
 	tokenizer->pos += 1;
-	return (next_c);
+	return (current_c);
 }
 
 /**
  * @brief 次の解析対象の文字を取得する。
  *
  * @param tokenizer
- * @return char*
+ * @return char* 次の解析対象にあたる文字
  */
 char	peek(t_tokenizer *tokenizer)
 {
-	puts("PEEK");
 	char next_c;
 
 	next_c = next(tokenizer);
@@ -49,21 +47,64 @@ char	peek(t_tokenizer *tokenizer)
 }
 
 /**
- * @brief 現在位置まで文字を切り出し、トークンとして格納する
+ * @brief 現在の解析対象の文字を取得する。
+ *
+ * @param tokenizer
+ * &return char 現在の解析対象にあたる文字
+ */
+char	current(t_tokenizer *tokenizer)
+{
+	return (*tokenizer->pos);
+}
+
+
+t_token	*format_space(t_token *token)
+{
+	char *formatted;
+
+	formatted = ft_strtrim(token->data, " ");
+	free(token->data);
+	token->data = formatted;
+	return (token);
+}
+
+t_token *format_quote(t_token *token)
+{
+	char	*formatted;
+
+	if (token->type == TOKEN_STR_SQUOTE)
+		formatted = ft_strtrim(token->data, "\'");
+	else if (token->type == TOKEN_STR_DQUOTE)
+		formatted = ft_strtrim(token->data, "\"");
+	else
+		formatted = ft_strdup(token->data);
+	free(token->data);
+	token->data = formatted;
+	return (token);
+}
+
+void	format_token(t_token *token)
+{
+	format_space(token);
+	format_quote(token);
+}
+
+/**
+ * @brief 現在位置まで文字を切り出し、トークンとして格納する。
  *
  * @param tk
  * @param ttype
  */
 void	emit(t_tokenizer *tk, t_token_type token_type)
 {
-	puts("EMIT");
 	t_token *token;
 
 	token = (t_token *)ft_xmalloc(sizeof(t_token));
 	token->data = ft_strndup(tk->start, tk->pos - tk->start);
 	token->type = token_type;
-	printf("->[%s]\n", token->data);
-	ft_vector_push_back(tk->tokens, token);
+	format_token(token);
+	if (*token->data)
+		ft_vector_push_back(tk->tokens, token);
 	tk->start = tk->pos;
 }
 

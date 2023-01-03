@@ -23,7 +23,6 @@ t_tokenizer	*init_tokenizer(char *line)
 	t_tokenizer	*tokenizer;
 
 	tokenizer = ft_xmalloc(sizeof(t_tokenizer));
-	tokenizer->str = line;
 	tokenizer->start = line;
 	tokenizer->pos = line;
 	tokenizer->state = lex_general;
@@ -73,9 +72,17 @@ bool	is_metacharacter(int c)
 	return (false);
 }
 
+bool	is_redirection(int c)
+{
+	if (c == '<' || c == '>')
+		return (true);
+	return (false);
+}
+
 bool	is_delimiter(int c)
 {
-	if (ft_isspace(c) || ft_isquote(c) || ft_isnull(c))
+	if (ft_isspace(c) || ft_isquote(c) || ft_isnull(c)
+		|| is_redirection(c) || c == '|' || c == ';')
 		return (true);
 	return (false);
 }

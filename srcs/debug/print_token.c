@@ -13,27 +13,34 @@
 #include "parser.h"
 #include "ft_printf.h"
 
+char	*get_str_type(t_token_type type)
+{
+	if (type == TOKEN_STR_SQUOTE)
+		return ("[STR_SINGLE_QUOTE]");
+	else if (type == TOKEN_STR_DQUOTE)
+		return ("[STR_DOUBLE_QUOTE]");
+	return ("[STR_PLAIN]");
+}
+
 char *get_type_name(t_token_type type)
 {
-	if (type == TOKEN_STR)
-		return ("[STRING]");
-	else if (type == TOKEN_RDIR)
-		return ("[OUTPUT_RDR]");
-	else if (type == TOKEN_RRDIR)
-		return ("[APPEND_OUTPUT_RDR]");
-	else if (type == TOKEN_LDIR)
-		return ("[INPUR_RDR]");
-	else if (type == TOKEN_LLDIR)
-		return ("[HEREDOC_RDR]");
-	else if (type == TOKEN_SPACE)
-		return ("[SPACE]");
-	else if (type == TOKEN_PIPELINE)
+	if (type & TOKEN_STR)
+		return (get_str_type(type));
+	else if (type & TOKEN_RDIR_OUTPUT)
+		return ("[OUTPUT_REDIRECT]");
+	else if (type & TOKEN_RDIR_APPEND)
+		return ("[APPEND__REDIRECT]");
+	else if (type & TOKEN_RDIR_INPUT)
+		return ("[INPUT_REDIRECT]");
+	else if (type & TOKEN_RDIR_HEREDOC)
+		return ("[HEREDOC_REDIRECT]");
+	else if (type & TOKEN_PIPELINE)
 		return ("[PIPELINE]");
-	else if (type == TOKEN_AMPERSAND)
+	else if (type & TOKEN_AMPERSAND)
 		return ("[AMPERSAND]");
-	else if (type == TOKEN_SEMICOLON)
+	else if (type & TOKEN_SEMICOLON)
 		return ("[SEMICOLON]");
-	else if (type == TOKEN_NULL)
+	else if (type & TOKEN_END)
 		return ("[EOL]");
 	return ("[N/A]");
 }
