@@ -8,12 +8,12 @@
  * @copyright Copyright (c) 2023
  *
  */
- 
+
 #include "minishell.h"
 #include "lexer.h"
 
 /**
- * @brief 字句解析器の構造体を初期化する
+ * @brief 字句解析器の管理情報を初期化する。
  *
  * @param line　解析したい文字列
  * @return t_tokenizer*　字句解析器の構造体
@@ -22,21 +22,40 @@ t_tokenizer	*init_tokenizer(char *line)
 {
 	t_tokenizer	*tokenizer;
 
-	tokenizer = malloc(sizeof(t_tokenizer));
+	tokenizer = ft_xmalloc(sizeof(t_tokenizer));
 	tokenizer->str = line;
+	tokenizer->start = line;
 	tokenizer->pos = line;
-	tokenizer->state = STATE_NORMAL;
+	tokenizer->state = lex_general;
+	tokenizer->tokens = ft_vector_init(sizeof(t_token), 32);
+	if (!tokenizer->tokens)
+		return (NULL);
 	return (tokenizer);
 }
 
 /**
- * @brief 字句解析器の構造体を解放する
+ * @brief 字句解析器の構造体を削除する
  *
  * @param tokenizer
  */
 void	delete_tokenizer(t_tokenizer *tokenizer)
 {
+	ft_vector_delete(&tokenizer->tokens);
 	free(tokenizer);
+}
+
+bool	ft_isquote(int c)
+{
+	if (c == '\'' || c == '"')
+		return (true);
+	return (false);
+}
+
+bool	ft_isnull(int c)
+{
+	if (c == '\0')
+		return(true);
+	return (false);
 }
 
 /**
@@ -46,10 +65,17 @@ void	delete_tokenizer(t_tokenizer *tokenizer)
  * @return true　メタキャラクターである
  * @return false　メタキャラクターでない
  */
-bool	is_metacharacter(char c)
+bool	is_metacharacter(int c)
 {
 	if (c == ' ' || c == '\t' || c == '&' || c == '<'
 		|| c == '>' || c == '|' || c == ';')
+		return (true);
+	return (false);
+}
+
+bool	is_delimiter(int c)
+{
+	if (ft_isspace(c) || ft_isquote(c) || ft_isnull(c))
 		return (true);
 	return (false);
 }
@@ -61,7 +87,7 @@ bool	is_metacharacter(char c)
  * @return true （ダブル）クオーテーションである
  * @return false　（ダブル）クオーテーションでない
  */
-bool	is_quotation(char c)
+bool	is_quotation(int c)
 {
 	if (c == '\'' || c == '\"')
 		return (true);

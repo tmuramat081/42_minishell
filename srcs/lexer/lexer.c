@@ -13,67 +13,58 @@
 
 #define INIT_SIZE 36
 
-bool	is_delimiter(t_tokenizer *tokenizer, char c)
+/**
+ * @brief 解析対象の文字を一つ進める。
+ *
+ * @param tokenizer
+ * @return char*
+ */
+char	next(t_tokenizer *tokenizer)
 {
-	if (c == '\0')
-		return (true);
-	else if (is_metacharacter(c) == true && tokenizer->state == STATE_NORMAL)
-	{
-		return (true);
-	}
-	return (false);
+	puts("NEXT");
+	char next_c;
+
+	if (*(tokenizer->pos) == CHAR_NULL)
+		return ('\0');
+	next_c = *tokenizer->pos;
+	tokenizer->pos += 1;
+	return (next_c);
 }
 
-void	handle_state(t_tokenizer *tk)
+/**
+ * @brief 次の解析対象の文字を取得する。
+ *
+ * @param tokenizer
+ * @return char*
+ */
+char	peek(t_tokenizer *tokenizer)
 {
-	if (*tk->pos == '\0')
-		tk->state = STATE_NORMAL;
-	else if (tk->state == STATE_NORMAL)
-	{
-		if (*tk->pos == '\'')
-			tk->state = STATE_SINGLE_QUOTE;
-		else if (*tk->pos == ('\"'))
-			tk->state = STATE_DOUBLE_QUOTE;
-	}
-	else if (tk->state == STATE_SINGLE_QUOTE && *tk->pos == '\'')
-		tk->state = STATE_NORMAL;
-	else if (tk->state == STATE_DOUBLE_QUOTE && *tk->pos == '\"')
-		tk->state = STATE_NORMAL;
+	puts("PEEK");
+	char next_c;
+
+	next_c = next(tokenizer);
+	if (next_c != '\0')
+		tokenizer->pos -= 1;
+	return (next_c);
 }
 
-char	*get_next_token(t_tokenizer *tokenizer)
+/**
+ * @brief 現在位置まで文字を切り出し、トークンとして格納する
+ *
+ * @param tk
+ * @param ttype
+ */
+void	emit(t_tokenizer *tk, t_token_type token_type)
 {
-	char	*startptr;
-	char	*endptr;
-	char	*token;
+	puts("EMIT");
+	t_token *token;
 
-	startptr = tokenizer->pos;
-	if (tokenizer->pos == '\0')
-		return (NULL);
-	if (is_delimiter(tokenizer, *startptr) == true)
-	{
-		if (*startptr == '\0')
-			return (NULL);
-		token = ft_strndup(startptr, 1);
-		tokenizer->pos++;
-		return (token);
-	}
-	if (*startptr == '\0')
-		return (NULL);
-	endptr = startptr;
-	while (true)
-	{
-		if (is_delimiter(tokenizer, *endptr) == true)
-		{
-			token = ft_strndup(startptr, endptr - startptr);
-			tokenizer->pos = endptr;
-			while (ft_isspace(*tokenizer->pos))
-				tokenizer->pos++;
-			return (token);
-		}
-		endptr++;
-	}
-	return (NULL);
+	token = (t_token *)ft_xmalloc(sizeof(t_token));
+	token->data = ft_strndup(tk->start, tk->pos - tk->start);
+	token->type = token_type;
+	printf("->[%s]\n", token->data);
+	ft_vector_push_back(tk->tokens, token);
+	tk->start = tk->pos;
 }
 
 /**
@@ -82,26 +73,16 @@ char	*get_next_token(t_tokenizer *tokenizer)
  * @param line
  * @return t_vector*
  */
-t_vector	*lexer(char *line)
+void	lexer(char *line, t_vector **tokens)
 {
 	t_tokenizer	*tokenizer;
-	t_token		*token;
-	t_vector	*tokens;
+	t_state_fn	next_fn;
 
-	tokens = ft_vector_init(sizeof(t_token), 16);
 	tokenizer = init_tokenizer(line);
-	while (true)
+	while (tokenizer->state != NULL)
 	{
-		handle_state(tokenizer);
-		token = ft_xmalloc(sizeof(t_token));
-		token->data = get_next_token(tokenizer);
-		if (!token->data || !*token->data)
-			break ;
-		token->type = get_token_type(token->data);
-		ft_vector_push_back(tokens, token);
-		token = NULL;
+		next_fn = (t_state_fn)tokenizer->state;
+		tokenizer->state = next_fn(tokenizer);
 	}
-	if (DEBUG)
-		print_tokens(tokens);
-	return (tokens);
+	*tokens = tokenizer->tokens;
 }

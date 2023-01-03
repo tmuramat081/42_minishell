@@ -60,7 +60,7 @@ void	print_nodes_rec(t_ast_node *node, int depth)
 
 void	print_nodes(t_ast *ast)
 {
-	ft_printf("\n%s<<<< PARSER >>>>", GREEN);
+	ft_printf("\n%s>>>> PARSER >>>>", GREEN);
 	ft_printf("\n===============================================\n");
 	print_nodes_rec(ast->root, 0);
 	ft_printf("===============================================%s\n\n", DEFAULT);

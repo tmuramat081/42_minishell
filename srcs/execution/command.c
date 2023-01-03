@@ -50,8 +50,6 @@ void	execute_external_command(char **args, t_shell *msh)
  */
 void	execute_builtin_command(char **args, t_shell *msh)
 {
-	if (DEBUG)
-		print_output();
 	if (!ft_strcmp(args[0], "echo"))
 		builtin_echo(args, msh);
 	else if (!ft_strcmp(args[0], "env"))

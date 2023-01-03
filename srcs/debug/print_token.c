@@ -56,7 +56,7 @@ void	print_tokens(t_vector *tokens)
 	int	index;
 
 	index = 0;
-	ft_printf("\n%s<<<< LEXER >>>>\n", MAGENTA);
+	ft_printf("\n%s>>>> LEXER >>>>\n", MAGENTA);
 	ft_printf("===============================================\n");
 	ft_printf("%s %*s %*s\n", "No. ", 20, "TOKEN", 20, "TYPE");
 	ft_printf("-----------------------------------------------\n");
