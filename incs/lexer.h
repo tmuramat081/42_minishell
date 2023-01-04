@@ -20,8 +20,9 @@ typedef struct s_tokenizer t_tokenizer;
 
 typedef void *(* t_state_fn)(t_tokenizer *);
 struct s_tokenizer {
-	char		*start;
-	char		*pos;
+	char		*str;
+	size_t		start;
+	size_t		pos;
 	void		*state;
 	t_vector	*tokens;
 };
@@ -58,6 +59,7 @@ void			emit(t_tokenizer *tk, t_token_type ttype);
 char			peek(t_tokenizer *tokenizer);
 char			current(t_tokenizer *tokenizer);
 char			next(t_tokenizer *tokenizer);
+void			prev(t_tokenizer *tokenizer);
 t_tokenizer		*init_tokenizer(char *line);
 void			delete_tokenizer(t_tokenizer *tokenizer);
 bool			is_metacharacter(int c);
@@ -71,6 +73,7 @@ void			*lex_whitespace(t_tokenizer *tokenizer);
 void			*lex_quote(t_tokenizer *tokenizer);
 void			*lex_string(t_tokenizer *tokenizer);
 void			*lex_redirect(t_tokenizer *tokenizer);
+void			*lex_redirect_double(t_tokenizer *tokenizer, char current);
 void			*lex_delimiter(t_tokenizer *tokenizer);
 void			*lex_error(t_tokenizer *tokenizer);
 void			*lex_eof(t_tokenizer *tokenizer);

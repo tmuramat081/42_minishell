@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2023
  *
  */
+
 #include "minishell.h"
 #include "lexer.h"
 
@@ -19,15 +20,15 @@
  * @param tokenizer
  * @return char*
  */
-char	next(t_tokenizer *tokenizer)
+char	next(t_tokenizer *tk)
 {
-	char current_c;
+	char current;
 
-	if (*(tokenizer->pos) == CHAR_NULL)
+	if (tk->pos >= ft_strlen(tk->str))
 		return ('\0');
-	current_c = *tokenizer->pos;
-	tokenizer->pos += 1;
-	return (current_c);
+	current = tk->str[tk->pos];
+	tk->pos += 1;
+	return (current);
 }
 
 /**
@@ -42,7 +43,7 @@ char	peek(t_tokenizer *tokenizer)
 
 	next_c = next(tokenizer);
 	if (next_c != '\0')
-		tokenizer->pos -= 1;
+		prev(tokenizer);
 	return (next_c);
 }
 
@@ -52,9 +53,14 @@ char	peek(t_tokenizer *tokenizer)
  * @param tokenizer
  * &return char 現在の解析対象にあたる文字
  */
-char	current(t_tokenizer *tokenizer)
+char	current(t_tokenizer *tk)
 {
-	return (*tokenizer->pos);
+	return (tk->str[tk->pos]);
+}
+
+void	prev(t_tokenizer *tokenizer)
+{
+	tokenizer->pos -= 1;
 }
 
 
@@ -100,13 +106,14 @@ void	emit(t_tokenizer *tk, t_token_type token_type)
 	t_token *token;
 
 	token = (t_token *)ft_xmalloc(sizeof(t_token));
-	token->data = ft_strndup(tk->start, tk->pos - tk->start);
+	token->data = ft_substr(tk->str, tk->start, tk->pos - tk->start);
 	token->type = token_type;
 	format_token(token);
 	if (*token->data)
 		ft_vector_push_back(tk->tokens, token);
 	tk->start = tk->pos;
 }
+
 
 /**
  * @brief 字句解析のエントリーポイント

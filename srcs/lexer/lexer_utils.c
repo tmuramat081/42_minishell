@@ -8,7 +8,6 @@
  * @copyright Copyright (c) 2023
  *
  */
-
 #include "minishell.h"
 #include "lexer.h"
 
@@ -23,8 +22,9 @@ t_tokenizer	*init_tokenizer(char *line)
 	t_tokenizer	*tokenizer;
 
 	tokenizer = ft_xmalloc(sizeof(t_tokenizer));
-	tokenizer->start = line;
-	tokenizer->pos = line;
+	tokenizer->str = line;
+	tokenizer->start = 0;
+	tokenizer->pos = 0;
 	tokenizer->state = lex_general;
 	tokenizer->tokens = ft_vector_init(sizeof(t_token), 32);
 	if (!tokenizer->tokens)
