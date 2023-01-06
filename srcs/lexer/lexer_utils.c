@@ -1,7 +1,7 @@
 /**
  * @file lexer_utils.c
  * @author tmuramat (tmuramat@student.42tokyo.jp)
- * @brief 字句解析のヘルパー関数
+ * @brief 字句解析のヘルパー関数群
  * @version 0.1
  * @date 2023-01-01
  *
@@ -12,91 +12,63 @@
 #include "lexer.h"
 
 /**
- * @brief 字句解析器の管理情報を初期化する。
- *
- * @param line　解析したい文字列
- * @return t_tokenizer*　字句解析器の構造体
- */
-t_tokenizer	*init_tokenizer(char *line)
-{
-	t_tokenizer	*tokenizer;
-
-	tokenizer = ft_xmalloc(sizeof(t_tokenizer));
-	tokenizer->str = line;
-	tokenizer->start = 0;
-	tokenizer->pos = 0;
-	tokenizer->state = lex_general;
-	tokenizer->tokens = ft_vector_init(sizeof(t_token), 32);
-	if (!tokenizer->tokens)
-		return (NULL);
-	return (tokenizer);
-}
-
-/**
- * @brief 字句解析器の構造体を削除する
+ * @brief 解析対象の対象を一文字進める。
  *
  * @param tokenizer
+ * @return char*
  */
-void	delete_tokenizer(t_tokenizer *tokenizer)
+char	next(t_tokenizer *tk)
 {
-	ft_vector_delete(&tokenizer->tokens);
-	free(tokenizer);
+	char current;
+
+	if (tk->pos >= ft_strlen(tk->str))
+		return ('\0');
+	current = tk->str[tk->pos];
+	tk->pos += 1;
+	return (current);
 }
 
-bool	ft_isquote(int c)
+/**　字句解析の対象を一文字戻す。
+ * @brief 
+ * 
+ * @param tokenizer 
+ */
+void	prev(t_tokenizer *tokenizer)
 {
-	if (c == '\'' || c == '"')
-		return (true);
-	return (false);
-}
-
-bool	ft_isnull(int c)
-{
-	if (c == '\0')
-		return(true);
-	return (false);
+	tokenizer->pos -= 1;
 }
 
 /**
- * @brief メタキャラクターの判定
+ * @brief 現在位置まで文字を切り出し、トークンとして格納する。
  *
- * @param c　判定したい文字
- * @return true　メタキャラクターである
- * @return false　メタキャラクターでない
+ * @param tk
+ * @param ttype
  */
-bool	is_metacharacter(int c)
+void	emit(t_tokenizer *tk, t_token_type token_type)
 {
-	if (c == ' ' || c == '\t' || c == '&' || c == '<'
-		|| c == '>' || c == '|' || c == ';')
-		return (true);
-	return (false);
-}
+	t_token *token;
 
-bool	is_redirection(int c)
-{
-	if (c == '<' || c == '>')
-		return (true);
-	return (false);
-}
-
-bool	is_delimiter(int c)
-{
-	if (ft_isspace(c) || ft_isquote(c) || ft_isnull(c)
-		|| is_redirection(c) || c == '|' || c == ';')
-		return (true);
-	return (false);
+	token = (t_token *)ft_xmalloc(sizeof(t_token));
+	token->data = ft_substr(tk->str, tk->start, tk->pos - tk->start);
+	token->type = token_type;
+	format_token(token);
+	if (*token->data)
+		ft_vector_push_back(tk->tokens, token);
+	tk->start = tk->pos;
 }
 
 /**
- * @brief （ダブル）クオーテーションの判定
+ * @brief 次の解析対象の文字を取得する。
  *
- * @param c
- * @return true （ダブル）クオーテーションである
- * @return false　（ダブル）クオーテーションでない
+ * @param tokenizer
+ * @return char* 次の解析対象にあたる文字
  */
-bool	is_quotation(int c)
+char	peek(t_tokenizer *tokenizer)
 {
-	if (c == '\'' || c == '\"')
-		return (true);
-	return (false);
+	char next_c;
+
+	next_c = next(tokenizer);
+	if (next_c != '\0')
+		prev(tokenizer);
+	return (next_c);
 }

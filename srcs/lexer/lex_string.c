@@ -1,5 +1,11 @@
 #include "lexer.h"
 
+/**
+ * @brief 状態遷移：文字列の場合 
+ * 
+ * @param tokenizer 
+ * @return void* 
+ */
 void	*lex_string(t_tokenizer *tokenizer)
 {
 	char next_c;

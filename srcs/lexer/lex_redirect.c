@@ -1,6 +1,13 @@
 #include "lexer.h"
 
-void *lex_redirect_double(t_tokenizer *tokenizer, char current)
+/**
+ * @brief 状態遷移：リダイレクトが連続する（">>"および"<<"）場合
+ * 
+ * @param tokenizer 
+ * @param current 
+ * @return void* 
+ */
+static void *lex_redirect_double(t_tokenizer *tokenizer, char current)
 {
 	t_token_type	type;
 	char			next_c;
@@ -16,6 +23,12 @@ void *lex_redirect_double(t_tokenizer *tokenizer, char current)
 	return (lex_general);
 }
 
+/**
+ * @brief 状態遷移：リダイレクト（">"および"<"）の場合 
+ * 
+ * @param tokenizer 
+ * @return void* 
+ */
 void	*lex_redirect(t_tokenizer *tokenizer)
 {
 	t_token_type 	type;

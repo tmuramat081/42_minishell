@@ -19,6 +19,7 @@
 typedef struct s_tokenizer t_tokenizer;
 
 typedef void *(* t_state_fn)(t_tokenizer *);
+
 struct s_tokenizer {
 	char		*str;
 	size_t		start;
@@ -26,6 +27,7 @@ struct s_tokenizer {
 	void		*state;
 	t_vector	*tokens;
 };
+
 typedef enum e_token_type {
 	TOKEN_NONE = (1 << 0),
 	TOKEN_STR_PLAIN = (1 << 1),
@@ -55,25 +57,20 @@ typedef struct s_token {
 }	t_token;
 
 void			lexer(char *line, t_vector **tokens);
-void			emit(t_tokenizer *tk, t_token_type ttype);
-char			peek(t_tokenizer *tokenizer);
-char			current(t_tokenizer *tokenizer);
-char			next(t_tokenizer *tokenizer);
-void			prev(t_tokenizer *tokenizer);
 t_tokenizer		*init_tokenizer(char *line);
 void			delete_tokenizer(t_tokenizer *tokenizer);
-bool			is_metacharacter(int c);
-bool			is_delimiter(int c);
+void			format_token(t_token *token);
+char			next(t_tokenizer *tokenizer);
+void			prev(t_tokenizer *tokenizer);
+void			emit(t_tokenizer *tk, t_token_type ttype);
+char			peek(t_tokenizer *tokenizer);
 bool			is_redirection(int c);
-bool			is_quotation(int c);
-bool			ft_isnull(int c);
-bool			ft_isquote(int c);
+bool			is_delimiter(int c);
 void			*lex_general(t_tokenizer *tokenizer);
 void			*lex_whitespace(t_tokenizer *tokenizer);
 void			*lex_quote(t_tokenizer *tokenizer);
 void			*lex_string(t_tokenizer *tokenizer);
 void			*lex_redirect(t_tokenizer *tokenizer);
-void			*lex_redirect_double(t_tokenizer *tokenizer, char current);
 void			*lex_delimiter(t_tokenizer *tokenizer);
 void			*lex_error(t_tokenizer *tokenizer);
 void			*lex_eof(t_tokenizer *tokenizer);

@@ -13,6 +13,8 @@ SRCS := \
 	terminal/boot.c \
 	terminal/signal.c \
 	lexer/lexer.c \
+	lexer/tokenizer.c \
+	lexer/formatter.c \
 	lexer/lex_general.c \
 	lexer/lex_string.c \
 	lexer/lex_whitespace.c \

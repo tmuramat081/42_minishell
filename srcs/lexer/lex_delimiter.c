@@ -1,6 +1,12 @@
 #include "lexer.h"
 #include "minishell.h"
 
+/**
+ * @brief 状態遷移：その他区切り文字の場合
+ * 
+ * @param tokenizer 
+ * @return void* 
+ */
 void	*lex_delimiter(t_tokenizer *tokenizer)
 {
 	char 			current;

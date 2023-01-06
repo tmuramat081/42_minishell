@@ -1,5 +1,11 @@
 #include "lexer.h"
 
+/**
+ * @brief 状態遷移：クオーテーションの場合
+ * 
+ * @param tokenizer 
+ * @return void* 
+ */
 void	*lex_quote(t_tokenizer *tokenizer)
 {
 	char quote_c;

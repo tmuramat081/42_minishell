@@ -16,9 +16,9 @@
 char	*get_str_type(t_token_type type)
 {
 	if (type == TOKEN_STR_SQUOTE)
-		return ("[STR_SINGLE_QUOTE]");
+		return ("[STR_S_QUOTE]");
 	else if (type == TOKEN_STR_DQUOTE)
-		return ("[STR_DOUBLE_QUOTE]");
+		return ("[STR_D_QUOTE]");
 	return ("[STR_PLAIN]");
 }
 
@@ -27,13 +27,13 @@ char *get_type_name(t_token_type type)
 	if (type & TOKEN_STR)
 		return (get_str_type(type));
 	else if (type & TOKEN_RDIR_OUTPUT)
-		return ("[OUTPUT_REDIRECT]");
+		return ("[RDIR_OUTPUT]");
 	else if (type & TOKEN_RDIR_APPEND)
-		return ("[APPEND__REDIRECT]");
+		return ("[RDIR_APPEND]");
 	else if (type & TOKEN_RDIR_INPUT)
-		return ("[INPUT_REDIRECT]");
+		return ("[RDIR_INPUT]");
 	else if (type & TOKEN_RDIR_HEREDOC)
-		return ("[HEREDOC_REDIRECT]");
+		return ("[RDIR_HEREDOC]");
 	else if (type & TOKEN_PIPELINE)
 		return ("[PIPELINE]");
 	else if (type & TOKEN_AMPERSAND)
