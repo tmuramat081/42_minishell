@@ -1,69 +1,74 @@
 /**
  * @file lexer_utils.c
  * @author tmuramat (tmuramat@student.42tokyo.jp)
- * @brief 字句解析のヘルパー関数
+ * @brief 字句解析のヘルパー関数群
  * @version 0.1
  * @date 2023-01-01
  *
  * @copyright Copyright (c) 2023
  *
  */
- 
 #include "minishell.h"
 #include "lexer.h"
 
 /**
- * @brief 字句解析器の構造体を初期化する
- *
- * @param line　解析したい文字列
- * @return t_tokenizer*　字句解析器の構造体
- */
-t_tokenizer	*init_tokenizer(char *line)
-{
-	t_tokenizer	*tokenizer;
-
-	tokenizer = malloc(sizeof(t_tokenizer));
-	tokenizer->str = line;
-	tokenizer->pos = line;
-	tokenizer->state = STATE_NORMAL;
-	return (tokenizer);
-}
-
-/**
- * @brief 字句解析器の構造体を解放する
+ * @brief 解析対象の対象を一文字進める。
  *
  * @param tokenizer
+ * @return char*
  */
-void	delete_tokenizer(t_tokenizer *tokenizer)
+char	next(t_tokenizer *tk)
 {
-	free(tokenizer);
+	char current;
+
+	if (tk->pos >= ft_strlen(tk->str))
+		return ('\0');
+	current = tk->str[tk->pos];
+	tk->pos += 1;
+	return (current);
+}
+
+/**　字句解析の対象を一文字戻す。
+ * @brief 
+ * 
+ * @param tokenizer 
+ */
+void	prev(t_tokenizer *tokenizer)
+{
+	tokenizer->pos -= 1;
 }
 
 /**
- * @brief メタキャラクターの判定
+ * @brief 現在位置まで文字を切り出し、トークンとして格納する。
  *
- * @param c　判定したい文字
- * @return true　メタキャラクターである
- * @return false　メタキャラクターでない
+ * @param tk
+ * @param ttype
  */
-bool	is_metacharacter(char c)
+void	emit(t_tokenizer *tk, t_token_type token_type)
 {
-	if (c == ' ' || c == '\t' || c == '&' || c == '<'
-		|| c == '>' || c == '|' || c == ';')
-		return (true);
-	return (false);
+	t_token *token;
+
+	token = (t_token *)ft_xmalloc(sizeof(t_token));
+	token->data = ft_substr(tk->str, tk->start, tk->pos - tk->start);
+	token->type = token_type;
+	format_token(token);
+	if (*token->data)
+		ft_vector_push_back(tk->tokens, token);
+	tk->start = tk->pos;
 }
 
 /**
- * @brief （ダブル）クオーテーションの判定
+ * @brief 次の解析対象の文字を取得する。
  *
- * @param c
- * @return true （ダブル）クオーテーションである
- * @return false　（ダブル）クオーテーションでない
+ * @param tokenizer
+ * @return char* 次の解析対象にあたる文字
  */
-bool	is_quotation(char c)
+char	peek(t_tokenizer *tokenizer)
 {
-	if (c == '\'' || c == '\"')
-		return (true);
-	return (false);
+	char next_c;
+
+	next_c = next(tokenizer);
+	if (next_c != '\0')
+		prev(tokenizer);
+	return (next_c);
 }

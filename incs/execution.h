@@ -6,7 +6,9 @@
 # include "ft_hashmap.h"
 # include "ft_vector.h"
 
-typedef struct stat	t_stat;
+struct s_executer {
+	int	pipe;
+}	t_executer;
 
 int		builtin_unset(char **args, t_shell *msh);
 int		builtin_export(char **args, t_shell	*msh);

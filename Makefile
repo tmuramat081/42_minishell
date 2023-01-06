@@ -13,7 +13,15 @@ SRCS := \
 	terminal/boot.c \
 	terminal/signal.c \
 	lexer/lexer.c \
-	lexer/token.c \
+	lexer/tokenizer.c \
+	lexer/formatter.c \
+	lexer/lex_general.c \
+	lexer/lex_string.c \
+	lexer/lex_whitespace.c \
+	lexer/lex_quote.c \
+	lexer/lex_delimiter.c \
+	lexer/lex_redirect.c \
+	lexer/lex_end.c \
 	lexer/lexer_utils.c \
 	parser/parser.c \
 	parser/parse_separator.c \
@@ -158,7 +166,7 @@ fclean:	clean
 re: fclean
 	@${MAKE} -s all
 
-
+#: Make executable file and exexute.
 run: ${NAME}
 	@./${NAME}
 
@@ -172,6 +180,7 @@ git:
 	git commit
 	git push origin feature
 
+#: Norminette
 norm:
 	@${PRINTF} "${RED}\nChecking norm for ${NAME}...${DEFAULT}\n "
 	@norminette ${SRC_DIR} inc/ libs/

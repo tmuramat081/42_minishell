@@ -13,27 +13,34 @@
 #include "parser.h"
 #include "ft_printf.h"
 
+char	*get_str_type(t_token_type type)
+{
+	if (type == TOKEN_STR_SQUOTE)
+		return ("[STR_S_QUOTE]");
+	else if (type == TOKEN_STR_DQUOTE)
+		return ("[STR_D_QUOTE]");
+	return ("[STR_PLAIN]");
+}
+
 char *get_type_name(t_token_type type)
 {
-	if (type == TOKEN_STR)
-		return ("[STRING]");
-	else if (type == TOKEN_RDIR)
-		return ("[OUTPUT_RDR]");
-	else if (type == TOKEN_RRDIR)
-		return ("[APPEND_OUTPUT_RDR]");
-	else if (type == TOKEN_LDIR)
-		return ("[INPUR_RDR]");
-	else if (type == TOKEN_LLDIR)
-		return ("[HEREDOC_RDR]");
-	else if (type == TOKEN_SPACE)
-		return ("[SPACE]");
-	else if (type == TOKEN_PIPELINE)
+	if (type & TOKEN_STR)
+		return (get_str_type(type));
+	else if (type & TOKEN_RDIR_OUTPUT)
+		return ("[RDIR_OUTPUT]");
+	else if (type & TOKEN_RDIR_APPEND)
+		return ("[RDIR_APPEND]");
+	else if (type & TOKEN_RDIR_INPUT)
+		return ("[RDIR_INPUT]");
+	else if (type & TOKEN_RDIR_HEREDOC)
+		return ("[RDIR_HEREDOC]");
+	else if (type & TOKEN_PIPELINE)
 		return ("[PIPELINE]");
-	else if (type == TOKEN_AMPERSAND)
+	else if (type & TOKEN_AMPERSAND)
 		return ("[AMPERSAND]");
-	else if (type == TOKEN_SEMICOLON)
+	else if (type & TOKEN_SEMICOLON)
 		return ("[SEMICOLON]");
-	else if (type == TOKEN_NULL)
+	else if (type & TOKEN_END)
 		return ("[EOL]");
 	return ("[N/A]");
 }
@@ -56,7 +63,7 @@ void	print_tokens(t_vector *tokens)
 	int	index;
 
 	index = 0;
-	ft_printf("\n%s<<<< LEXER >>>>\n", MAGENTA);
+	ft_printf("\n%s>>>> LEXER >>>>\n", MAGENTA);
 	ft_printf("===============================================\n");
 	ft_printf("%s %*s %*s\n", "No. ", 20, "TOKEN", 20, "TYPE");
 	ft_printf("-----------------------------------------------\n");

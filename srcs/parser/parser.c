@@ -76,7 +76,5 @@ t_ast	*parser(t_vector *tokens, t_shell *msh)
 	curr_token = ft_vector_front(tokens);
 	syntax_tree = ast_init();
 	syntax_tree->root = parse_separator(tokens, &curr_token);
-	if (DEBUG)
-		print_nodes(syntax_tree);
 	return (syntax_tree);
 }
