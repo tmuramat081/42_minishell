@@ -57,3 +57,4 @@ latex/
 .DS_Store
 minishell
 .vscode/
+bnf_shell.txt

@@ -1,23 +1,10 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-# define STR_RDIR ">"
-# define STR_RRDIR ">>"
-# define STR_LDIR "<"
-# define STR_LLDIR "<<"
-# define STR_SPACE " "
-# define STR_PIPELINE "|"
-# define STR_AMPERSAND "&"
-# define STR_SEMICOLON ";"
-# define STR_QUOTE "\'"
-# define STR_DOUBLE_QUOTE "\""
-# define CHAR_NULL '\0'
-
 #include <stdbool.h>
 #include "ft_vector.h"
 
 typedef struct s_tokenizer t_tokenizer;
-
 typedef void *(* t_state_fn)(t_tokenizer *);
 
 struct s_tokenizer {

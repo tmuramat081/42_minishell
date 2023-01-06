@@ -166,7 +166,7 @@ fclean:	clean
 re: fclean
 	@${MAKE} -s all
 
-
+#: Make executable file and exexute.
 run: ${NAME}
 	@./${NAME}
 
@@ -180,6 +180,7 @@ git:
 	git commit
 	git push origin feature
 
+#: Norminette
 norm:
 	@${PRINTF} "${RED}\nChecking norm for ${NAME}...${DEFAULT}\n "
 	@norminette ${SRC_DIR} inc/ libs/
