@@ -23,8 +23,10 @@
 	<pipeline>		::=	<redirection> '|' <pipeline>
 					|	<redirection>
 
-	<redirection>	::=	<command> '<' <filename>
-					|	<command> '>' <filename>
+	<redirection>	::=	<command> '>' <filename>
+					|	<command> '>>' <filename>
+					|	<command> '<' <filename>
+					|	<command> '<<' <filename>
 					|	<command>
 
 	<command>		::=	<pathname> <token_list>
@@ -45,11 +47,11 @@
  * @return true
  * @return false
  */
-bool consume_token(t_vector *tokens, t_token_type toketype, t_token **curr, char **buff)
+bool consume_token(t_vector *tokens, t_token_type token_type, t_token **curr, char **buff)
 {
 	if (!curr || !*curr)
 		return (false);
-    if ((*curr)->type == toketype)
+    if (token_type & (*curr)->type)
     {
 		if (buff)
 			*buff = ft_strdup((*curr)->data);

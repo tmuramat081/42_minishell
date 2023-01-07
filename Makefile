@@ -26,7 +26,7 @@ SRCS := \
 	parser/parser.c \
 	parser/parse_separator.c \
 	parser/parse_pipeline.c \
-	parser/parse_redirection.c \
+	parser/parse_redirect.c \
 	parser/parse_command.c \
 	parser/parse_argument.c \
 	execution/execute.c \

@@ -34,8 +34,8 @@ char	*get_node_type(t_node_type	type)
 		return("[COMMAND]");
 	else if (type & NODE_ARGUMENT)
 		return("[ARGUMENT]");
-	else if (type & NODE_DATA)
-		return("[DATA]");
+	else if (type & NODE_FILENAME)
+		return("[FILENAME]");
 	return ("[N/A]");
 }
 

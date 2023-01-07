@@ -25,7 +25,7 @@ void ast_node_set_data(t_ast_node* node, char *data)
 	if(data != NULL)
 	{
 		node->data = data;
-		node->type |= NODE_DATA;
+		node->type |= NODE_ALL;
 	}
 }
 
@@ -42,7 +42,7 @@ void ast_node_delete(t_ast_node *node)
 {
     if (!node)
         return;
-    if (node->type & NODE_DATA)
+    if (node->type & NODE_ALL)
         free(node->data);
 	ast_node_delete(node->left);
 	ast_node_delete(node->right);

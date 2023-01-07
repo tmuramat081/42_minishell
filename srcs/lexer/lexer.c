@@ -12,8 +12,6 @@
 #include "minishell.h"
 #include "lexer.h"
 
-#define INIT_SIZE 36
-
 /**
  * @brief 字句解析のエントリーポイント
  *
