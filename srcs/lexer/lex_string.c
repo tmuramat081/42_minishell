@@ -13,7 +13,7 @@ void	*lex_string(t_tokenizer *tokenizer)
 	next_c = peek(tokenizer);
 	if (is_delimiter(next_c) == true)
 	{
-		emit(tokenizer, TOKEN_STR);
+		emit(tokenizer, TOKEN_STR_PLAIN);
 		return (lex_general);
 	}
 	next(tokenizer);

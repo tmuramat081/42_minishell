@@ -12,5 +12,5 @@ void	print_input(char *line)
 
 void	print_output(void)
 {
-	ft_printf("%sOUTPUT >>>>%s\n", BLUE, DEFAULT);
+	ft_printf("%sOUTPUT >>>>%s\n", RED, DEFAULT);
 }

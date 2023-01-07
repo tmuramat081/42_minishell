@@ -22,10 +22,14 @@ char	*get_node_type(t_node_type	type)
 		return("[PIPELINE]");
 	else if (type & NODE_SEQUENCE)
 		return("[SEQUENCE]");
-	else if (type & NODE_REDIRECT_IN)
-		return("[REDIRECT_IN]");
-	else if (type & NODE_REDIRECT_OUT)
-		return("[REDIRECT_OUT]");
+	else if (type & NODE_RDIR_INPUT)
+		return("[RDIR_INPUT]");
+	else if (type & NODE_RDIR_OUTPUT)
+		return("[RDIR_OUTPUT]");
+	else if (type & NODE_RDIR_APPEND)
+		return("[RDIR_APPEND]");
+	else if (type & NODE_RDIR_HEREDOC)
+		return("[RDIR_HEREDOC]");
 	else if (type & NODE_COMMAND)
 		return("[COMMAND]");
 	else if (type & NODE_ARGUMENT)
