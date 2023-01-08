@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   boot.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/03 19:28:46 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/08 15:33:22 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,10 @@ void	boot_minishell(t_shell	*msh)
 	while (true)
 	{
 		line = readline(msh->prompt);
-		if (!line || !*line)
+		if (!line)
 			break ;
-		add_history(line);
+		else if (*line)
+			add_history(line);
 		if(DEBUG)
 			print_input(line);
 		lexer(line, &lexed_tokens);
@@ -70,4 +71,5 @@ void	boot_minishell(t_shell	*msh)
 		execute_syntax_tree(syntax_tree, msh);
 		free(line);
 	}
+	exit(EXIT_FAILURE);
 }
