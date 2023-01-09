@@ -17,7 +17,7 @@ static t_ast_node	*parse_pipeline2(t_vector *tokens, t_token **curr)
 {
 	t_ast_node *node;
 
-	node = parse_redirect(tokens, curr);
+	node = parse_simple_cmd(tokens, curr);
 	return (node);
 }
 
@@ -29,7 +29,7 @@ static t_ast_node	*parse_pipeline1(t_vector *tokens, t_token **curr)
 	t_ast_node	*node;
 	char		*pipeline;
 
-	lhs_node = parse_redirect(tokens, curr);
+	lhs_node = parse_simple_cmd(tokens, curr);
 	if (!lhs_node)
 		return (NULL);
 	if (!consume_token(tokens, TOKEN_PIPELINE, curr, &pipeline))
@@ -45,7 +45,7 @@ static t_ast_node	*parse_pipeline1(t_vector *tokens, t_token **curr)
 	}
 	node = ft_xmalloc(sizeof(t_ast_node));
 	ast_node_set(node, NODE_PIPELINE, pipeline);
-	ast_attach_binary_branch(node, lhs_node, rhs_node);
+	ast_node_create(node, lhs_node, rhs_node);
 	return (node);
 }
 

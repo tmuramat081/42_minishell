@@ -20,19 +20,22 @@
 					|	<pipeline> ';'
 					|	<pipeline>
 
-	<pipeline>		::=	<redirection> '|' <pipeline>
-					|	<redirection>
+	<pipeline>		::=	<simple_cmd> '|' <pipeline>
+					|	<simple_cmd>
 
-	<redirection>	::=	<command> '>' <filename>
-					|	<command> '>>' <filename>
-					|	<command> '<' <filename>
-					|	<command> '<<' <filename>
+	<simple_cmd>	::= <io_redirect> <simple_cmd>
+					|	<io_redirect>
+	
+	<io_redirect>	::=	<command> '>' 'filename'
+					|	<command> '>>' 'filename'
+					|	<command> '<' 'filename'
+					|	<command> '<<' 'here_end'
 					|	<command>
 
-	<command>		::=	<pathname> <token_list>
-					|	<pathname>
+	<command>		::=	'pathname' <token_list>
+					|	'pathname'
 
-	<token_list>	::=	<token> <token_list>
+	<token_list>	::=	'token' <token_list>
 					|	(EMPTY)
  *
 **/

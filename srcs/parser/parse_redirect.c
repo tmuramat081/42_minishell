@@ -43,7 +43,7 @@ static t_ast_node	*parse_redirect4(t_vector *tokens, t_token **curr)
 	}
 	node = ft_xmalloc(sizeof(t_ast_node));
 	ast_node_set(node, NODE_RDIR_HEREDOC, filename);
-	ast_attach_binary_branch(node, NULL, rhs_node);
+	ast_node_create(node, NULL, rhs_node);
 	return (node);
 }
 
@@ -70,7 +70,7 @@ static t_ast_node	*parse_redirect3(t_vector *tokens, t_token **curr)
 	}
 	node = ft_xmalloc(sizeof(t_ast_node));
 	ast_node_set(node, NODE_RDIR_APPEND, filename);
-	ast_attach_binary_branch(node, NULL, rhs_node);
+	ast_node_create(node, NULL, rhs_node);
 	return (node);
 }
 
@@ -97,7 +97,7 @@ static t_ast_node	*parse_redirect2(t_vector *tokens, t_token **curr)
 	}
     node = ft_xmalloc(sizeof(t_ast_node));
     ast_node_set(node, NODE_RDIR_OUTPUT, filename);
-    ast_attach_binary_branch(node, NULL, rhs_node);
+    ast_node_create(node, NULL, rhs_node);
 	return (node);
 }
 
@@ -124,7 +124,7 @@ static t_ast_node	*parse_redirect1(t_vector *tokens, t_token **curr)
 	}
 	node = ft_xmalloc(sizeof(t_ast_node));
 	ast_node_set(node, NODE_RDIR_INPUT, filename);
-	ast_attach_binary_branch(node, NULL, rhs_node);
+	ast_node_create(node, NULL, rhs_node);
 	return (node);
 }
 
@@ -140,7 +140,7 @@ t_ast_node	*parse_redirect(t_vector *tokens, t_token **curr)
 	t_token		*save;
 	t_ast_node* node;
 
-//	puts("REDIRECT");
+	puts("start:redirect");
 	save = *curr;
 	node = parse_redirect1(tokens, curr);
 	if (node)
@@ -161,6 +161,7 @@ t_ast_node	*parse_redirect(t_vector *tokens, t_token **curr)
 	node = parse_redirect5(tokens, curr);
 	if (node)
 		return (node);
+	puts("end:redirect");
 	return (NULL);
 }
 

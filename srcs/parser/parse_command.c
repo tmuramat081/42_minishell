@@ -35,7 +35,7 @@ t_ast_node	*parse_command1(t_vector *tokens, t_token **curr)
 	rhs_node = parse_argument(tokens, curr);
 	node = ft_xmalloc(sizeof(t_ast_node));
 	ast_node_set(node, NODE_COMMAND, pathname);
-	ast_attach_binary_branch(node, NULL, rhs_node);
+	ast_node_create(node, NULL, rhs_node);
 	return (node);
 }
 
@@ -51,7 +51,7 @@ t_ast_node	*parse_command(t_vector *tokens, t_token **curr)
 	t_ast_node	*node;
 	t_token		*save;
 
-//	printf("COMMAND:%s\n", (*curr)->data);
+	puts("start:command");
 	save = *curr;
 	*curr = save;
 	node = parse_command1(tokens, curr);
@@ -61,5 +61,6 @@ t_ast_node	*parse_command(t_vector *tokens, t_token **curr)
 	node = parse_command2(tokens, curr);
 	if (node)
 		return (node);
+	puts("end:command");
 	return (NULL);
 }

@@ -36,7 +36,7 @@ t_ast_node	*parse_argument1(t_vector *tokens, t_token **curr)
 	rhs_node = parse_argument(tokens, curr);
 	node = ft_xmalloc(sizeof(t_ast_node));
 	ast_node_set(node, NODE_ARGUMENT, arg);
-	ast_attach_binary_branch(node, NULL, rhs_node);
+	ast_node_create(node, NULL, rhs_node);
 	return (node);
 }
 
@@ -52,7 +52,7 @@ t_ast_node	*parse_argument(t_vector *tokens, t_token **curr)
 	t_token *save;
 	t_ast_node* node;
 
-//	printf("ARGS\n");
+	puts("start:argument");
 	save = *curr;
 	*curr = save;
 	node = parse_argument1(tokens, curr);
@@ -62,6 +62,7 @@ t_ast_node	*parse_argument(t_vector *tokens, t_token **curr)
 	node = parse_argument2(tokens, curr);
 	if (node)
 		return (node);
+	puts("end:argument");
 	return (NULL);
 }
 

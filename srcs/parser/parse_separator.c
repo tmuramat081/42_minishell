@@ -34,7 +34,7 @@ t_ast_node	*parse_separator2(t_vector *tokens, t_token **curr)
 	}
 	node = ft_xmalloc(sizeof(t_ast_node));
 	ast_node_set(node, NODE_SEQUENCE, semicolon);
-	ast_attach_binary_branch(node, lhs_node, NULL);
+	ast_node_create(node, lhs_node, NULL);
 	return (node);
 }
 
@@ -62,7 +62,7 @@ static t_ast_node	*parse_separator1(t_vector *tokens, t_token **curr)
 	}
  	node = ft_xmalloc(sizeof(t_ast_node));
 	ast_node_set(node, NODE_SEQUENCE, semicolon);
-	ast_attach_binary_branch(node, lhs_node, rhs_node);
+	ast_node_create(node, lhs_node, rhs_node);
 	return (node);
 }
 
