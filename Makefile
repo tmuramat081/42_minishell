@@ -30,7 +30,13 @@ SRCS := \
 	parser/parse_command.c \
 	parser/parse_argument.c \
 	execution/execute.c \
-	execution/command.c \
+	execution/exec_separator.c \
+	execution/exec_pipeline.c \
+	execution/exec_redirect.c \
+	execution/exec_command.c \
+	execution/cmd_internal.c \
+	execution/cmd_external.c \
+	execution/set_redirection.c \
 	execution/execvpe.c \
 	execution/exec_utils.c \
 	builtin/export.c \
@@ -180,14 +186,18 @@ git:
 	git commit
 	git push origin feature
 
-#: Norminette
+#: Check norminette.
 norm:
 	@${PRINTF} "${RED}\nChecking norm for ${NAME}...${DEFAULT}\n "
 	@norminette ${SRC_DIR} inc/ libs/
 
+#: Check allowed function.
+nm:
+	@nm -u ${NAME}
+
 #: Display all commands.
 help:
-	@grep -A1 -E "^#:" --color=auto Makefile \
+	@grep -A1 -E "^#:" Makefile \
 	| grep -v -- -- \
 	| sed 'N;s/\n/###/' \
 	| sed -n 's/^#: \(.*\)###\(.*\):.*/\2###\1/p' \
@@ -195,4 +205,4 @@ help:
 	| column -t -s '###'
 
 .PHONY:
-	all clean fclean re debug git help
+	all clean fclean re run dev git norm nm help
