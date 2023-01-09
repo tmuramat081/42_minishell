@@ -7,29 +7,22 @@
 #include <fcntl.h>
 
 /** 
- * @brief ファイルをオープンする際のフラグを取得する。
+ * @brief ファイルをオープンする。
  * 
  * @param redirect_type 
  * @return int 
  */
-static int     get_open_flags(int redirect_type)
+static int     open_file(t_process *process)
 {
-    int flags;
+    char        *filename;
+    const int   file_mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH; 
 
-    flags = 0;
-    if (redirect_type & NODE_RDIR_INPUT)
-    {
-        flags = O_RDONLY;
-    }
-    else
-    {
-        flags = O_RDONLY | O_CREAT | 0666;
-        if (redirect_type & NODE_RDIR_OUTPUT)
-            flags |= O_TRUNC;
-        else
-            flags |= O_APPEND;
-    }
-    return (flags);
+    filename = process->redirect_file;
+    if (process->redirect_type & NODE_RDIR_OUTPUT) 
+        return (open(filename, O_WRONLY | O_CREAT | O_TRUNC, file_mode));
+    else if (process->redirect_type & NODE_RDIR_APPEND)
+        return (open(filename, O_WRONLY | O_CREAT | O_APPEND, file_mode));
+    return (open(filename, O_RDONLY));
 }
 
 /**
@@ -53,7 +46,6 @@ static int get_new_fd(int redirect_type)
  */
 void    set_redirection(t_process *process)
 {
-    int flags;
     int old_fd;
     int new_fd;
     
@@ -62,11 +54,12 @@ void    set_redirection(t_process *process)
     {
         exit(EXIT_FAILURE);
     }
-    flags = get_open_flags(process->redirect_type);
     new_fd = get_new_fd(process->redirect_type);
-    old_fd = open(process->redirect_file, flags);
+    old_fd = open_file(process);
     if (old_fd == -1)
     {
+        printf("%d\n", errno);
+        strerror(errno);
         exit(EXIT_FAILURE);
     }
     if (dup2(old_fd, new_fd) < 0)
@@ -82,6 +75,8 @@ void    reset_redirection(t_process *process)
     int old_fd;
     int new_fd;
 
+    if (!process->fd_backup)
+        return ;
     old_fd = process->fd_backup;
     new_fd = get_new_fd(process->redirect_type);
 	dup2(old_fd, new_fd);
