@@ -51,6 +51,7 @@ t_ast_node	*parse_command(t_vector *tokens, t_token **curr)
 	t_ast_node	*node;
 	t_token		*save;
 
+//	printf("COMMAND:%s\n", (*curr)->data);
 	save = *curr;
 	*curr = save;
 	node = parse_command1(tokens, curr);

@@ -16,26 +16,27 @@ struct s_tokenizer {
 };
 
 typedef enum e_token_type {
-	TOKEN_NONE = (1 << 0),
-	TOKEN_STR_PLAIN = (1 << 1),
-	TOKEN_STR_SQUOTE = (1 << 2),
-	TOKEN_STR_DQUOTE = (1 << 3),
-	TOKEN_RDIR_INPUT = (1 << 4),
-	TOKEN_RDIR_APPEND = (1 << 5),
-	TOKEN_RDIR_OUTPUT = (1 << 6),
-	TOKEN_RDIR_HEREDOC = (1 << 7),
-	TOKEN_PIPELINE = (1 << 8),
-	TOKEN_AMPERSAND = (1 << 9),
-	TOKEN_SEMICOLON = (1 << 10),
-	TOKEN_END = (1 << 11),
+	TOKEN_NONE = 0,
+	TOKEN_STR_PLAIN = (1 << 0),
+	TOKEN_STR_SQUOTE = (1 << 1),
+	TOKEN_STR_DQUOTE = (1 << 2),
+	TOKEN_RDIR_INPUT = (1 << 3),
+	TOKEN_RDIR_APPEND = (1 << 4),
+	TOKEN_RDIR_OUTPUT = (1 << 5),
+	TOKEN_RDIR_HEREDOC = (1 << 6),
+	TOKEN_PIPELINE = (1 << 7),
+	TOKEN_AMPERSAND = (1 << 8),
+	TOKEN_SEMICOLON = (1 << 9),
+	TOKEN_END = (1 << 10),
 	TOKEN_RDIR = TOKEN_RDIR_INPUT
-			| TOKEN_RDIR_OUTPUT
-			| TOKEN_RDIR_APPEND
-			| TOKEN_RDIR_HEREDOC,
+				| TOKEN_RDIR_OUTPUT
+				| TOKEN_RDIR_APPEND
+				| TOKEN_RDIR_HEREDOC,
 	TOKEN_STR_QUOTE = TOKEN_STR_SQUOTE
 					| TOKEN_STR_DQUOTE,
 	TOKEN_STR = TOKEN_STR_PLAIN
 				| TOKEN_STR_QUOTE,
+	TOKEN_ALL = ~0,
 }	t_token_type;
 
 typedef struct s_token {

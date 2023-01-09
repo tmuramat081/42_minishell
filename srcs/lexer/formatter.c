@@ -33,6 +33,8 @@ static t_token *format_quote(t_token *token)
  */
 void	format_token(t_token *token)
 {
+	if (!token || !token->data)
+		return ;
 	format_space(token);
 	format_quote(token);
 }

@@ -17,7 +17,7 @@ static t_ast_node	*parse_pipeline2(t_vector *tokens, t_token **curr)
 {
 	t_ast_node *node;
 
-	node = parse_redirection(tokens, curr);
+	node = parse_redirect(tokens, curr);
 	return (node);
 }
 
@@ -29,7 +29,7 @@ static t_ast_node	*parse_pipeline1(t_vector *tokens, t_token **curr)
 	t_ast_node	*node;
 	char		*pipeline;
 
-	lhs_node = parse_redirection(tokens, curr);
+	lhs_node = parse_redirect(tokens, curr);
 	if (!lhs_node)
 		return (NULL);
 	if (!consume_token(tokens, TOKEN_PIPELINE, curr, &pipeline))

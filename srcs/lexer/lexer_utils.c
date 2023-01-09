@@ -49,11 +49,13 @@ void	emit(t_tokenizer *tk, t_token_type token_type)
 	t_token *token;
 
 	token = (t_token *)ft_xmalloc(sizeof(t_token));
-	token->data = ft_substr(tk->str, tk->start, tk->pos - tk->start);
+	if (token_type == TOKEN_END)
+		token->data = NULL;
+	else
+		token->data = ft_substr(tk->str, tk->start, tk->pos - tk->start);
 	token->type = token_type;
 	format_token(token);
-	if (*token->data)
-		ft_vector_push_back(tk->tokens, token);
+	ft_vector_push_back(tk->tokens, token);
 	tk->start = tk->pos;
 }
 
