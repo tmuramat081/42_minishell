@@ -29,25 +29,32 @@ static const t_builtin g_builtins[8] = {
 	{NULL, NULL},
 };
 
-void	reset_redirection(t_process process)
+bool	is_builtin(char *args)
 {
-	(void)process;
-	return ;
+	size_t i;
+
+	i = 0;
+	while (g_builtins[i].symbol)
+	{
+		if (!ft_strcmp(args, g_builtins[i].symbol))
+			return (true);
+		i++;
+	}
+	return (false);
 }
 
 /**
  * @brief 内部コマンドを実行する
  *
- * @param args　コマンドの引数（0番目はプログラム名）
+ * @param args　コマンドに渡す引数の配列（[0]はコマンド名）
  * @param msh シェルの管理情報
+ * @return int 実行したコマンドの戻り値を返す。コマンドが見つからなければ1を返す。
  */
-int		maybe_exec_internal_command(char **args, t_process process, t_shell *msh)
+int		exec_internal_command(char **args, t_process process, t_shell *msh)
 {
 	size_t	i;
-
-	int fd_backup = dup(STDOUT_FILENO);
-	if (process.redirect_file)
-		set_redirection(process);
+	(void)process;
+	
 	i = 0;
 	while (g_builtins[i].symbol)
 	{
@@ -55,8 +62,5 @@ int		maybe_exec_internal_command(char **args, t_process process, t_shell *msh)
 			return (g_builtins[i].func(args, msh));
 		i++;
 	} 
-	dup2(STDOUT_FILENO, fd_backup);
-	close(fd_backup);
-	reset_redirection(process);
 	return (1);
 }

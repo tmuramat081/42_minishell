@@ -30,7 +30,6 @@ static char	**init_arguments(t_ast_node *node)
 	return (args);
 }
 
-
 /**
  * @brief 実行処理；コマンド
  * 
@@ -42,8 +41,12 @@ void	exec_command(t_ast_node *node, t_process process, t_shell *msh)
     char **args;
 
 	args = init_arguments(node);
-	if (maybe_exec_internal_command(args, process, msh))
-    	exec_external_command(args, process, msh);
+	
+    if (process.redirect_file)
+        set_redirection(&process);
+	if (is_builtin(args[0]) == true)
+		exec_internal_command(args, process, msh);
+	else
+   		exec_external_command(args, process, msh);
+	reset_redirection(&process);
 }
-
-
