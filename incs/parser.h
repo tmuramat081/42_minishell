@@ -6,7 +6,7 @@
 /*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 10:21:31 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/09 17:36:04 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/01/12 00:08:42 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,14 @@
 # include "libast.h"
 # include "libft.h"
 # include "ft_vector.h"
+# include "ft_deque.h"
 # include "minishell.h"
 
+typedef struct s_command
+{
+	t_deque *arg;
+	t_deque *redirect;
+}   t_command;
 
 t_ast		*parser(t_vector *tokens, t_shell *msh);
 t_ast_node	*parse_separator(t_vector *tokens, t_token **curr);
