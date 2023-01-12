@@ -27,12 +27,12 @@ t_process *init_process(void)
  * @param syntax_tree 抽象構文木
  * @param msh 
  */
-void execute_syntax_tree(t_ast *syntax_tree, t_shell *msh)
+void execute_syntax_tree(t_ast_node *syntax_tree, t_shell *msh)
 {
 	t_process *process;
 
 	if (!syntax_tree)
 		return ;
 	process = init_process();
-	exec_separator(syntax_tree->root, msh);
+	exec_separator(syntax_tree, msh);
 }

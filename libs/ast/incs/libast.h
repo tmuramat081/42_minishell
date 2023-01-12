@@ -7,6 +7,9 @@ typedef struct s_ast_node t_ast_node;
 typedef struct s_ast t_ast;
 typedef	enum e_node_type t_node_type;
 typedef struct s_data t_data;
+typedef struct s_redirect t_redirect;
+typedef struct s_command t_command;
+typedef struct s_arg t_arg;
 
 enum e_node_type {
 	NODE_PIPELINE		= (1 << 0),
@@ -21,12 +24,32 @@ enum e_node_type {
 	NODE_ALL			= ~0
 };
 
+struct s_arg
+{
+	char	*arg;
+	t_arg	*next;
+};
+
+struct s_redirect
+{
+	t_node_type 	dir;
+	int				fd;
+	char			*file;
+	t_redirect		*next;
+};
+
+struct s_command
+{
+	t_arg		*args;
+	t_redirect	*redirects;
+};
+
 struct s_ast_node
 {
 	int			type;
 	t_ast_node	*left;
 	t_ast_node	*right;
-	void		*data;
+	t_command	*command;
 };
 
 struct s_ast
@@ -37,7 +60,8 @@ struct s_ast
 };
 
 t_ast		*ast_init(void);
-void		ast_node_create (t_ast_node* root , t_ast_node* lhs , t_ast_node* rhs);
+t_ast_node	*ast_node_create (void);
+t_ast_node	*ast_parent_create (t_ast_node* left, t_ast_node* right);
 void		ast_node_delete (t_ast_node* node );
 void		ast_node_set_type (t_ast_node* node , t_node_type node_type);
 void		ast_node_set_data (t_ast_node* node , char * data);

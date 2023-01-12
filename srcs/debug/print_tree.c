@@ -39,6 +39,30 @@ char	*get_node_type(t_node_type	type)
 	return ("[N/A]");
 }
 
+void	print_arg(void *p_arg)
+{
+	char *arg = p_arg;
+	ft_printf("%s \n", arg);
+}
+
+void	print_redirect(void *p_redirect)
+{
+	t_redirect *redirect;
+
+	redirect = p_redirect;
+	ft_printf("%s ", redirect->file);
+}
+
+void	print_node_command(void *p_command)
+{
+	t_command *cmd;
+
+	cmd = (t_command *)p_command;
+	ft_deque_foreach(cmd->arg, print_arg);
+	ft_deque_foreach(cmd->redirect, print_redirect);
+}
+
+
 void	print_indent(int depth)
 {
 	while (depth--)
@@ -49,7 +73,8 @@ void	print_node(t_ast_node *node)
 {
 	ft_printf("-");
 	ft_printf("%s ", get_node_type(node->type));
-	ft_printf("%s\n", node->data);
+	if (node->type & NODE_COMMAND)
+		print_node_command(node->data);
 }
 
 void	print_nodes_rec(t_ast_node *node, int depth)
@@ -62,10 +87,10 @@ void	print_nodes_rec(t_ast_node *node, int depth)
 	print_nodes_rec(node->right, depth + 1);
 }
 
-void	print_nodes(t_ast *ast)
+void	print_nodes(t_ast_node *node)
 {
 	ft_printf("\n%s>>>> PARSER >>>>", GREEN);
 	ft_printf("\n===============================================\n");
-	print_nodes_rec(ast->root, 0);
+	print_nodes_rec(node, 0);
 	ft_printf("===============================================%s\n\n", DEFAULT);
 }
