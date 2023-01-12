@@ -3,7 +3,6 @@ NAME := libast.a
 CC := gcc
 
 SRCS := \
-	astree_init.c \
 	astree_create.c \
 	astree_delete.c \
 	astree_set.c \

@@ -52,21 +52,12 @@ struct s_ast_node
 	t_command	*command;
 };
 
-struct s_ast
-{
-	t_ast_node	*root;
-	size_t		len;
-	int			error;
-};
-
-t_ast		*ast_init(void);
 t_ast_node	*ast_node_create (void);
 t_ast_node	*ast_parent_create (t_ast_node* left, t_ast_node* right);
+t_command	*ast_command_create(void);
 void		ast_node_delete (t_ast_node* node );
 void		ast_node_set_type (t_ast_node* node , t_node_type node_type);
-void		ast_node_set_data (t_ast_node* node , char * data);
-void		ast_node_set(t_ast_node *node, t_node_type type, char *data);
-void		ast_delete(t_ast **ast);
 size_t		ast_count_nodes(t_ast_node *root);
-
+void		append_arg(t_command *command, char *word);
+void		append_redirect(t_command *command, t_redirect *redirect);
 #endif

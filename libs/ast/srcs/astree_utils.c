@@ -8,18 +8,23 @@ size_t  ast_count_nodes(t_ast_node *root)
 }
 
 
-t_command  *command_create(void)
+void	append_redirect(t_command *command, t_redirect *redirect)
 {
-	t_command *command;
+	t_redirect *tmp;
 
-	command = ft_xmalloc(sizeof(t_command));
-	command->arg = ft_deque_init(sizeof(char *), 1);
-	command->redirect = ft_deque_init(sizeof(char *), 1);
-	return (command);
+	tmp = command->redirects;
+	while (tmp)
+		tmp = tmp->next;
+	tmp = redirect;
+
 }
 
-void	append_word(t_deque *list, void *word)
+void	append_arg(t_command *command, char *word)
 {
-	if (!ft_deque_push_back(list, &word))
-		exit(EXIT_FAILURE);
+	t_arg	*tmp;
+
+	tmp = command->args;
+	while (tmp)
+		tmp = tmp->next;
+	tmp->arg = word;
 }
