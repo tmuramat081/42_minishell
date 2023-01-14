@@ -38,34 +38,6 @@
  *
 **/
 
-void	next_token(t_vector *tokens, t_token **curr)
-{
-	*curr = (t_token *)ft_vector_next(tokens, *curr, 1);;
-}
-
-/**
- * @brief 解析対象の文字を取得し、対象を次に移す。
- *
- * @param tokens トークンのリスト
- * @param toketype　判定したいトークンの種別　
- * @param curr　現在解析しているトークン
- * @param buff　正であればbuffにトークンの文字列を書き込む
- * @return true
- * @return false
- */
-char *scan_token(t_vector *tokens, t_token **curr)
-{
-	char *buff;
-
-	if (!curr || !*curr)
-		return (NULL);
-	buff = ft_strdup((*curr)->data);
-	if (!buff)
-		return (NULL);
-	next_token(tokens, curr);
-    return (buff);
-}
-
 /**
  * @brief 再帰下降パーサーにより抽象構文木を作成する
  *
@@ -80,6 +52,6 @@ t_ast_node	*parser(t_vector *tokens, t_shell *msh)
 
 	(void)msh;
 	curr_token = ft_vector_front(tokens);
-	syntax_tree = parse_simple_cmd(tokens, &curr_token);
+	syntax_tree = parse_command_line(tokens, &curr_token);
 	return (syntax_tree);
 }

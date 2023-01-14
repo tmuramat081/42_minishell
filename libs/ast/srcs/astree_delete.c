@@ -1,19 +1,20 @@
 #include "libast.h"
 #include <stdlib.h>
 
-void 	ast_argument_delete(t_argument *argument)
+void 	ast_arguments_delete(t_argument *argument)
 {
 	t_argument	*tmp;
-	while (tmp)
+
+	while (argument)
 	{
 		tmp = argument->next;
 		free(tmp->argument);
-		tmp = tmp->next;
+		argument = tmp;
 	}
 	free(argument);
 }
 
-void	ast_redirect_delete(t_redirect *redirect)
+void	ast_redirects_delete(t_redirect *redirect)
 {
 	t_redirect	*tmp;
 
@@ -32,8 +33,8 @@ void	ast_command_delete(t_command *command)
 {
 	if (!command)
 		return ;
-	ast_redirect_delete(command->redirects);
-	ast_argument_delete(command->arguments);
+	ast_redirects_delete(command->redirects);
+	ast_arguments_delete(command->arguments);
 	free(command);
 }
 

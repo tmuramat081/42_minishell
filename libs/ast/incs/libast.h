@@ -77,7 +77,10 @@ t_argument	*ast_argument_create(char *word);
 t_redirect	*ast_redirect_create(int type, int fd, char *file);
 
 /** Destructor functions */
-void		ast_node_delete (t_ast_node* node );
+void		ast_node_delete (t_ast_node* node);
+void		ast_command_delete (t_command* command);
+void		ast_arguments_delete (t_argument* arguments);
+void		ast_redirects_delete (t_redirect* redirects);
 
 /** Setter functions */
 void		ast_node_set_type (t_ast_node* node , t_node_type node_type);

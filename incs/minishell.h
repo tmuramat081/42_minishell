@@ -44,5 +44,6 @@ void		print_tokens(t_vector *tokens);
 void		print_nodes(t_ast_node *node);
 void		print_output(void);
 void		print_input(char *line);
+char		*get_node_type(t_node_type	type);
 
 #endif
