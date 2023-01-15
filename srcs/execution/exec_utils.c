@@ -11,6 +11,7 @@
 
 #include "execution.h"
 #include "ft_snprintf.h"
+#include "ft_printf.h"
 
 /**
  * @brief ベクター型を文字列の配列に変換する
@@ -32,9 +33,13 @@ char	**convert_vector_to_array(t_vector *src)
 		if(!ft_vector_pop_back(src, &env))
 			return (NULL);
 		if (env.key && env.value)
+		{
 			len = ft_strlen(env.key) + ft_strlen(env.value) + 1 + 1;
-		arr[i] = (char *)ft_xmalloc(sizeof(char) * len);
-		ft_snprintf(arr[i], len, "%s=%s", env.key, env.value);
+			arr[i] = (char *)ft_xmalloc(sizeof(char) * len);
+			ft_snprintf(arr[i], len, "%s=%s", env.key, env.value);
+		}
+		free(env.key);
+		free(env.value);
 		i++;
 	}
 	arr[i] = NULL;
@@ -71,9 +76,10 @@ char	**construct_environ(t_hashmap *envs)
 	t_vector	*tmp_envs;
 	char		**envp;
 
-	tmp_envs = ft_vector_init(sizeof(t_env), 32);
+	tmp_envs = ft_vector_init(sizeof(t_env), 64);
 	ft_hashmap_iterate(envs, set_env, tmp_envs);
 	envp = convert_vector_to_array(tmp_envs);
 	ft_vector_delete(&tmp_envs);
+	ft_hashmap_delete(&envs);
 	return (envp);
 }

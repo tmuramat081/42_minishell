@@ -13,6 +13,7 @@
 #include "minishell.h"
 #include "ft_snprintf.h"
 #include "ft_hashmap.h"
+#include "ft_printf.h"
 
 /**
  * @brief 環境変数テーブルからPATHの値を取得する。
@@ -25,12 +26,14 @@ char 	*get_environ_value(char *const envp[], char *key)
 	size_t	i;
 	size_t	key_len;
 
+	if (!envp || !*envp)
+		return (NULL);
 	key_len = ft_strlen(key);
 	i = 0;
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], key, key_len) == 0)
-			return (&envp[i][key_len + 1]);
+			return (&envp[i][key_len]);
 		i++;
 	}
 	return (NULL);
@@ -71,7 +74,7 @@ void	try_executable_path(char **paths, const char *file, char *const argv[], cha
 	while (paths[i])
 	{
 		path_len = ft_strlen(paths[i]);
-		buffer = (char *)malloc(sizeof(char) * (file_len + path_len + 1 + 1));
+		buffer = (char *)ft_xmalloc(sizeof(char) * (file_len + path_len + 1 + 1));
 		ft_snprintf(buffer, file_len + path_len + 1 + 1, "%s/%s", paths[i], file);
 		execve(buffer, argv, envp);
 		if (!is_expected_error())
@@ -104,7 +107,9 @@ int	ft_execvpe(const char *file, char *const argv[], char *const envp[])
 		execve(file, argv, envp);
 		return (-1);
 	}
-	raw_path = get_environ_value(envp, "PATH");
+	raw_path = get_environ_value(envp, "PATH=");
+	if (!raw_path)
+		return (-1);
 	paths = ft_split(raw_path, ':');
 	try_executable_path(paths, file, argv, envp);
 	return (-1);
