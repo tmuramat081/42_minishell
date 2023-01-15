@@ -1,11 +1,18 @@
 #ifndef LIBAST_H
 # define LIBAST_H
 
-#define NODETYPE(a) (a & (~NODE_DATA))	// get the type of the nodes
-
 #include <stdio.h>
 
-typedef enum e_node_type {
+typedef struct s_ast_node t_ast_node;
+typedef struct s_ast t_ast;
+typedef	enum e_node_type t_node_type;
+typedef struct s_data t_data;
+typedef struct s_redirect t_redirect;
+typedef struct s_command t_command;
+typedef struct s_argument t_argument;
+
+enum e_node_type {
+	NODE_NONE			= 0,
 	NODE_PIPELINE		= (1 << 0),
 	NODE_SEQUENCE 		= (1 << 1),
 	NODE_RDIR_INPUT 	= (1 << 2),
@@ -16,31 +23,76 @@ typedef enum e_node_type {
 	NODE_ARGUMENT		= (1 << 7),
 	NODE_FILENAME 		= (1 << 8),
 	NODE_ALL			= ~0
-}	t_node_type;
+};
 
-typedef struct s_ast_node
+/**
+ * @struct t_argument
+ * @brief Command arguments list.
+ */
+struct s_argument
 {
-	int					type;
-	char				*data;
-	struct	s_ast_node	*left;
-	struct	s_ast_node	*right;
-} t_ast_node;
+	char		*argument;
+	t_argument	*next;
+};
 
-typedef struct s_ast
+/**
+ * @struct t_redirect
+ * @brief Command redirection list.
+ */
+struct s_redirect
 {
-	t_ast_node	*root;
-	size_t		len;
-	int			error;
-}	t_ast;
+	t_node_type 	dir;
+	int				fd;
+	char			*file;
+	t_redirect		*next;
+};
 
+/**
+ * @struct t_command_node
+ * @brief Leaf node for the shell syntax.
+ */
+struct s_command
+{
+	t_argument	*arguments;
+	t_redirect	*redirects;
+};
+
+/**
+ * @struct t_ast_node
+ * @brief Tree node for the shell syntax.
+ */
+struct s_ast_node
+{
+	t_node_type	type;
+	t_ast_node	*left;
+	t_ast_node	*right;
+	t_command	*command;
+};
+
+/** Constructor functions */
+t_ast_node	*ast_node_create (void);
+t_ast_node	*ast_parent_create (t_ast_node* left, t_ast_node* right);
+t_command	*ast_command_create(void);
+t_argument	*ast_argument_create(char *word);
+t_redirect	*ast_redirect_create(int type, int fd, char *file);
+
+/** Destructor functions */
+void		ast_node_delete (t_ast_node* node);
+void		ast_command_delete (t_command* command);
+void		ast_arguments_delete (t_argument* arguments);
+void		ast_redirects_delete (t_redirect* redirects);
+
+/** Setter functions */
+void		ast_node_set_type (t_ast_node* node , t_node_type node_type);
+void		ast_append_argument(t_command *command, t_argument *new_arg);
+void		ast_append_redirect(t_command *command, t_redirect *new_redirect);
+
+/** Getter functions */
+char		*ast_get_command_name(t_command *command);
+size_t		ast_count_redirects(t_redirect *redirects);
+size_t		ast_count_arguments(t_argument *arguments);
+
+/** Util functions */
 size_t		ast_count_nodes(t_ast_node *root);
-void		ast_attach_binary_branch (t_ast_node* root , t_ast_node* leftNode , t_ast_node* rightNode);
-void		ast_node_set_type (t_ast_node* node , t_node_type nodetype);
-void		ast_node_set_data (t_ast_node* node , char * data);
-void		ast_node_set(t_ast_node *node, t_node_type type, char *data);
-void		ast_node_delete (t_ast_node* node );
-t_ast		*ast_init(void);
-void		*ast_delete(t_ast **ast);
-t_ast_node	*ast_root(t_ast **ast);
 
 #endif

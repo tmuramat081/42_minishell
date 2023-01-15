@@ -6,7 +6,7 @@
 /*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/08 15:33:22 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/01/12 08:04:03 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	boot_minishell(t_shell	*msh)
 {
 	char		*line;
 	t_vector	*lexed_tokens;
-	t_ast		*syntax_tree;
+	t_ast_node	*syntax_tree;
 
 	line = NULL;
 	ignore_signal();

@@ -14,53 +14,29 @@
 #include "libast.h"
 #include "minishell.h"
 
-/**		Backus-Naur Form(NBF)
+/**		Backus-Naur Form (BNF)
  *
 	<command_line>	::= <pipeline> ';' <command_line>
 					|	<pipeline> ';'
 					|	<pipeline>
 
-	<pipeline>		::=	<redirection> '|' <pipeline>
-					|	<redirection>
+	<pipeline>		::=	<simple_cmd> '|' <pipeline>
+					|	<simple_cmd>
 
-	<redirection>	::=	<command> '>' <filename>
-					|	<command> '>>' <filename>
-					|	<command> '<' <filename>
-					|	<command> '<<' <filename>
-					|	<command>
+	<simple_cmd>	::= cmd_name
+					|	cmd_name <cmd_suffix>
 
-	<command>		::=	<pathname> <token_list>
-					|	<pathname>
+	<cmd_suffix>	::= 			 <io_redirect>
+					|	<cmd_suffix> <io_redirect>
+					|				 word
+					|	<cmd_suffix> word
 
-	<token_list>	::=	<token> <token_list>
-					|	(EMPTY)
+	<io_redirect>	::= '>'  filename
+					| 	'>>' filename
+					| 	'<'  filename
+					| 	'<<' here_end
  *
 **/
-
-/**
- * @brief 解析しているトークンの種類が一致するか判定し、次のトークンを取得する
- *
- * @param tokens トークンのリスト
- * @param toketype　判定したいトークンの種別　
- * @param curr　現在解析しているトークン
- * @param buff　正であればbuffにトークンの文字列を書き込む
- * @return true
- * @return false
- */
-bool consume_token(t_vector *tokens, t_token_type token_type, t_token **curr, char **buff)
-{
-	if (!curr || !*curr)
-		return (false);
-    if (token_type & (*curr)->type)
-    {
-		if (buff)
-			*buff = ft_strdup((*curr)->data);
-		*curr = (t_token *)ft_vector_next(tokens, *curr, 1);
-        return (true);
-    }
-	*curr = (t_token *)ft_vector_next(tokens, *curr, 1);;
-    return (false);
-}
 
 /**
  * @brief 再帰下降パーサーにより抽象構文木を作成する
@@ -69,14 +45,13 @@ bool consume_token(t_vector *tokens, t_token_type token_type, t_token **curr, ch
  * @param msh shellのステータスを管理する構造体
  * @return t_ast* 抽象構文木
  */
-t_ast	*parser(t_vector *tokens, t_shell *msh)
+t_ast_node	*parser(t_vector *tokens, t_shell *msh)
 {
-	t_ast	*syntax_tree;
-	t_token	*curr_token;
+	t_ast_node	*syntax_tree;
+	t_token		*curr_token;
 
 	(void)msh;
 	curr_token = ft_vector_front(tokens);
-	syntax_tree = ast_init();
-	syntax_tree->root = parse_separator(tokens, &curr_token);
+	syntax_tree = parse_command_line(tokens, &curr_token);
 	return (syntax_tree);
 }

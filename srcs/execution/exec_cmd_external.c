@@ -12,7 +12,7 @@
  * @param args
  * @param msh
  */
-void	exec_external_command(char **args, t_process process, t_shell *msh)
+void	exec_external_command(t_process process, t_shell *msh)
 {
 	pid_t	pid;
 	(void)msh;
@@ -21,7 +21,7 @@ void	exec_external_command(char **args, t_process process, t_shell *msh)
 	pid = fork();
 	if (pid == 0)
 	{
-		ft_execvpe(args[0], args, construct_environ(msh->envs));
+		ft_execvpe(process.argv[0], process.argv, construct_environ(msh->envs));
 		perror("command not found\n");
 		exit (EXIT_FAILURE);
 	}

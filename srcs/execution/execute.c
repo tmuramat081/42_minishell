@@ -22,17 +22,17 @@ t_process *init_process(void)
 }
 
 /**
- * @brief executerのエントリーポイント
- * 
+ * @brief コマンド実行のエントリーポイント
+ *
  * @param syntax_tree 抽象構文木
- * @param msh 
+ * @param msh
  */
-void execute_syntax_tree(t_ast *syntax_tree, t_shell *msh)
+void execute_syntax_tree(t_ast_node *syntax_tree, t_shell *msh)
 {
 	t_process *process;
 
 	if (!syntax_tree)
 		return ;
 	process = init_process();
-	exec_separator(syntax_tree->root, msh);
+	exec_command_line(syntax_tree, msh);
 }

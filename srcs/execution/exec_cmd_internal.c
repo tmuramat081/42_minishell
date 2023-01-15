@@ -16,13 +16,13 @@
 
 /**
  * @brief ビルトイン関数群
- * 
+ *
  */
 static const t_builtin g_builtins[8] = {
 	{"echo", &builtin_echo},
 	{"cd", &builtin_cd},
 	{"pwd", &builtin_pwd},
-	{"export", &builtin_export}, 
+	{"export", &builtin_export},
 	{"unset", &builtin_unset},
 	{"env", &builtin_env},
 	{"exit", &builtin_exit},
@@ -50,17 +50,16 @@ bool	is_builtin(char *args)
  * @param msh シェルの管理情報
  * @return int 実行したコマンドの戻り値を返す。コマンドが見つからなければ1を返す。
  */
-int		exec_internal_command(char **args, t_process process, t_shell *msh)
+int		exec_internal_command(t_process process, t_shell *msh)
 {
 	size_t	i;
-	(void)process;
-	
+
 	i = 0;
 	while (g_builtins[i].symbol)
 	{
-		if (!ft_strcmp(args[0], g_builtins[i].symbol))
-			return (g_builtins[i].func(args, msh));
+		if (!ft_strcmp(process.argv[0], g_builtins[i].symbol))
+			return (g_builtins[i].func(process.argv, msh));
 		i++;
-	} 
+	}
 	return (1);
 }

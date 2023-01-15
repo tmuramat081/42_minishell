@@ -22,21 +22,39 @@ char	*get_node_type(t_node_type	type)
 		return("[PIPELINE]");
 	else if (type & NODE_SEQUENCE)
 		return("[SEQUENCE]");
-	else if (type & NODE_RDIR_INPUT)
-		return("[RDIR_INPUT]");
-	else if (type & NODE_RDIR_OUTPUT)
-		return("[RDIR_OUTPUT]");
-	else if (type & NODE_RDIR_APPEND)
-		return("[RDIR_APPEND]");
-	else if (type & NODE_RDIR_HEREDOC)
-		return("[RDIR_HEREDOC]");
 	else if (type & NODE_COMMAND)
 		return("[COMMAND]");
 	else if (type & NODE_ARGUMENT)
 		return("[ARGUMENT]");
-	else if (type & NODE_FILENAME)
-		return("[FILENAME]");
+	else if (type & NODE_RDIR_INPUT)
+		return("<");
+	else if (type & NODE_RDIR_OUTPUT)
+		return(">");
+	else if (type & NODE_RDIR_APPEND)
+		return(">>");
+	else if (type & NODE_RDIR_HEREDOC)
+		return("<<");
 	return ("[N/A]");
+}
+
+void	print_node_command(t_command *command)
+{
+	t_argument		*arg_tmp;
+	t_redirect	*redirect_tmp;
+
+	redirect_tmp = command->redirects;
+	while (redirect_tmp)
+	{
+		ft_printf("dir:%d%s file:%s ", redirect_tmp->fd, get_node_type(redirect_tmp->dir), redirect_tmp->file);
+		redirect_tmp = redirect_tmp->next;
+	}
+	arg_tmp = command->arguments;
+	ft_printf("argv: ");
+	while (arg_tmp)
+	{
+		ft_printf("%s ", arg_tmp->argument);
+		arg_tmp = arg_tmp->next;
+	}
 }
 
 void	print_indent(int depth)
@@ -49,7 +67,9 @@ void	print_node(t_ast_node *node)
 {
 	ft_printf("-");
 	ft_printf("%s ", get_node_type(node->type));
-	ft_printf("%s\n", node->data);
+	if (node->type & NODE_COMMAND)
+		print_node_command(node->command);
+	ft_printf("\n");
 }
 
 void	print_nodes_rec(t_ast_node *node, int depth)
@@ -62,10 +82,10 @@ void	print_nodes_rec(t_ast_node *node, int depth)
 	print_nodes_rec(node->right, depth + 1);
 }
 
-void	print_nodes(t_ast *ast)
+void	print_nodes(t_ast_node *node)
 {
 	ft_printf("\n%s>>>> PARSER >>>>", GREEN);
 	ft_printf("\n===============================================\n");
-	print_nodes_rec(ast->root, 0);
+	print_nodes_rec(node, 0);
 	ft_printf("===============================================%s\n\n", DEFAULT);
 }

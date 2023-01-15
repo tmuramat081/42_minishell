@@ -14,54 +14,26 @@
 #include "libast.h"
 #include "minishell.h"
 
-t_ast_node	*parse_argument(t_vector *, t_token **);
-
-// [empty]
-t_ast_node	*parse_argument2(t_vector *tokens, t_token **curr)
-{
-	(void)tokens;
-	(void)curr;
-	return (NULL);
-}
-
-// <arg> <argument>
-t_ast_node	*parse_argument1(t_vector *tokens, t_token **curr)
-{
-	t_ast_node	*rhs_node;
-	t_ast_node	*node;
-	char		*arg;
-
-	if (!consume_token(tokens, TOKEN_STR, curr, &arg))
-		return (NULL);
-	rhs_node = parse_argument(tokens, curr);
-	node = ft_xmalloc(sizeof(t_ast_node));
-	ast_node_set(node, NODE_ARGUMENT, arg);
-	ast_attach_binary_branch(node, NULL, rhs_node);
-	return (node);
-}
+/**
+ * @note
+ * [BNF]
+ * <word> := word
+ * [EBNF]
+ * word := 'word'
+ */
 
 /**
- * @brief コマンド引数の解析
+ * @brief 引数の解析
  *
  * @param tokens
  * @param curr
- * @return t_ast_node*
+ * @return t_argument*
  */
-t_ast_node	*parse_argument(t_vector *tokens, t_token **curr)
+t_argument	*parse_argument(t_vector *tokens, t_token **curr)
 {
-	t_token *save;
-	t_ast_node* node;
+	char		*arg;
 
-//	printf("ARGS\n");
-	save = *curr;
-	*curr = save;
-	node = parse_argument1(tokens, curr);
-	if (node)
-		return (node);
-	*curr = save;
-	node = parse_argument2(tokens, curr);
-	if (node)
-		return (node);
-	return (NULL);
+	arg = scan_token(tokens, curr);
+	return(ast_argument_create(arg));
 }
 

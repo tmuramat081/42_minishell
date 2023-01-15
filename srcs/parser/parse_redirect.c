@@ -13,154 +13,55 @@
 #include "lexer.h"
 #include "parser.h"
 
-// <command>
-static t_ast_node	*parse_redirect5(t_vector *tokens, t_token **curr)
-{
-	return (parse_command(tokens, curr));
-}
-
-
-// <command> '<<' 'filename'
-static t_ast_node	*parse_redirect4(t_vector *tokens, t_token **curr)
-{
-	t_ast_node	*node;
-	t_ast_node	*rhs_node;
-	char		*filename;
-
-	rhs_node = parse_command(tokens, curr);
-	if (!rhs_node)
-		return (NULL);
-	if (!consume_token(tokens, TOKEN_RDIR_HEREDOC, curr, NULL))
-	{
-		ast_node_delete(rhs_node);
-		return (NULL);
-	}
-	if (!consume_token(tokens, TOKEN_STR, curr, &filename))
-	{
-		free(filename);
-		ast_node_delete(rhs_node);
-		return (NULL);
-	}
-	node = ft_xmalloc(sizeof(t_ast_node));
-	ast_node_set(node, NODE_RDIR_HEREDOC, filename);
-	ast_attach_binary_branch(node, NULL, rhs_node);
-	return (node);
-}
-
-// <command> '>>' 'filename'
-static t_ast_node	*parse_redirect3(t_vector *tokens, t_token **curr)
-{
-	t_ast_node	*node;
-	t_ast_node	*rhs_node;
-	char		*filename;
-
-	rhs_node = parse_command(tokens, curr);
-	if (!rhs_node)
-		return (NULL);
-	if (!consume_token(tokens, TOKEN_RDIR_APPEND, curr, NULL))
-	{
-		ast_node_delete(rhs_node);
-		return (NULL);
-	}
-	if (!consume_token(tokens, TOKEN_STR, curr, &filename))
-	{
-		free(filename);
-		ast_node_delete(rhs_node);
-		return (NULL);
-	}
-	node = ft_xmalloc(sizeof(t_ast_node));
-	ast_node_set(node, NODE_RDIR_APPEND, filename);
-	ast_attach_binary_branch(node, NULL, rhs_node);
-	return (node);
-}
-
-// <command> '>' 'filename'
-static t_ast_node	*parse_redirect2(t_vector *tokens, t_token **curr)
-{
-	t_ast_node	*node;
-	t_ast_node	*rhs_node;
-	char		*filename;
-
-	rhs_node = parse_command(tokens, curr);
-	if (!rhs_node)
-		return (NULL);
-	if (!consume_token(tokens, TOKEN_RDIR_OUTPUT, curr, NULL))
-	{
-		ast_node_delete(rhs_node);
-		return (NULL);
-	}
-	if (!consume_token(tokens, TOKEN_STR, curr, &filename))
-	{
-		free(filename);
-		ast_node_delete(rhs_node);
-		return (NULL);
-	}
-    node = ft_xmalloc(sizeof(t_ast_node));
-    ast_node_set(node, NODE_RDIR_OUTPUT, filename);
-    ast_attach_binary_branch(node, NULL, rhs_node);
-	return (node);
-}
-
-// <command> '<' 'filename'
-static t_ast_node	*parse_redirect1(t_vector *tokens, t_token **curr)
-{
-	t_ast_node	*node;
-	t_ast_node	*rhs_node;
-	char		*filename;
-
-	rhs_node = parse_command(tokens, curr);
-	if (!rhs_node)
-		return (NULL);
-	if (!consume_token(tokens, TOKEN_RDIR_INPUT, curr, NULL))
-	{
-		ast_node_delete(rhs_node);
-		return (NULL);
-	}
-	if (!consume_token(tokens, TOKEN_STR, curr, &filename))
-	{
-		free(filename);
-		ast_node_delete(rhs_node);
-		return (NULL);
-	}
-	node = ft_xmalloc(sizeof(t_ast_node));
-	ast_node_set(node, NODE_RDIR_INPUT, filename);
-	ast_attach_binary_branch(node, NULL, rhs_node);
-	return (node);
-}
+/**
+ * @note
+ * [BNF]
+ * <io_redirect>	::= '>'  filename
+ *					| 	'>>' filename
+ *					| 	'<'  filename
+ *					| 	'<<' here_end
+ * [EBNF]
+ * io_redirect		::= ('>' | '>>' | '<' | '<<') word
+ */
 
 /**
- * @brief  リダイレクトの解析
+ * @brief リダイレクの解析
  *
  * @param tokens
  * @param curr
- * @return t_ast_node*
+ * @return t_redirect* リダイレクトの管理情報
  */
-t_ast_node	*parse_redirect(t_vector *tokens, t_token **curr)
+t_redirect	*parse_io_redirect(t_vector *tokens, t_token **curr)
 {
-	t_token		*save;
-	t_ast_node* node;
+	int			dir;;
+	int			fd;
+	char		*file;
 
-//	puts("REDIRECT");
-	save = *curr;
-	node = parse_redirect1(tokens, curr);
-	if (node)
-		return (node);
-	*curr = save;
-	node = parse_redirect2(tokens, curr);
-	if (node)
-		return (node);
-	*curr = save;
-	node = parse_redirect3(tokens, curr);
-	if (node)
-		return (node);
-	*curr = save;
-	node = parse_redirect4(tokens, curr);
-	if (node)
-		return (node);
-	*curr = save;
-	node = parse_redirect5(tokens, curr);
-	if (node)
-		return (node);
-	return (NULL);
+	
+	fd = 0;
+	dir = NODE_NONE;
+	if ((*curr)->type & TOKEN_RDIR_INPUT)
+	{
+		fd = 0;
+		dir = NODE_RDIR_INPUT;
+	}
+	else if ((*curr)->type & TOKEN_RDIR_OUTPUT)
+	{
+		fd = 1;
+		dir = NODE_RDIR_OUTPUT;
+	}
+	else if ((*curr)->type & TOKEN_RDIR_APPEND)
+	{
+		fd = 1;
+		dir = NODE_RDIR_APPEND;
+	}
+	else if ((*curr)->type & TOKEN_RDIR_HEREDOC)
+	{
+		fd = 0;
+		dir = NODE_RDIR_HEREDOC;
+	}
+	next_token(tokens, curr);
+	file = scan_token(tokens, curr);
+	return (ast_redirect_create(dir, fd, file));
 }
 
