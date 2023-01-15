@@ -16,25 +16,25 @@ typedef struct s_builtin {
 typedef struct s_process {
 	char		**argv;
 	t_redirect	*redirects;
-	t_redirect	redirect_default;
 	int			fd_backup[3];
-	int			pipe;
+	int			pipe[2];
+	int			pipewrite;
+	int			piperead;
 }	t_process;
 
 
 /********* Builtin commands **********/
-int		builtin_unset(char **args, t_shell *msh);
-int		builtin_export(char **args, t_shell	*msh);
-int		builtin_env(char **args, t_shell *msh);
-int		builtin_echo(char **args, t_shell *msh);
-int		builtin_exit(char **args, t_shell *msh);
-int		builtin_cd(char **args, t_shell *msh);
-int		builtin_pwd(char **args, t_shell *msh);
+int		builtin_unset(char **argv, t_shell *msh);
+int		builtin_export(char **argv, t_shell	*msh);
+int		builtin_env(char **argv, t_shell *msh);
+int		builtin_echo(char **argv, t_shell *msh);
+int		builtin_exit(char **argv, t_shell *msh);
+int		builtin_cd(char **argv, t_shell *msh);
+int		builtin_pwd(char **argv, t_shell *msh);
 
-void	exec_command_line(t_ast_node *node, t_shell *msh);
-void	exec_pipeline(t_ast_node *node, t_shell *msh);
-void	exec_simple_cmd(t_ast_node *node, t_shell *msh);
-void	exec_redirect(t_ast_node *node, t_shell *msh);
+void	exec_command_line(t_ast_node *node, t_process process, t_shell *msh);
+void	exec_pipeline(t_ast_node *node, t_process process, t_shell *msh);
+void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh);
 
 void	execute_syntax_tree(t_ast_node *syntax_tree, t_shell *msh);
 int		exec_internal_command(t_process process, t_shell *msh);

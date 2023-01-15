@@ -13,14 +13,6 @@
 #include "minishell.h"
 #include "execution.h"
 
-t_process *init_process(void)
-{
-	t_process	*process;
-
-	process = ft_xmalloc(sizeof(t_process));
-	return (process);
-}
-
 /**
  * @brief コマンド実行のエントリーポイント
  *
@@ -29,10 +21,10 @@ t_process *init_process(void)
  */
 void execute_syntax_tree(t_ast_node *syntax_tree, t_shell *msh)
 {
-	t_process *process;
+	t_process process;
 
 	if (!syntax_tree)
 		return ;
-	process = init_process();
-	exec_command_line(syntax_tree, msh);
+	process = (t_process){};
+	exec_command_line(syntax_tree, process, msh);
 }

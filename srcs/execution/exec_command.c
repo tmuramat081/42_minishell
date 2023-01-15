@@ -36,16 +36,13 @@ static char	**init_arguments(t_argument *arguments)
  * @param command
  * @re urn t_process*
  */
-static t_process init_command_process(t_command *command)
+static void set_command_process(t_process *process, t_command *command)
 {
-	t_process process;
-
-	process.argv = init_arguments(command->arguments);
-	process.redirects = command->redirects;
-	process.fd_backup[0] = dup(STDIN_FILENO);
-	process.fd_backup[1] = dup(STDOUT_FILENO);
-	process.fd_backup[2] = dup(STDERR_FILENO);
-	return (process);
+	process->argv = init_arguments(command->arguments);
+	process->redirects = command->redirects;
+	process->fd_backup[0] = dup(STDIN_FILENO);
+	process->fd_backup[1] = dup(STDOUT_FILENO);
+	process->fd_backup[2] = dup(STDERR_FILENO);
 }
 
 /**
@@ -54,13 +51,11 @@ static t_process init_command_process(t_command *command)
  * @param node
  * @param msh
  */
-void	exec_simple_cmd(t_ast_node *node, t_shell *msh)
+void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh)
 {
-    t_process process;
-
-	if (!node->command)
+	if (!node || !node->command)
 		return ;
-	process = init_command_process(node->command);
+	set_command_process(&process, node->command);
     if (ast_count_redirects(process.redirects) > 0)
         set_redirection(&process);
 	if (is_builtin(process.argv[0]) == true)

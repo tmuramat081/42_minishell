@@ -33,6 +33,8 @@ bool	is_builtin(char *args)
 {
 	size_t i;
 
+	if (!args)
+		return (false);
 	i = 0;
 	while (g_builtins[i].symbol)
 	{
