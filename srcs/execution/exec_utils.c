@@ -13,7 +13,7 @@
 #include "ft_snprintf.h"
 
 /**
- * @brief ベクター型を文字列型配列に変換する
+ * @brief ベクター型を文字列の配列に変換する
  *
  * @param src
  * @return char**
@@ -61,7 +61,7 @@ static int	set_env(t_hashmap_data *map_data, void *p_envs)
 }
 
 /**
- * @brief ハッシュテーブルを文字列型配列に変換する
+ * @brief ハッシュテーブルを文字列の配列に変換する
  *
  * @param envs
  * @return char**

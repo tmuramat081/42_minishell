@@ -14,10 +14,11 @@ typedef struct s_builtin {
 }	t_builtin;
 
 typedef struct s_process {
-	int redirect_type;
-	char *redirect_file;
-	int	fd_backup;
-	int	pipe;
+	char		**argv;
+	t_redirect	*redirects;
+	t_redirect	redirect_default;
+	int			fd_backup[3];
+	int			pipe;
 }	t_process;
 
 
@@ -30,18 +31,18 @@ int		builtin_exit(char **args, t_shell *msh);
 int		builtin_cd(char **args, t_shell *msh);
 int		builtin_pwd(char **args, t_shell *msh);
 
-void	exec_command(t_ast_node *node, t_process process, t_shell *msh);
-void	exec_redirect(t_ast_node *node, t_shell *msh);
+void	exec_command_line(t_ast_node *node, t_shell *msh);
 void	exec_pipeline(t_ast_node *node, t_shell *msh);
-void	exec_separator(t_ast_node *node, t_shell *msh);
+void	exec_simple_cmd(t_ast_node *node, t_shell *msh);
+void	exec_redirect(t_ast_node *node, t_shell *msh);
 
 void	execute_syntax_tree(t_ast_node *syntax_tree, t_shell *msh);
-int		exec_internal_command(char **args, t_process process, t_shell *msh);
-void	exec_external_command(char **args, t_process process, t_shell *msh);
+int		exec_internal_command(t_process process, t_shell *msh);
+void	exec_external_command(t_process process, t_shell *msh);
 
 bool	is_builtin(char *args);
 void    set_redirection(t_process *process);
-void    reset_redirection(t_process *process);
+void    reset_redirection(t_process process);
 char	**construct_environ(t_hashmap *map);
 int		ft_execvpe(const char *file, char *const argv[], char *const envp[]);
 char	**convert_vector_to_array(t_vector *src);

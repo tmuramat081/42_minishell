@@ -89,6 +89,8 @@ void		ast_append_redirect(t_command *command, t_redirect *new_redirect);
 
 /** Getter functions */
 char		*ast_get_command_name(t_command *command);
+size_t		ast_count_redirects(t_redirect *redirects);
+size_t		ast_count_arguments(t_argument *arguments);
 
 /** Util functions */
 size_t		ast_count_nodes(t_ast_node *root);

@@ -2,10 +2,10 @@
 #include "libast.h"
 
 /**
- * @brief 実行処理：パイプライン 
- * 
- * @param node 
- * @param msh 
+ * @brief 実行処理：パイプライン
+ *
+ * @param node
+ * @param msh
  */
 void	exec_pipeline(t_ast_node *node, t_shell *msh)
 {
@@ -13,8 +13,8 @@ void	exec_pipeline(t_ast_node *node, t_shell *msh)
 		return ;
 	if (node->type & NODE_PIPELINE)
 	{
-        //TODO: パイプの実装
-        return ;
+		//TODO: パイプの実装
+		return ;
 	}
-	exec_redirect(node, msh);
+	exec_simple_cmd(node, msh);
 }

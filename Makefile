@@ -24,15 +24,18 @@ SRCS := \
 	lexer/lex_end.c \
 	lexer/lexer_utils.c \
 	parser/parser.c \
+	parser/parse_line.c \
 	parser/parse_command.c \
+	parser/parse_pipeline.c \
+	parser/parse_argument.c \
+	parser/parse_redirect.c \
 	parser/parser_utils.c \
 	execution/execute.c \
-	execution/exec_separator.c \
+	execution/exec_line.c \
 	execution/exec_pipeline.c \
-	execution/exec_redirect.c \
 	execution/exec_command.c \
-	execution/cmd_internal.c \
-	execution/cmd_external.c \
+	execution/exec_cmd_internal.c \
+	execution/exec_cmd_external.c \
 	execution/set_redirection.c \
 	execution/execvpe.c \
 	execution/exec_utils.c \
