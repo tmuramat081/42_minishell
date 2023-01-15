@@ -37,7 +37,6 @@ t_redirect	*parse_io_redirect(t_vector *tokens, t_token **curr)
 	int			fd;
 	char		*file;
 
-	
 	fd = 0;
 	dir = NODE_NONE;
 	if ((*curr)->type & TOKEN_RDIR_INPUT)

@@ -14,7 +14,7 @@
 
 /**
  * @brief プロンプト名を生成する
- * @detail　プロンプト名の文字列を動的に生成する。TODO: 環境変数PS1からの取得を要検討。
+ * @details　プロンプト名の文字列を動的に生成する。TODO: 環境変数PS1からの取得を要検討。
  * @return char*　生成した文字列
  */
 char	*get_prompt(void)

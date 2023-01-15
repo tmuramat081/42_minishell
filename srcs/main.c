@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:59:01 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/01 11:59:15 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/16 00:48:25 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 /**
  * @brief シェルの管理情報を初期化する
- * @detail 環境変数・プロンプト名
+ * @details 環境変数・プロンプト名
  * @return t_shell*
  */
 t_shell	*init_minishell(void)

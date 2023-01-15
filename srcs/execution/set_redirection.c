@@ -25,7 +25,7 @@ static int     open_file(t_redirect redirect)
 
 /**
  * @brief リダイレクト先の設定を行う。
- * @detail 新規にファイルを開き（open）、入力／出力先に指定（dup2）する。
+ * @details 新規にファイルを開き（open）、入力／出力先に指定（dup2）する。
  * @param process
  */
 void    set_redirection(t_process *process)
@@ -41,7 +41,6 @@ void    set_redirection(t_process *process)
     	new_fd = redirects->fd;
     	if (old_fd == -1)
     	{
-    	    printf("%d\n", errno);
     	    strerror(errno);
     	    exit(EXIT_FAILURE);
 		}
