@@ -189,7 +189,7 @@ git:
 #: Check norminette.
 norm:
 	@${PRINTF} "${RED}\nChecking norm for ${NAME}...${DEFAULT}\n "
-	@norminette ${SRC_DIR} inc/ libs/
+	@norminette ${SRCS_DIR} incs/ libs/
 
 #: Check allowed function.
 nm:

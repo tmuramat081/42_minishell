@@ -9,16 +9,16 @@ void	set_pipeline_process(t_process *process)
 	{
 		exit(EXIT_FAILURE);
 	}
-	process->pipewrite = process->pipe[1];
-	process->piperead = process->pipe[0];
+	process->writer = process->pipe[1];
+	process->reader = process->pipe[0];
 }
 
 
 
 void	reset_pipeline_process(t_process *process)
 {
-	process->piperead = process->pipe[0];
-	close(process->piperead);
+	process->reader = process->pipe[0];
+	close(process->writer);
 }
 
 
@@ -42,14 +42,14 @@ void	exec_pipeline(t_ast_node *node, t_process process, t_shell *msh)
 	next_node = node->right;
 	while (next_node && next_node->type & NODE_PIPELINE)
 	{
-		close(process.pipewrite);
+		close(process.writer);
 		pipe(process.pipe);
-		process.pipewrite = process.pipe[1];
+		process.writer = process.pipe[1];
 		exec_simple_cmd(node, process, msh);
-		close(process.piperead);
+		close(process.reader);
 		next_node = next_node->right;
 	}
 	reset_pipeline_process(&process);
 	exec_simple_cmd(next_node, process, msh);
-	close(process.piperead);
+	close(process.reader);
 }

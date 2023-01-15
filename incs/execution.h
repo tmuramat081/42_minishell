@@ -18,8 +18,8 @@ typedef struct s_process {
 	t_redirect	*redirects;
 	int			fd_backup[3];
 	int			pipe[2];
-	int			pipewrite;
-	int			piperead;
+	int			writer;
+	int			reader;
 }	t_process;
 
 

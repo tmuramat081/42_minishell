@@ -41,7 +41,7 @@ char 	*get_environ_value(char *const envp[], char *key)
 
 /**
  * @brief 実行可能なエラーかどうかを判定する。
- * @detail EACEESS:アクセス権限がない, ENOENT:パスが存在しない, ESTALE:ファイルハンドルが古い, ENOTDIR: ディレクトリではない, ENODEV: デバイスが存在しない, ETIMEDOUT: 操作がタイムアウトした
+ * @details EACEESS:アクセス権限がない, ENOENT:パスが存在しない, ESTALE:ファイルハンドルが古い, ENOTDIR: ディレクトリではない, ENODEV: デバイスが存在しない, ETIMEDOUT: 操作がタイムアウトした
  * @return true　上記のエラーである場合
  * @return false 上記以外のエラーである場合
  */
@@ -86,7 +86,7 @@ void	try_executable_path(char **paths, const char *file, char *const argv[], cha
 
 /**
  * @brief execvpeの実装
- * @detail ※GNU標準関数ではない（v - 引数配列渡し, p - PATH自動参照, e - 環境変数指定）。また、fileに'/'が含まれる場合はPATHを参照しない。
+ * @details ※GNU標準関数ではない（v - 引数配列渡し, p - PATH自動参照, e - 環境変数指定）。また、fileに'/'が含まれる場合はPATHを参照しない。
  * @param file  コマンド名
  * @param argv　起動引数
  * @param envp　環境変数
