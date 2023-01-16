@@ -17,9 +17,10 @@ typedef struct s_process {
 	char		**argv;
 	t_redirect	*redirects;
 	int			fd_backup[3];
-	int			pipe[2];
 	int			writer;
 	int			reader;
+	bool		stdin;
+	bool		stdout;
 }	t_process;
 
 

@@ -26,5 +26,7 @@ void execute_syntax_tree(t_ast_node *syntax_tree, t_shell *msh)
 	if (!syntax_tree)
 		return ;
 	process = (t_process){};
+	process.writer = -1;
+	process.reader = -1;
 	exec_command_line(syntax_tree, process, msh);
 }

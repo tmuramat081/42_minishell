@@ -3,16 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   hash.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 07:17:03 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/16 09:33:54 by event            ###   ########.fr       */
+/*   Updated: 2023/01/17 00:13:57 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_hashmap.h"
 
-const unsigned long	g_crc32_ta[] = {
+/**
+ *
+ *    for(uint32_t i = 0; i < 256; i++) {
+ *       uint32_t c = i << 24;
+ *       for( int j=0; j<8; j++){
+ *           c = (c << 1) ^ ( ( c & 0x80000000) ? 0x04C11DB7 : 0);
+ *       }
+ *       crc_table[i] = c;
+ *    }
+ *
+ */
+
+const unsigned long	g_crc32_tab[] = {
 	0x00000000L, 0x77073096L, 0xee0e612cL, 0x990951baL, 0x076dc419L,
 	0x706af48fL, 0xe963a535L, 0x9e6495a3L, 0x0edb8832L, 0x79dcb8a4L,
 	0xe0d5e91eL, 0x97d2d988L, 0x09b64c2bL, 0x7eb17cbdL, 0xe7b82d07L,
@@ -70,16 +82,16 @@ const unsigned long	g_crc32_ta[] = {
 static unsigned long	_crc32(const unsigned char *s, unsigned int len)
 {
 	unsigned int	i;
-	unsigned long	crc32val;
+	unsigned long	val;
 
-	crc32val = 0;
+	val = 0xffffffff;
 	i = 0;
 	while (i < len)
 	{
-		crc32val = g_crc32_tab[(crc32val ^ s[i]) & 0xff] ^ (crc32val >> 8);
+		val = g_crc32_tab[(val ^ s[i]) & 0xff] ^ (val >> 8);
 		i++;
 	}
-	return (crc32val);
+	return (val);
 }
 
 size_t	hashmap_hash_int(const void *data)
@@ -89,14 +101,5 @@ size_t	hashmap_hash_int(const void *data)
 
 	keystring = (char *)data;
 	key = _crc32((unsigned char *)(keystring), ft_strlen(keystring));
-	key += (key << 12);
-	key ^= (key >> 22);
-	key += (key << 4);
-	key ^= (key >> 9);
-	key += (key << 10);
-	key ^= (key >> 2);
-	key += (key << 7);
-	key ^= (key >> 12);
-	key = (key >> 3) * 2654435761;
 	return (key);
 }
