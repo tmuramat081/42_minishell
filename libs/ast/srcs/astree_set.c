@@ -1,16 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   astree_set.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/16 08:26:01 by event             #+#    #+#             */
+/*   Updated: 2023/01/16 08:26:02 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libast.h"
 #include <stdlib.h>
 
-void ast_node_set_type(t_ast_node *node, t_node_type type)
+void	ast_node_set_type(t_ast_node *node, t_node_type type)
 {
 	if (!node)
 		return ;
-    node->type = type;
+	node->type = type;
 }
 
 void	ast_append_redirect(t_command *command, t_redirect *new_redirect)
 {
-	t_redirect *curr;
+	t_redirect	*curr;
 
 	if (!command->redirects)
 	{

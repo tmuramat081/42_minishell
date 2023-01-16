@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   astree_create.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/16 08:22:11 by event             #+#    #+#             */
+/*   Updated: 2023/01/16 08:22:12 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libast.h"
 #include <stdlib.h>
 
@@ -11,7 +23,7 @@
  */
 t_redirect	*ast_redirect_create(int dir, int fd, char *file)
 {
-	t_redirect *new_redirect;
+	t_redirect	*new_redirect;
 
 	new_redirect = malloc(sizeof(t_redirect));
 	if (!new_redirect)
@@ -31,7 +43,7 @@ t_redirect	*ast_redirect_create(int dir, int fd, char *file)
  */
 t_argument	*ast_argument_create(char *arg)
 {
-	t_argument *new_arg;
+	t_argument	*new_arg;
 
 	new_arg = malloc(sizeof(t_argument));
 	if (!arg)
@@ -46,9 +58,9 @@ t_argument	*ast_argument_create(char *arg)
  *
  * @return t_command*
  */
-t_command  *ast_command_create(void)
+t_command	*ast_command_create(void)
 {
-	t_command *command;
+	t_command	*command;
 
 	command = malloc(sizeof(t_command));
 	if (!command)
@@ -58,9 +70,9 @@ t_command  *ast_command_create(void)
 	return (command);
 }
 
-t_ast_node  *ast_node_create(void)
+t_ast_node	*ast_node_create(void)
 {
-	t_ast_node *node;
+	t_ast_node	*node;
 
 	node = (t_ast_node *)malloc(sizeof(t_ast_node));
 	if (!node)
@@ -83,9 +95,9 @@ t_ast_node  *ast_node_create(void)
  * @param right pointer to a right node.
  * @return t_ast_node*
  */
-t_ast_node *ast_parent_create(t_ast_node *left, t_ast_node *right)
+t_ast_node	*ast_parent_create(t_ast_node *left, t_ast_node *right)
 {
-	t_ast_node *node;
+	t_ast_node	*node;
 
 	node = ast_node_create();
 	if (!node)

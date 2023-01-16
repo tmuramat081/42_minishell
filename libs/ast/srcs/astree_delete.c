@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   astree_delete.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/16 08:24:14 by event             #+#    #+#             */
+/*   Updated: 2023/01/16 08:26:23 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libast.h"
 #include <stdlib.h>
 
-void 	ast_arguments_delete(t_argument *argument)
+void	ast_arguments_delete(t_argument *argument)
 {
 	t_argument	*tmp;
 
@@ -38,12 +50,12 @@ void	ast_command_delete(t_command *command)
 	free(command);
 }
 
-void ast_node_delete(t_ast_node *node)
+void	ast_node_delete(t_ast_node *node)
 {
-    if (!node)
-        return;
-    if (node->command)
-        free(node->command);
+	if (!node)
+		return ;
+	if (node->command)
+		free(node->command);
 	ast_node_delete(node->left);
 	ast_node_delete(node->right);
 	free(node);
