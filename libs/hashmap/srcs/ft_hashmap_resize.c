@@ -32,9 +32,9 @@ static void	_hash_reinsert(t_hashmap *map, t_hashmap_data *new_data,
 
 int	ft_hashmap_resize(t_hashmap *map)
 {
-	t_hashmap_data 	*new_data;
+	t_hashmap_data	*new_data;
 	size_t			prev_cap;
-	size_t	i;
+	size_t			i;
 
 	prev_cap = map->cap;
 	map->nbits += 1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 19:49:55 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/02 19:29:57 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/16 09:37:56 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ size_t		ft_strspn(const char *s1, const char *s2);
 size_t		ft_strcspn(const char *s1, const char *s2);
 void		ft_strtoupper(char *str);
 char		*ft_strtok_r(char *str, const char *delim, char **save_ptr);
-
 
 /*** memory functions ***/
 void		ft_bzero(void *p, size_t n);

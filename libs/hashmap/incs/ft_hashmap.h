@@ -43,10 +43,8 @@ typedef struct s_hashmap {
 	t_hashmap_data	*data;
 	size_t			len;
 	size_t			cap;
-	size_t 			(*hash)(const void *);
+	size_t			(*hash)(const void *);
 }	t_hashmap;
-
-
 
 /**
  * @brief 初期化の関数
@@ -90,14 +88,14 @@ int			ft_hashmap_remove(t_hashmap *map, char *key);
  * @param data　コールバック関数に渡すデータ。使用しない場合はNULL。
  * @return int 成功なら1が返る。失敗したら0が返る。
  */
-int			ft_hashmap_iterate(t_hashmap *map, int(*f)(t_hashmap_data *, void *), void *data);
-
+int			ft_hashmap_iterate(t_hashmap *map, \
+				int(*f)(t_hashmap_data *, void *), void *data);
 void		ft_hashmap_clear(t_hashmap *map);
 int			ft_hashmap_resize(t_hashmap *map);
 int			ft_hashmap_find(t_hashmap *map, char *key, void **arg);
 size_t		ft_strlen(const char *str);
 void		*ft_memset(void *p, int c, size_t len);
 int			ft_strcmp(const char *s1, const char *s2);
-size_t		hashmap_hash_int(const void* data);
+size_t		hashmap_hash_int(const void *data);
 
 #endif

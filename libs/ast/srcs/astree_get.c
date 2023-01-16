@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   astree_get.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/16 08:25:16 by event             #+#    #+#             */
+/*   Updated: 2023/01/16 08:25:17 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libast.h"
 
-size_t  ast_count_nodes(t_ast_node *root)
+size_t	ast_count_nodes(t_ast_node *root)
 {
-    if (root == NULL)
-        return (0);
-    return (1 + ast_count_nodes(root->left) + ast_count_nodes(root->right));
+	if (root == NULL)
+		return (0);
+	return (1 + ast_count_nodes(root->left) + ast_count_nodes(root->right));
 }
 
 size_t	ast_count_arguments(t_argument *arguments)
