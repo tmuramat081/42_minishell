@@ -12,7 +12,6 @@
 
 #ifndef FT_HASHMAP_H
 # define FT_HASHMAP_H
-
 # define HASHMAP_SUCCESS 1
 # define HASHMAP_FAILURE 0
 

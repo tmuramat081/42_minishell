@@ -45,11 +45,11 @@ static void set_command_process(t_process *process, t_command *command)
 	process->fd_backup[2] = dup(STDERR_FILENO);
 	process->argv = init_arguments(command->arguments);
 	process->redirects = command->redirects;
-	if (ast_count_redirects(process->redirects) > 0)
+	if (ast_count_redirects(command->redirects) > 0)
 		set_redirection(process);
-	if (process->reader > 0)
+	if (process->stdin == true)
 		dup2(process->reader, STDIN_FILENO);
-	if (process->writer > 0)
+	if (process->stdout == true)
 		dup2(process->writer, STDOUT_FILENO);
 
 }

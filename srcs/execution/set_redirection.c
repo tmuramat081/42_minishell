@@ -38,12 +38,12 @@ void    set_redirection(t_process *process)
 	while (redirects)
 	{
     	old_fd = open_file(*redirects);
-    	new_fd = redirects->fd;
     	if (old_fd == -1)
     	{
     	    strerror(errno);
     	    exit(EXIT_FAILURE);
 		}
+    	new_fd = redirects->fd;
     	if (dup2(old_fd, new_fd) < 0)
     	{
     	    close(old_fd);
