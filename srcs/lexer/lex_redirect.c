@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lex_redirect.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 19:09:22 by event             #+#    #+#             */
+/*   Updated: 2023/01/17 19:09:23 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 
 /**
@@ -7,7 +19,7 @@
  * @param current 
  * @return void* 
  */
-static void lex_redirect_double(t_tokenizer *tokenizer, char current)
+static void	lex_redirect_double(t_tokenizer *tokenizer, char current)
 {
 	t_token_type	type;
 	char			next_c;
@@ -30,7 +42,7 @@ static void lex_redirect_double(t_tokenizer *tokenizer, char current)
  */
 void	*lex_redirect(t_tokenizer *tokenizer)
 {
-	t_token_type 	type;
+	t_token_type	type;
 	char			current;
 
 	current = next(tokenizer);

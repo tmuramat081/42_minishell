@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lex_general.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 19:06:30 by event             #+#    #+#             */
+/*   Updated: 2023/01/17 19:06:31 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 #include "libft.h"
 
@@ -11,7 +23,7 @@ static bool	ft_isquote(int c)
 static bool	ft_isnull(int c)
 {
 	if (c == '\0')
-		return(true);
+		return (true);
 	return (false);
 }
 
@@ -38,7 +50,7 @@ bool	is_delimiter(int c)
  */
 void	*lex_general(t_tokenizer *tokenizer)
 {
-	char next_c;
+	char	next_c;
 
 	next_c = peek(tokenizer);
 	if (ft_isspace(next_c) == true)
