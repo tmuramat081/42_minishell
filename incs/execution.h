@@ -6,6 +6,9 @@
 # include "ft_hashmap.h"
 # include "ft_vector.h"
 
+# define PIPE_STDIN (1 << 0)
+# define PIPE_STDOUT (1 << 1)
+
 typedef int (*t_builtin_fn)(char **, t_shell *);
 
 typedef struct s_builtin {
@@ -19,8 +22,7 @@ typedef struct s_process {
 	int			fd_backup[3];
 	int			writer;
 	int			reader;
-	bool		stdin;
-	bool		stdout;
+	int			pipe_state;
 }	t_process;
 
 
@@ -42,7 +44,7 @@ int		exec_internal_command(t_process process, t_shell *msh);
 void	exec_external_command(t_process process, t_shell *msh);
 
 bool	is_builtin(char *args);
-void    set_redirection(t_process *process);
+void    set_redirection(t_process process);
 void    reset_redirection(t_process process);
 char	**construct_environ(t_hashmap *map);
 int		ft_execvpe(const char *file, char *const argv[], char *const envp[]);
