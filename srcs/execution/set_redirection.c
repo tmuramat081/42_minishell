@@ -28,13 +28,13 @@ static int     open_file(t_redirect redirect)
  * @details 新規にファイルを開き（open）、入力／出力先に指定（dup2）する。
  * @param process
  */
-void    set_redirection(t_process *process)
+void    set_redirection(t_process process)
 {
     int old_fd;
     int new_fd;
 	t_redirect	*redirects;
 
-	redirects = process->redirects;
+	redirects = process.redirects;
 	while (redirects)
 	{
     	old_fd = open_file(*redirects);

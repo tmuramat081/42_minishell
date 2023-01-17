@@ -40,18 +40,11 @@ static char	**init_arguments(t_argument *arguments)
  */
 static void set_command_process(t_process *process, t_command *command)
 {
-	process->fd_backup[0] = dup(STDIN_FILENO);
-	process->fd_backup[1] = dup(STDOUT_FILENO);
-	process->fd_backup[2] = dup(STDERR_FILENO);
+//	process->fd_backup[0] = dup(STDIN_FILENO);
+//	process->fd_backup[1] = dup(STDOUT_FILENO);
+//	process->fd_backup[2] = dup(STDERR_FILENO);
 	process->argv = init_arguments(command->arguments);
 	process->redirects = command->redirects;
-	if (ast_count_redirects(command->redirects) > 0)
-		set_redirection(process);
-	if (process->stdin == true)
-		dup2(process->reader, STDIN_FILENO);
-	if (process->stdout == true)
-		dup2(process->writer, STDOUT_FILENO);
-
 }
 
 /**
@@ -62,12 +55,11 @@ static void set_command_process(t_process *process, t_command *command)
  */
 void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh)
 {
-	if (!node || !node->command)
+	if (!node)
 		return ;
 	set_command_process(&process, node->command);
 	if (is_builtin(process.argv[0]) == true)
 		exec_internal_command(process, msh);
 	else
 		exec_external_command(process, msh);
-	reset_redirection(process);
 }
