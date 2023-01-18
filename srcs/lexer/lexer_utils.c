@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 19:11:48 by event             #+#    #+#             */
+/*   Updated: 2023/01/17 19:11:49 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /**
  * @file lexer_utils.c
  * @author tmuramat (tmuramat@student.42tokyo.jp)
@@ -19,7 +31,7 @@
  */
 char	next(t_tokenizer *tk)
 {
-	char current;
+	char	current;
 
 	if (tk->pos >= ft_strlen(tk->str))
 		return ('\0');
@@ -46,7 +58,7 @@ void	prev(t_tokenizer *tokenizer)
  */
 void	emit(t_tokenizer *tk, t_token_type token_type)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = (t_token *)ft_xmalloc(sizeof(t_token));
 	if (token_type == TOKEN_END)
@@ -67,7 +79,7 @@ void	emit(t_tokenizer *tk, t_token_type token_type)
  */
 char	peek(t_tokenizer *tokenizer)
 {
-	char next_c;
+	char	next_c;
 
 	next_c = next(tokenizer);
 	if (next_c != '\0')

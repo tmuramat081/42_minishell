@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_argument.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 19:12:43 by event             #+#    #+#             */
+/*   Updated: 2023/01/17 19:12:44 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /**
  * @file parse_argument.c
  * @author tmuramat (tmuramat@student.42tokyo.jp)
@@ -34,6 +46,5 @@ t_argument	*parse_argument(t_vector *tokens, t_token **curr)
 	char		*arg;
 
 	arg = scan_token(tokens, curr);
-	return(ast_argument_create(arg));
+	return (ast_argument_create(arg));
 }
-

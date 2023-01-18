@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_pipeline.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 19:14:10 by event             #+#    #+#             */
+/*   Updated: 2023/01/17 19:14:11 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /**
  * @file parse_pipeline.c
  * @author tmuramat (tmuramat@student.42tokyo.jp)
@@ -32,8 +44,8 @@
 
 t_ast_node	*parse_pipeline(t_vector *tokens, t_token **curr)
 {
-    t_ast_node	*right_node;
-    t_ast_node	*node;
+	t_ast_node	*right_node;
+	t_ast_node	*node;
 
 	right_node = NULL;
 	if ((*curr)->type & TOKEN_END)
@@ -48,4 +60,3 @@ t_ast_node	*parse_pipeline(t_vector *tokens, t_token **curr)
 	}
 	return (node);
 }
-
