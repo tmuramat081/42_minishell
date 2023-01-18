@@ -40,14 +40,15 @@ void	exec_pipeline(t_ast_node *node, t_process process, t_shell *msh);
 void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh);
 
 void	execute_syntax_tree(t_ast_node *syntax_tree, t_shell *msh);
-int		exec_internal_command(t_process process, t_shell *msh);
+int		maybe_exec_internal_command(t_process process, t_shell *msh);
 void	exec_external_command(t_process process, t_shell *msh);
 
-bool	is_builtin(char *args);
+t_builtin_fn	*search_builtin(char *args);
 void    set_redirection(t_process process);
 void    reset_redirection(t_process process);
 char	**construct_environ(t_hashmap *map);
 int		ft_execvpe(const char *file, char *const argv[], char *const envp[]);
 char	**convert_vector_to_array(t_vector *src);
+void	change_file_descripter(t_process process);
 
 #endif

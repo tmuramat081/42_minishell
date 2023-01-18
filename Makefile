@@ -66,9 +66,6 @@ LIBDEQUE := ${LIBDEQUE_DIR}libdeque.a
 LIBPQUEUE_DIR := libs/priority_queue/
 LIBPQUEUE := ${LIBPQUEUE_DIR}libpqueue.a
 
-LIBHASHSET_DIR := libs/hashset/
-LIBHASHSET := ${LIBHASHSET_DIR}libhashset.a
-
 LIBHASHMAP_DIR := libs/hashmap/
 LIBHASHMAP := ${LIBHASHMAP_DIR}libhashmap.a
 
@@ -83,7 +80,6 @@ INCS := \
 	-I./${LIBDEQUE_DIR}incs/ \
 	-I./${LIBVECTOR_DIR}incs/ \
 	-I./${LIBPQUEUE_DIR}incs/ \
-	-I./${LIBHASHSET_DIR}incs/ \
 	-I./${LIBHASHMAP_DIR}incs/ \
 	-I./${LIBAST_DIR}incs/
 
@@ -110,7 +106,7 @@ PROGRESS = ${eval SRC_CNT = ${shell expr ${SRC_CNT} + 1}} \
 	$(SRC_CNT) $(SRC_TOT) $(SRC_PCT)
 
 # Main commands
-${NAME}: ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBHASHMAP} ${LIBAST} ${OBJS}
+${NAME}: ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHMAP} ${LIBAST} ${OBJS}
 	@${CC} ${CFLAGS} ${DFLAGS} ${INCS} ${OBJS} ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHSET} ${LIBREADLINE} ${LIBHASHMAP} ${LIBAST} -o $@
 	@echo "\n${BLUE}--- ${NAME} is up to date! ---${DEFAULT}"
 
@@ -125,9 +121,6 @@ ${LIBVECTOR}:
 
 ${LIBPQUEUE}:
 	@${MAKE} -C ${LIBPQUEUE_DIR} --no-print-directory
-
-${LIBHASHSET}:
-	@${MAKE} -C ${LIBHASHSET_DIR} --no-print-directory
 
 ${LIBHASHMAP}:
 	@${MAKE} -C ${LIBHASHMAP_DIR} --no-print-directory
@@ -151,7 +144,6 @@ clean:
 	@${MAKE} clean -C ${LIBDEQUE_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBVECTOR_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBPQUEUE_DIR} --no-print-directory
-	@${MAKE} clean -C ${LIBHASHSET_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBHASHMAP_DIR} --no-print-directory
 	@${MAKE} clean -C ${LIBAST_DIR} --no-print-directory
 	@${PRINTF} "${RED}Cleaned up object files in ${basename ${NAME}} ${DEFAULT}\n"
@@ -163,7 +155,6 @@ fclean:	clean
 	@${RM} ${LIBDEQUE}
 	@${RM} ${LIBVECTOR}
 	@${RM} ${LIBPQUEUE}
-	@${RM} ${LIBHASHSET}
 	@${RM} ${LIBHASHMAP}
 	@${RM} ${LIBAST}
 	@${PRINTF} "${RED}Removed object and executable files in ${NAME} ${DEFAULT}\n"

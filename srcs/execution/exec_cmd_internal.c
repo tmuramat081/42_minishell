@@ -29,20 +29,20 @@ static const t_builtin g_builtins[8] = {
 	{NULL, NULL},
 };
 
-bool	is_builtin(char *args)
+t_builtin_fn *search_builtin(char *args)
 {
 	size_t i;
 
 	if (!args)
-		return (false);
+		return (NULL);
 	i = 0;
 	while (g_builtins[i].symbol)
 	{
 		if (!ft_strcmp(args, g_builtins[i].symbol))
-			return (true);
+			return ((t_builtin_fn *)&g_builtins[i].func);
 		i++;
 	}
-	return (false);
+	return (NULL);
 }
 
 /**

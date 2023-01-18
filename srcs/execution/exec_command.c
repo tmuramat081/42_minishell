@@ -55,11 +55,14 @@ static void set_command_process(t_process *process, t_command *command)
  */
 void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh)
 {
+	t_builtin_fn *builtin_cmd;
+
 	if (!node)
 		return ;
 	set_command_process(&process, node->command);
-	if (is_builtin(process.argv[0]) == true)
-		exec_internal_command(process, msh);
+	builtin_cmd = search_builtin(process.argv[0]);
+	if (builtin_cmd)
+		(*builtin_cmd)(process.argv, msh);
 	else
 		exec_external_command(process, msh);
 }
