@@ -26,6 +26,7 @@ char	**convert_vector_to_array(t_vector *src)
 	t_env	env;
 	size_t	i;
 
+	len = 0;
 	arr = (char **)ft_xmalloc(sizeof(char *) * (ft_vector_size(src) + 1));
 	i = 0;
 	while (!ft_vector_is_empty(src))

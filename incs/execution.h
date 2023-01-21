@@ -16,13 +16,17 @@ typedef struct s_builtin {
 	t_builtin_fn	func;
 }	t_builtin;
 
+typedef struct s_pipe {
+	int reader;
+	int	writer;
+	int state;
+}	t_pipe;
+
 typedef struct s_process {
 	char		**argv;
 	t_redirect	*redirects;
 	int			fd_backup[3];
-	int			writer;
-	int			reader;
-	int			pipe_state;
+	t_pipe		pipe;
 }	t_process;
 
 
