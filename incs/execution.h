@@ -25,7 +25,7 @@ typedef struct s_pipe {
 typedef struct s_process {
 	char		**argv;
 	t_redirect	*redirects;
-	int			fd_backup[3];
+	int			in_fd;
 	t_pipe		pipe;
 }	t_process;
 

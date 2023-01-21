@@ -9,6 +9,9 @@
 
 void	change_file_descripter(t_process process)
 {
+	printf("%d ", process.pipe.reader);
+	printf("%d\n", process.pipe.writer);
+	close(process.pipe.reader);
 	if (process.pipe.state & PIPE_STDIN)
 	{
 		dup2(process.pipe.reader, STDIN_FILENO);
@@ -31,16 +34,5 @@ void	change_file_descripter(t_process process)
  */
 void	exec_external_command(t_process process, t_shell *msh)
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid < 0)
-		exit(EXIT_FAILURE);
-	else if (pid == 0)
-	{
-		change_file_descripter(process);
-		ft_execvpe(process.argv[0], process.argv, construct_environ(msh->envs));
-		perror("command not found\n");
-		exit (EXIT_FAILURE);
-	}
+	ft_execvpe(process.argv[0], process.argv, construct_environ(msh->envs));
 }

@@ -53,18 +53,3 @@ void    set_redirection(t_process process)
 		redirects = redirects->next;
 	}
 }
-
-/**
- * @brief 標準入力・標準出力・エラー出力先を初期値に戻す。
- *
- * @param process
- */
-void    reset_redirection(t_process process)
-{
-	dup2(process.fd_backup[0], STDIN_FILENO);
-	dup2(process.fd_backup[1], STDOUT_FILENO);
-	dup2(process.fd_backup[2], STDERR_FILENO);
-	close(process.fd_backup[0]);
-	close(process.fd_backup[1]);
-	close(process.fd_backup[2]);
-}

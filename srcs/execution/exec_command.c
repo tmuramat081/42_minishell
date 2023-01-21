@@ -40,9 +40,6 @@ static char	**init_arguments(t_argument *arguments)
  */
 static void set_command_process(t_process *process, t_command *command)
 {
-//	process->fd_backup[0] = dup(STDIN_FILENO);
-//	process->fd_backup[1] = dup(STDOUT_FILENO);
-//	process->fd_backup[2] = dup(STDERR_FILENO);
 	process->argv = init_arguments(command->arguments);
 	process->redirects = command->redirects;
 }
@@ -59,6 +56,7 @@ void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh)
 
 	if (!node)
 		return ;
+	puts(ast_get_command_name(node->command));
 	set_command_process(&process, node->command);
 	builtin_command = search_builtin(process.argv[0]);
 	if (builtin_command)
