@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_argument.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:12:43 by event             #+#    #+#             */
-/*   Updated: 2023/01/17 19:12:44 by event            ###   ########.fr       */
+/*   Updated: 2023/01/21 20:59:54 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,12 @@
 t_argument	*parse_argument(t_vector *tokens, t_token **curr)
 {
 	char		*arg;
+	t_node_type	type;
 
+	if ((*curr)->type & TOKEN_STR_SQUOTE)
+		type = NODE_WORD_ESC;
+	else
+		type = NODE_WORD;
 	arg = scan_token(tokens, curr);
-	return (ast_argument_create(arg));
+	return (ast_argument_create(arg, type));
 }
