@@ -6,7 +6,7 @@
 /*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:09:23 by event             #+#    #+#             */
-/*   Updated: 2023/01/17 16:17:07 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/01/21 20:52:17 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ enum	e_node_type {
 	NODE_RDIR_OUTPUT	= (1 << 4),
 	NODE_RDIR_HEREDOC	= (1 << 5),
 	NODE_COMMAND		= (1 << 6),
-	NODE_ARGUMENT		= (1 << 7),
-	NODE_FILENAME		= (1 << 8),
+	NODE_WORD			= (1 << 7),
+	NODE_WORD_ESC		= (1 << 8),
 	NODE_ALL			= ~0
 };
 
@@ -44,6 +44,7 @@ enum	e_node_type {
 struct s_argument
 {
 	char		*argument;
+	t_node_type	type;
 	t_argument	*next;
 };
 
@@ -85,7 +86,7 @@ struct s_ast_node
 t_ast_node	*ast_node_create(void);
 t_ast_node	*ast_parent_create(t_ast_node *left, t_ast_node *right);
 t_command	*ast_command_create(void);
-t_argument	*ast_argument_create(char *word);
+t_argument	*ast_argument_create(char *word, t_node_type type);
 t_redirect	*ast_redirect_create(int type, int fd, char *file);
 
 /** Destructor functions */

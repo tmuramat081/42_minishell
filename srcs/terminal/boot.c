@@ -6,7 +6,7 @@
 /*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/12 08:04:03 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/01/21 02:10:44 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 #include "constant.h"
 #include "ft_printf.h"
 #include "parser.h"
+#include "expansion.h"
 #include "execution.h"
 
 /**
@@ -64,6 +65,7 @@ void	boot_minishell(t_shell	*msh)
 		if(DEBUG)
 			print_tokens(lexed_tokens);
 		syntax_tree = parser(lexed_tokens, msh);
+		expand(syntax_tree, msh);
 		if(DEBUG)
 			print_nodes(syntax_tree);
 		if(DEBUG)
