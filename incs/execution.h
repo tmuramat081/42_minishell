@@ -44,10 +44,10 @@ void	exec_pipeline(t_ast_node *node, t_process process, t_shell *msh);
 void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh);
 
 void	execute_syntax_tree(t_ast_node *syntax_tree, t_shell *msh);
-int		maybe_exec_internal_command(t_process process, t_shell *msh);
+void	exec_internal_command(t_builtin_fn builtin_cmd, t_process process, t_shell *msh);
 void	exec_external_command(t_process process, t_shell *msh);
 
-t_builtin_fn	*search_builtin(char *args);
+t_builtin_fn	search_builtin(char *args);
 void    set_redirection(t_process process);
 void    reset_redirection(t_process process);
 char	**construct_environ(t_hashmap *map);

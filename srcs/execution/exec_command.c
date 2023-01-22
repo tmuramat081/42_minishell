@@ -52,7 +52,7 @@ static void set_command_process(t_process *process, t_command *command)
  */
 void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh)
 {
-	t_builtin_fn *builtin_command;
+	t_builtin_fn builtin_command;
 
 	if (!node)
 		return ;
@@ -60,7 +60,7 @@ void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh)
 	set_command_process(&process, node->command);
 	builtin_command = search_builtin(process.argv[0]);
 	if (builtin_command)
-		(*builtin_command)(process.argv, msh);
+		exec_internal_command(builtin_command, process, msh);
 	else
 		exec_external_command(process, msh);
 }

@@ -53,7 +53,7 @@ void	exec_pipeline_recursive(t_ast_node *node, t_process process, t_shell *msh, 
 		dup2(in_fd, STDIN_FILENO);
 		dup2(fd[1], STDOUT_FILENO);
 		exec_simple_cmd(node->left, process, msh);
-		exit(1);
+		return ;
 	}
 	else
 	{
@@ -66,7 +66,6 @@ void	exec_pipeline_recursive(t_ast_node *node, t_process process, t_shell *msh, 
 	{
 		dup2(fd[0], STDIN_FILENO);
 		exec_simple_cmd(node->right, process, msh);
-		exit(1);
 	}
 }
 
@@ -80,7 +79,9 @@ void	exec_pipeline(t_ast_node *node, t_process process, t_shell *msh)
 {
 	process.pipe = pipe_init();
 	if (node->type & NODE_COMMAND)
+	{
 		exec_simple_cmd(node, process, msh);
+	}
 	else
 		exec_pipeline_recursive(node, process, msh, STDIN_FILENO);
 	wait_child_process();
