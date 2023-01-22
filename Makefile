@@ -38,9 +38,9 @@ SRCS := \
 	execution/exec_command.c \
 	execution/exec_cmd_internal.c \
 	execution/exec_cmd_external.c \
-	execution/set_redirection.c \
 	execution/execvpe.c \
 	execution/exec_utils.c \
+	execution/redirect.c \
 	execution/process.c \
 	execution/pipe.c \
 	builtin/export.c \
