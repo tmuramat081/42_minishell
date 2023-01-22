@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "terminal.h"
 #include "execution.h"
 #include "parser.h"
 #include "libast.h"

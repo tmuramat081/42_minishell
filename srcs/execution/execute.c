@@ -10,7 +10,7 @@
  */
 #include "libast.h"
 #include "parser.h"
-#include "minishell.h"
+#include "terminal.h"
 #include "execution.h"
 
 /**

@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:29 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/01 13:31:34 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/22 21:35:41 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  *
  */
 #include "ft_hashmap.h"
-#include "minishell.h"
+#include "terminal.h"
 
 int	builtin_unset(char **arg, t_shell *msh)
 {

@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/01 17:58:01 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/22 21:35:41 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * @copyright Copyright (c) 2023
  *
  */
-#include "minishell.h"
+#include "terminal.h"
 #include "ft_printf.h"
 #include "libft.h"
 #include "ft_pqueue.h"

@@ -9,7 +9,7 @@
  *
  */
 
-#include <minishell.h>
+#include <terminal.h>
 
 /**
 * @file ignore_signal.c

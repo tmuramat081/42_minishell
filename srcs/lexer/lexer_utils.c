@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2023
  *
  */
-#include "minishell.h"
+#include "terminal.h"
 #include "lexer.h"
 
 /**
@@ -29,9 +29,9 @@ char	next(t_tokenizer *tk)
 }
 
 /**　字句解析の対象を一文字戻す。
- * @brief 
- * 
- * @param tokenizer 
+ * @brief
+ *
+ * @param tokenizer
  */
 void	prev(t_tokenizer *tokenizer)
 {

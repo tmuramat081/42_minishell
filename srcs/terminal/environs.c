@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:18:28 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/06 15:00:40 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/01/22 21:35:41 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  *
  */
 
-#include "minishell.h"
+#include "terminal.h"
 
 /**
  * @brief 環境変数の文字列を'='で分割し、 keyとvalueからなるenv構造体を作成する。

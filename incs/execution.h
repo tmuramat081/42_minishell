@@ -1,7 +1,7 @@
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
-# include "minishell.h"
+# include "terminal.h"
 # include "libast.h"
 # include "ft_hashmap.h"
 # include "ft_vector.h"
@@ -19,14 +19,15 @@ typedef struct s_builtin {
 typedef struct s_pipe {
 	int reader;
 	int	writer;
+	int in_fd;
 	int state;
+	int	backup[2];
 }	t_pipe;
 
 typedef struct s_process {
 	char		**argv;
 	t_redirect	*redirects;
-	int			in_fd;
-	t_pipe		pipe;
+	bool		has_child;
 }	t_process;
 
 
@@ -41,8 +42,7 @@ int		builtin_pwd(char **argv, t_shell *msh);
 
 void	exec_command_line(t_ast_node *node, t_process process, t_shell *msh);
 void	exec_pipeline(t_ast_node *node, t_process process, t_shell *msh);
-void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh);
-
+void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh, t_pipe pipe);
 void	execute_syntax_tree(t_ast_node *syntax_tree, t_shell *msh);
 void	exec_internal_command(t_builtin_fn builtin_cmd, t_process process, t_shell *msh);
 void	exec_external_command(t_process process, t_shell *msh);
@@ -54,5 +54,13 @@ char	**construct_environ(t_hashmap *map);
 int		ft_execvpe(const char *file, char *const argv[], char *const envp[]);
 char	**convert_vector_to_array(t_vector *src);
 void	change_file_descripter(t_process process);
+pid_t	create_child_process(void);
+void	wait_all_child_processes(void);
+void	wait_child_process(pid_t pid);
+t_pipe pipe_create(void);
+void	pipe_fd_backup(t_pipe *pipe);
+void	pipe_fd_restore(t_pipe pipe);
+void	set_pipeline(t_pipe pipe);
+t_pipe	pipe_init(void);
 
 #endif

@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "terminal.h"
 #include "execution.h"
 #include "libast.h"
 #include <fcntl.h>
@@ -50,17 +50,23 @@ static void set_command_process(t_process *process, t_command *command)
  * @param node
  * @param msh
  */
-void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh)
+void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh, t_pipe pipe)
 {
 	t_builtin_fn builtin_command;
 
 	if (!node)
 		return ;
-	puts(ast_get_command_name(node->command));
+//	puts(ast_get_command_name(node->command));
 	set_command_process(&process, node->command);
-	builtin_command = search_builtin(process.argv[0]);
-	if (builtin_command)
-		exec_internal_command(builtin_command, process, msh);
-	else
-		exec_external_command(process, msh);
+	if (ast_count_redirects(process.redirects) > 0)
+		set_redirection(process);
+	if (create_child_process() == 0)
+	{
+		set_pipeline(pipe);
+		builtin_command = search_builtin(process.argv[0]);
+		if (builtin_command)
+			exec_internal_command(builtin_command, process, msh);
+		else
+			exec_external_command(process, msh);
+	}
 }

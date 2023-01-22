@@ -9,7 +9,7 @@
  *
  */
 
-#include "minishell.h"
+#include "terminal.h"
 #include "lexer.h"
 
 /**

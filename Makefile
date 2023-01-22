@@ -1,8 +1,10 @@
 # Compile variables
 NAME := minishell
+NAME_DEV := minishell_dev
 CC := gcc
 CFLAGS := -Wall -Wextra -Werror -MMD -MP
 #ifdef FOR_DEBUG
+NAME := ${NAME_DEV}
 DFLAGS := -g -D DEBUG -fsanitize=address
 #endif
 SRCS_DIR := srcs/
@@ -39,6 +41,8 @@ SRCS := \
 	execution/set_redirection.c \
 	execution/execvpe.c \
 	execution/exec_utils.c \
+	execution/process.c \
+	execution/pipe.c \
 	builtin/export.c \
 	builtin/unset.c \
 	builtin/echo.c \
@@ -169,7 +173,7 @@ run: ${NAME}
 
 #: [debug] Print debug info.
 dev: clean
-	@${MAKE} FOR_DEBUG=1 --no-print-directory
+	@${MAKE} FOR_DEBUG=TRUE --no-print-directory
 
 #: Push to git repository.
 git:

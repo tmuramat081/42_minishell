@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2023
  *
  */
-#include "minishell.h"
+#include "terminal.h"
 #include "ft_printf.h"
 #include "execution.h"
 

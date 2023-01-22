@@ -10,7 +10,7 @@
  */
 #include <fcntl.h>
 #include "lexer.h"
-#include "minishell.h"
+#include "terminal.h"
 #include "parser.h"
 #include "ft_printf.h"
 
