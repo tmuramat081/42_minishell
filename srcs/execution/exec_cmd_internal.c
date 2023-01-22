@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2023
  *
  */
-#include "minishell.h"
+#include "terminal.h"
 #include "execution.h"
 #include "parser.h"
 #include "libast.h"
@@ -54,18 +54,5 @@ t_builtin_fn search_builtin(char *args)
  */
 void	exec_internal_command(t_builtin_fn builtin_cmd, t_process process, t_shell *msh)
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		change_file_descripter(process);
-		(*builtin_cmd)(process.argv, msh);
-		exit(EXIT_FAILURE);
-	}
-	else if (pid < 0)
-	{
-		exit(EXIT_FAILURE);
-	}
-	return ;
+	(*builtin_cmd)(process.argv, msh);
 }

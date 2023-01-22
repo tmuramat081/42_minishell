@@ -11,7 +11,7 @@
 
 typedef int (*t_builtin_fn)(char **, t_shell *);
 
-typedef struct s_builtin {
+typedef struct s_builtinｊ{
 	char 			*symbol;
 	t_builtin_fn	func;
 }	t_builtin;

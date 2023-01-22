@@ -40,7 +40,6 @@ void    set_redirection(t_process process)
     	old_fd = open_file(*redirects);
     	if (old_fd == -1)
     	{
-    	    strerror(errno);
     	    exit(EXIT_FAILURE);
 		}
     	new_fd = redirects->fd;

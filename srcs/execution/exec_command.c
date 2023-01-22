@@ -5,7 +5,7 @@
 #include <unistd.h>
 
 /**
- * @brief　コマンド引数のリストから文字列の配列を生成する。
+ * @brief　コマンド引数のリストを文字列の配列に変換する。
  *
  * @details ast_count_nodesで引数の数を数える
  * @param node
@@ -56,13 +56,13 @@ void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh, t_pipe p
 
 	if (!node)
 		return ;
-//	puts(ast_get_command_name(node->command));
+	puts(ast_get_command_name(node->command));
 	set_command_process(&process, node->command);
-	if (ast_count_redirects(process.redirects) > 0)
-		set_redirection(process);
 	if (create_child_process() == 0)
 	{
 		set_pipeline(pipe);
+		if (ast_count_redirects(process.redirects) > 0)
+			set_redirection(process);
 		builtin_command = search_builtin(process.argv[0]);
 		if (builtin_command)
 			exec_internal_command(builtin_command, process, msh);
