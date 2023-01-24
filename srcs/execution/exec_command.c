@@ -56,10 +56,10 @@ void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh, t_pipe p
 
 	if (!node)
 		return ;
-	puts(ast_get_command_name(node->command));
-	set_command_process(&process, node->command);
+//	puts(ast_get_command_name(node->command));
 	if (create_child_process() == 0)
 	{
+		set_command_process(&process, node->command);
 		set_pipeline(pipe);
 		if (ast_count_redirects(process.redirects) > 0)
 			set_redirection(process);

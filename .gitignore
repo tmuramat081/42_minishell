@@ -58,3 +58,4 @@ latex/
 minishell
 .vscode/
 bnf_shell.txt
+minishell_dev

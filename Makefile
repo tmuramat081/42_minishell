@@ -3,10 +3,10 @@ NAME := minishell
 NAME_DEV := minishell_dev
 CC := gcc
 CFLAGS := -Wall -Wextra -Werror -MMD -MP
-#ifdef FOR_DEBUG
+ifdef FOR_DEBUG
 NAME := ${NAME_DEV}
 DFLAGS := -g -D DEBUG -fsanitize=address
-#endif
+endif
 SRCS_DIR := srcs/
 SRCS := \
 	main.c \
@@ -173,7 +173,7 @@ run: ${NAME}
 
 #: [debug] Print debug info.
 dev: clean
-	@${MAKE} FOR_DEBUG=TRUE --no-print-directory
+	@${MAKE} FOR_DEBUG=1 --no-print-directory
 
 #: Push to git repository.
 git:

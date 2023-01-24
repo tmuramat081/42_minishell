@@ -1,20 +1,5 @@
 #include "execution.h"
 
-t_pipe pipe_create(void)
-{
-	t_pipe pipe_fd;
-	int		tmp[2];
-
-	pipe_fd = (t_pipe){};
- 	if (pipe(tmp) < 0)
-	{
-		exit(EXIT_FAILURE);
-	}
-	pipe_fd.reader = tmp[0];
-	pipe_fd.writer = tmp[1];
-	return (pipe_fd);
-}
-
 t_pipe	pipe_init(void)
 {
 	t_pipe piped;
@@ -25,6 +10,19 @@ t_pipe	pipe_init(void)
 	piped.in_fd = STDIN_FILENO;
 	return (piped);
 }
+
+void	pipe_update(t_pipe *piped)
+{
+	int tmp[2];
+
+	if (pipe(tmp) < 0)
+	{
+		exit(EXIT_FAILURE);
+	}
+	piped->reader = tmp[0];
+	piped->writer = tmp[1];
+}
+
 
 void	pipe_fd_backup(t_pipe *pipe)
 {
@@ -40,14 +38,16 @@ void	pipe_fd_restore(t_pipe pipe)
 
 void	set_pipeline(t_pipe pipe)
 {
-	if (pipe.state & PIPE_STDIN)
+	if (pipe.state & PIPE_STDOUT)
+		close_file(pipe.reader);
+	if (pipe.state & PIPE_STDIN && pipe.in_fd != STDIN_FILENO)
 	{
 		dup2(pipe.in_fd, STDIN_FILENO);
 		close(pipe.in_fd);
 	}
-	if (pipe.state & PIPE_STDOUT)
+	if (pipe.state & PIPE_STDOUT && pipe.in_fd != STDOUT_FILENO)
 	{
 		dup2(pipe.writer, STDOUT_FILENO);
-		close(pipe.writer);
+		close_file(pipe.writer);
 	}
 }

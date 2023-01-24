@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libast.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:09:23 by event             #+#    #+#             */
-/*   Updated: 2023/01/17 16:17:07 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/01/24 23:51:06 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,7 @@ void		ast_append_redirect(t_command *command, t_redirect *new_redirect);
 char		*ast_get_command_name(t_command *command);
 size_t		ast_count_redirects(t_redirect *redirects);
 size_t		ast_count_arguments(t_argument *arguments);
-
-/** Util functions */
+size_t		ast_count_pipeline(t_ast_node *node);
 size_t		ast_count_nodes(t_ast_node *root);
 
 #endif

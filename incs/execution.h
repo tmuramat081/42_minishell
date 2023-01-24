@@ -48,19 +48,25 @@ void	exec_internal_command(t_builtin_fn builtin_cmd, t_process process, t_shell 
 void	exec_external_command(t_process process, t_shell *msh);
 
 t_builtin_fn	search_builtin(char *args);
-void    set_redirection(t_process process);
-void    reset_redirection(t_process process);
 char	**construct_environ(t_hashmap *map);
 int		ft_execvpe(const char *file, char *const argv[], char *const envp[]);
 char	**convert_vector_to_array(t_vector *src);
-void	change_file_descripter(t_process process);
+
+/**********  Redirect **********/
+void    set_redirection(t_process process);
+void    reset_redirection(t_process process);
+void	close_file(int fd);
+
+/**********  Process **********/
 pid_t	create_child_process(void);
-void	wait_all_child_processes(void);
+void	wait_all_child_processes();
 void	wait_child_process(pid_t pid);
-t_pipe pipe_create(void);
+
+/********** Pipeline **********/
+t_pipe	pipe_init(void);
+void	pipe_update(t_pipe *piped);
 void	pipe_fd_backup(t_pipe *pipe);
 void	pipe_fd_restore(t_pipe pipe);
 void	set_pipeline(t_pipe pipe);
-t_pipe	pipe_init(void);
 
 #endif

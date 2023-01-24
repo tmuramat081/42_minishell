@@ -6,6 +6,12 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+void	close_file(int fd)
+{
+	if (close(fd) < 0)
+		exit(EXIT_FAILURE);
+}
+
 /**
  * @brief ファイルをオープンする。
  *
@@ -48,7 +54,7 @@ void    set_redirection(t_process process)
     	    close(old_fd);
     	    exit(EXIT_FAILURE);
     	}
-    	close(old_fd);
+    	close_file(old_fd);
 		redirects = redirects->next;
 	}
 }
