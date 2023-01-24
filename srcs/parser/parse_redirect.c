@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_redirect.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 19:15:08 by event             #+#    #+#             */
+/*   Updated: 2023/01/17 19:17:28 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /**
  * @file parse_redirection.c
  * @author tmuramat (tmuramat@student.42tokyo.jp)
@@ -33,9 +45,9 @@
  */
 t_redirect	*parse_io_redirect(t_vector *tokens, t_token **curr)
 {
-	int			dir;;
-	int			fd;
-	char		*file;
+	int		dir;
+	int		fd;
+	char	*file;
 
 	fd = 0;
 	dir = NODE_NONE;
@@ -63,4 +75,3 @@ t_redirect	*parse_io_redirect(t_vector *tokens, t_token **curr)
 	file = scan_token(tokens, curr);
 	return (ast_redirect_create(dir, fd, file));
 }
-

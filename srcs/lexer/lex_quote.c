@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lex_quote.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 19:07:45 by event             #+#    #+#             */
+/*   Updated: 2023/01/17 19:07:46 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 
 /**
@@ -8,8 +20,8 @@
  */
 void	*lex_quote(t_tokenizer *tokenizer)
 {
-	char quote_c;
-	char tmp_c;
+	char	quote_c;
+	char	tmp_c;
 
 	quote_c = next(tokenizer);
 	while (true)

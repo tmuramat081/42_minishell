@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   astree_create.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:22:11 by event             #+#    #+#             */
-/*   Updated: 2023/01/16 08:22:12 by event            ###   ########.fr       */
+/*   Updated: 2023/01/21 20:57:19 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_redirect	*ast_redirect_create(int dir, int fd, char *file)
  * @param arg
  * @return t_argument*
  */
-t_argument	*ast_argument_create(char *arg)
+t_argument	*ast_argument_create(char *arg, t_node_type type)
 {
 	t_argument	*new_arg;
 
@@ -49,6 +49,7 @@ t_argument	*ast_argument_create(char *arg)
 	if (!arg)
 		return (NULL);
 	new_arg->argument = arg;
+	new_arg->type = type;
 	new_arg->next = NULL;
 	return (new_arg);
 }

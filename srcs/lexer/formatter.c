@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   formatter.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 19:05:09 by event             #+#    #+#             */
+/*   Updated: 2023/01/17 19:05:10 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 #include "libft.h"
 
 static t_token	*format_space(t_token *token)
 {
-	char *formatted;
+	char	*formatted;
 
 	formatted = ft_strtrim(token->data, " ");
 	free(token->data);
@@ -11,7 +23,7 @@ static t_token	*format_space(t_token *token)
 	return (token);
 }
 
-static t_token *format_quote(t_token *token)
+static t_token	*format_quote(t_token *token)
 {
 	char	*formatted;
 

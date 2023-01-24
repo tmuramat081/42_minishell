@@ -35,6 +35,7 @@ char	**convert_vector_to_array(t_vector *src)
 			return (NULL);
 		if (env.key && env.value)
 		{
+			printf("%s %s\n", env.key, env.value);
 			len = ft_strlen(env.key) + ft_strlen(env.value) + 1 + 1;
 			arr[i] = (char *)ft_xmalloc(sizeof(char) * len);
 			ft_snprintf(arr[i], len, "%s=%s", env.key, env.value);

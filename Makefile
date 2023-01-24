@@ -32,6 +32,7 @@ SRCS := \
 	parser/parse_argument.c \
 	parser/parse_redirect.c \
 	parser/parser_utils.c \
+	expansion/expand.c \
 	execution/execute.c \
 	execution/exec_line.c \
 	execution/exec_pipeline.c \
@@ -98,16 +99,14 @@ MOVE := \033[1F
 CR := \033[1G
 
 # Progress variables
-SRC_TOT := $(shell expr $(shell echo -n ${SRCS} | wc -w) - $(shell ls -l ${OBJ_DIR} 2>&1 | grep ".o" | wc -l) + 1)
-ifeq ($(shell test ${SRC_TOT} -le 0; echo $$?),0)
-	SRC_TOT := $(shell echo -n ${SRCS} | wc -w)
+SRC_TOT := ${shell expr ${words ${ALL_SRCS}} - $(shell ls -l ${OBJ_DIR} | grep .o$ | wc -l)}
+ifndef SRC_TOT
+	SRC_TOT := ${words ${ALL_SRCS}}
 endif
 SRC_CNT := 0
-SRC_PCT = ${shell expr 100 \* ${SRC_CNT} / ${SRC_TOT}}
-
-PROGRESS = ${eval SRC_CNT = ${shell expr ${SRC_CNT} + 1}} \
-	${PRINTF} "${CR}%100s${CR}${GREEN}[ %d/%d (%d%%) ] ${CC} ${CFLAGS} $< ...${DEFAULT}" "" \
-	$(SRC_CNT) $(SRC_TOT) $(SRC_PCT)
+SRC_PCT = $(shell expr 100 \* $(SRC_CNT) / $(SRC_TOT))
+PROGRESS = $(eval SRC_CNT = $(shell expr ${SRC_CNT} + 1)) \
+	${PRINTF} "${DEL}${GREEN}[ %d/%d (%d%%) ] ${CC} ${CFLAGS} $< ...${DEFAULT}${CR}" $(SRC_CNT) $(SRC_TOT) $(SRC_PCT)
 
 # Main commands
 ${NAME}: ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHMAP} ${LIBAST} ${OBJS}

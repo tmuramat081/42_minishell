@@ -24,8 +24,8 @@ char	*get_node_type(t_node_type	type)
 		return("[SEQUENCE]");
 	else if (type & NODE_COMMAND)
 		return("[COMMAND]");
-	else if (type & NODE_ARGUMENT)
-		return("[ARGUMENT]");
+	else if (type & NODE_WORD)
+		return("[WORD]");
 	else if (type & NODE_RDIR_INPUT)
 		return("<");
 	else if (type & NODE_RDIR_OUTPUT)

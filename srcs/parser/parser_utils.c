@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 19:19:13 by event             #+#    #+#             */
+/*   Updated: 2023/01/17 19:20:31 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 #include "lexer.h"
 #include "libast.h"
 #include "terminal.h"
 #include "ft_deque.h"
-
 
 /**
  * @brief 解析対象のインデックスを次に進める。
@@ -13,7 +24,7 @@
  */
 void	next_token(t_vector *tokens, t_token **curr)
 {
-	*curr = (t_token *)ft_vector_next(tokens, *curr, 1);;
+	*curr = (t_token *)ft_vector_next(tokens, *curr, 1);
 }
 
 /**
@@ -26,9 +37,9 @@ void	next_token(t_vector *tokens, t_token **curr)
  * @return true
  * @return false
  */
-char *scan_token(t_vector *tokens, t_token **curr)
+char	*scan_token(t_vector *tokens, t_token **curr)
 {
-	char *buff;
+	char	*buff;
 
 	if (!curr || !*curr || (*curr)->type & TOKEN_END)
 		return (NULL);
@@ -36,5 +47,5 @@ char *scan_token(t_vector *tokens, t_token **curr)
 	if (!buff)
 		return (NULL);
 	next_token(tokens, curr);
-    return (buff);
+	return (buff);
 }

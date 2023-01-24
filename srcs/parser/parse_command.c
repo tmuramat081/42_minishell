@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_command.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 19:13:08 by event             #+#    #+#             */
+/*   Updated: 2023/01/17 19:13:09 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /**
  * @file parse_command.c
  * @author tmuramat (tmuramat@student.42tokyo.jp)
@@ -30,7 +42,7 @@
  * @param curr
  * @return t_word*
  */
-t_command *parse_suffix(t_vector *tokens, t_token **curr)
+t_command	*parse_suffix(t_vector *tokens, t_token **curr)
 {
 	t_command	*command;
 	t_argument	*argument;
