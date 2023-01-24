@@ -42,7 +42,7 @@ SRC_PCT = $(shell expr 100 \* $(SRC_CNT) / $(SRC_TOT))
 PROGRESS = $(eval SRC_CNT = $(shell expr ${SRC_CNT} + 1)) \
 	${PRINTF} "${DEL}${GREEN}[ %d/%d (%d%%) ] ${CC} ${CFLAGS} $< ...${DEFAULT}${CR}" $(SRC_CNT) $(SRC_TOT) $(SRC_PCT)
 
-# Command
+# Commands
 ${NAME}: ${ALL_OBJS}
 	@echo "\n${BLUE}--- ${NAME} is up to date! ---${DEFAULT}"
 	@${AR} ${NAME} ${ALL_OBJS}
