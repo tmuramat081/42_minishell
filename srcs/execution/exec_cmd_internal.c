@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2023
  *
  */
-#include "minishell.h"
+#include "terminal.h"
 #include "execution.h"
 #include "parser.h"
 #include "libast.h"
@@ -29,7 +29,7 @@ static const t_builtin g_builtins[8] = {
 	{NULL, NULL},
 };
 
-t_builtin_fn *search_builtin(char *args)
+t_builtin_fn search_builtin(char *args)
 {
 	size_t i;
 
@@ -39,7 +39,7 @@ t_builtin_fn *search_builtin(char *args)
 	while (g_builtins[i].symbol)
 	{
 		if (!ft_strcmp(args, g_builtins[i].symbol))
-			return ((t_builtin_fn *)&g_builtins[i].func);
+			return ((t_builtin_fn)g_builtins[i].func);
 		i++;
 	}
 	return (NULL);
@@ -52,16 +52,8 @@ t_builtin_fn *search_builtin(char *args)
  * @param msh シェルの管理情報
  * @return int 実行したコマンドの戻り値を返す。コマンドが見つからなければ1を返す。
  */
-int		exec_internal_command(t_process process, t_shell *msh)
+void	exec_internal_command(t_builtin_fn builtin_cmd, t_process process, t_shell *msh)
 {
-	size_t	i;
-
-	i = 0;
-	while (g_builtins[i].symbol)
-	{
-		if (!ft_strcmp(process.argv[0], g_builtins[i].symbol))
-			return (g_builtins[i].func(process.argv, msh));
-		i++;
-	}
-	return (1);
+	(*builtin_cmd)(process.argv, msh);
+	exit(EXIT_FAILURE);
 }

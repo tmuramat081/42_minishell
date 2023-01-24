@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 10:21:31 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/15 23:24:15 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/22 21:35:41 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "libft.h"
 # include "ft_vector.h"
 # include "ft_deque.h"
-# include "minishell.h"
+# include "terminal.h"
 
 t_ast_node	*parser(t_vector *tokens, t_shell *msh);
 t_ast_node	*parse_command_line(t_vector *tokens, t_token **curr);

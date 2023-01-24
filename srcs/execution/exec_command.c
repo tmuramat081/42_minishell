@@ -1,11 +1,11 @@
-#include "minishell.h"
+#include "terminal.h"
 #include "execution.h"
 #include "libast.h"
 #include <fcntl.h>
 #include <unistd.h>
 
 /**
- * @brief　コマンド引数のリストから文字列の配列を生成する。
+ * @brief　コマンド引数のリストを文字列の配列に変換する。
  *
  * @details ast_count_nodesで引数の数を数える
  * @param node
@@ -40,9 +40,6 @@ static char	**init_arguments(t_argument *arguments)
  */
 static void set_command_process(t_process *process, t_command *command)
 {
-//	process->fd_backup[0] = dup(STDIN_FILENO);
-//	process->fd_backup[1] = dup(STDOUT_FILENO);
-//	process->fd_backup[2] = dup(STDERR_FILENO);
 	process->argv = init_arguments(command->arguments);
 	process->redirects = command->redirects;
 }
@@ -53,16 +50,23 @@ static void set_command_process(t_process *process, t_command *command)
  * @param node
  * @param msh
  */
-void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh)
+void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh, t_pipe pipe)
 {
-	t_builtin_fn *builtin_cmd;
+	t_builtin_fn builtin_command;
 
 	if (!node)
 		return ;
-	set_command_process(&process, node->command);
-	builtin_cmd = search_builtin(process.argv[0]);
-	if (builtin_cmd)
-		(*builtin_cmd)(process.argv, msh);
-	else
-		exec_external_command(process, msh);
+//	puts(ast_get_command_name(node->command));
+	if (create_child_process() == 0)
+	{
+		set_command_process(&process, node->command);
+		set_pipeline(pipe);
+		if (ast_count_redirects(process.redirects) > 0)
+			set_redirection(process);
+		builtin_command = search_builtin(process.argv[0]);
+		if (builtin_command)
+			exec_internal_command(builtin_command, process, msh);
+		else
+			exec_external_command(process, msh);
+	}
 }

@@ -13,7 +13,7 @@
 #include "parser.h"
 #include "lexer.h"
 #include "libast.h"
-#include "minishell.h"
+#include "terminal.h"
 #include "ft_deque.h"
 
 /**

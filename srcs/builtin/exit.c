@@ -9,7 +9,7 @@
  *
  */
 
-#include "minishell.h"
+#include "terminal.h"
 
 void	put_error(char *message, char *arg)
 {

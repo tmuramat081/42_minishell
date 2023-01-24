@@ -1,7 +1,7 @@
 #include "expansion.h"
 #include "ft_vector.h"
 #include "ft_hashmap.h"
-#include "minishell.h"
+#include "terminal.h"
 #include "libast.h"
 
 char    *search_environment(char *key, t_hashmap *environ)
@@ -45,7 +45,7 @@ void    expand_environs(t_command *command, t_hashmap *environ)
 void    expand_node(t_ast_node *node, t_shell *msh)
 {
     if (!node)
-        return ; 
+        return ;
     if (node->type & NODE_COMMAND)
     {
         expand_environs(node->command, msh->envs);

@@ -3,10 +3,10 @@ NAME := minishell
 NAME_DEV := minishell_dev
 CC := gcc
 CFLAGS := -Wall -Wextra -Werror -MMD -MP
-#ifdef FOR_DEBUG
+ifdef FOR_DEBUG
 NAME := ${NAME_DEV}
 DFLAGS := -g -D DEBUG -fsanitize=address
-#endif
+endif
 SRCS_DIR := srcs/
 SRCS := \
 	main.c \
@@ -39,9 +39,11 @@ SRCS := \
 	execution/exec_command.c \
 	execution/exec_cmd_internal.c \
 	execution/exec_cmd_external.c \
-	execution/set_redirection.c \
 	execution/execvpe.c \
 	execution/exec_utils.c \
+	execution/redirect.c \
+	execution/process.c \
+	execution/pipe.c \
 	builtin/export.c \
 	builtin/unset.c \
 	builtin/echo.c \
@@ -97,9 +99,9 @@ MOVE := \033[1F
 CR := \033[1G
 
 # Progress variables
-SRC_TOT := ${shell expr ${words ${ALL_SRCS}} - $(shell ls -l ${OBJ_DIR} | grep .o$ | wc -l)}
+SRC_TOT := ${shell expr ${words ${SRCS}} - $(shell ls -l ${OBJS_DIR} | grep .o$ | wc -l)}
 ifndef SRC_TOT
-	SRC_TOT := ${words ${ALL_SRCS}}
+	SRC_TOT := ${words ${SRCS}}
 endif
 SRC_CNT := 0
 SRC_PCT = $(shell expr 100 \* $(SRC_CNT) / $(SRC_TOT))
@@ -151,7 +153,7 @@ clean:
 
 #: Remove all object and executable files.
 fclean:	clean
-	@${RM} ${NAME}
+	@${RM} ${NAME} ${NAME_DEV}
 	@${RM} ${LIBFT}
 	@${RM} ${LIBDEQUE}
 	@${RM} ${LIBVECTOR}
@@ -186,6 +188,10 @@ norm:
 #: Check allowed function.
 nm:
 	@nm -u ${NAME}
+
+#: Check source files.
+echo:
+	@echo ${SRCS}
 
 #: Display all commands.
 help:

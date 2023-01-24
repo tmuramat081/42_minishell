@@ -10,7 +10,7 @@
  */
 
 #include "execution.h"
-#include "minishell.h"
+#include "terminal.h"
 #include "ft_snprintf.h"
 #include "ft_hashmap.h"
 #include "ft_printf.h"

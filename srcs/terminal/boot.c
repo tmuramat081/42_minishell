@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   boot.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/21 02:10:44 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/01/25 03:09:42 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  *
  */
 
-#include "minishell.h"
+#include "terminal.h"
 #include "libast.h"
 #include "ft_snprintf.h"
 #include "constant.h"

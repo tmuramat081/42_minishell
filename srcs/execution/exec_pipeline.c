@@ -1,37 +1,34 @@
 #include "execution.h"
 #include "libast.h"
+#include <signal.h>
 
 
-void	set_pipeline_begin(t_process *process, int pipe_fd[2])
+/**
+ * @brief パイプ内のコマンドを再帰的に実行する。
+ * @param node
+ * @param process
+ * @param msh
+ * @param pipe
+ */
+void	exec_pipeline_recursive(t_ast_node *node, t_process process, t_shell *msh, t_pipe pipe)
 {
-
-	if (pipe(pipe_fd) < 0)
+	if (node->type & NODE_COMMAND)
 	{
-		exit(EXIT_FAILURE);
+		pipe.state = PIPE_STDIN;
+		exec_simple_cmd(node, process, msh, pipe);
 	}
-	process->writer = pipe_fd[1];
-	process->reader = pipe_fd[0];
-	process->pipe_state = PIPE_STDOUT;
-}
-
-void	set_pipeline_middle(t_process *process, int pipe_fd[2])
-{
-	close(process->writer);
-	if (pipe(pipe_fd) < 0)
+	else
 	{
-		exit(EXIT_FAILURE);
+		pipe_update(&pipe);
+		pipe.state = PIPE_STDIN | PIPE_STDOUT;
+		exec_simple_cmd(node->left, process, msh, pipe);
+		close_file(pipe.writer);
+		close_file(pipe.in_fd);
+		pipe.in_fd = pipe.reader;
+		if (node->right)
+			exec_pipeline_recursive(node->right, process, msh, pipe);
 	}
-	process->writer = pipe_fd[1];
-	process->pipe_state = PIPE_STDIN | PIPE_STDOUT;
 }
-
-void	set_pipeline_end(t_process *process, int pipe_fd[2])
-{
-	process->reader = pipe_fd[0];
-	close(process->writer);
-	process->pipe_state = PIPE_STDIN;
-}
-
 
 /**
  * @brief 実行処理：パイプライン（"|"）
@@ -41,26 +38,14 @@ void	set_pipeline_end(t_process *process, int pipe_fd[2])
  */
 void	exec_pipeline(t_ast_node *node, t_process process, t_shell *msh)
 {
-	t_ast_node *next_node;
-	int			pipe_fd[2];
+	t_pipe	pipe;
+	size_t	process_cnt;
 
-	if (node->type & NODE_COMMAND)
-	{
-		exec_simple_cmd(node, process, msh);
-		return ;
-	}
-	set_pipeline_begin(&process, pipe_fd);
-	exec_simple_cmd(node->left, process, msh);
-	next_node = node->right;
-	while (next_node && (next_node->type & NODE_PIPELINE))
-	{
-		set_pipeline_middle(&process, pipe_fd);
-		exec_simple_cmd(next_node->left, process, msh);
-		close(process.reader);
-		process.reader = pipe_fd[0];
-		next_node = next_node->right;
-	}
-	set_pipeline_end(&process, pipe_fd);
-	exec_simple_cmd(next_node, process, msh);
-	close(process.reader);
+	signal(SIGCHLD, SIG_IGN);
+	pipe = pipe_init();
+	process_cnt = ast_count_pipeline(node);
+	pipe_fd_backup(&pipe);
+	exec_pipeline_recursive(node, process, msh, pipe);
+	wait_all_child_processes();
+	pipe_fd_restore(pipe);
 }

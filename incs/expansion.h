@@ -2,7 +2,7 @@
 # define EXPANSION_H
 
 #include "libast.h"
-#include "minishell.h"
+#include "terminal.h"
 
 void    expand(t_ast_node *syntax_tree, t_shell *msh);
 

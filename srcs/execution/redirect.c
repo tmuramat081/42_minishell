@@ -1,10 +1,16 @@
-#include "minishell.h"
+#include "terminal.h"
 #include "execution.h"
 #include "parser.h"
 #include "libast.h"
 #include "ft_printf.h"
 #include <unistd.h>
 #include <fcntl.h>
+
+void	close_file(int fd)
+{
+	if (close(fd) < 0)
+		exit(EXIT_FAILURE);
+}
 
 /**
  * @brief ファイルをオープンする。
@@ -40,7 +46,6 @@ void    set_redirection(t_process process)
     	old_fd = open_file(*redirects);
     	if (old_fd == -1)
     	{
-    	    strerror(errno);
     	    exit(EXIT_FAILURE);
 		}
     	new_fd = redirects->fd;
@@ -49,22 +54,7 @@ void    set_redirection(t_process process)
     	    close(old_fd);
     	    exit(EXIT_FAILURE);
     	}
-    	close(old_fd);
+    	close_file(old_fd);
 		redirects = redirects->next;
 	}
-}
-
-/**
- * @brief 標準入力・標準出力・エラー出力先を初期値に戻す。
- *
- * @param process
- */
-void    reset_redirection(t_process process)
-{
-	dup2(process.fd_backup[0], STDIN_FILENO);
-	dup2(process.fd_backup[1], STDOUT_FILENO);
-	dup2(process.fd_backup[2], STDERR_FILENO);
-	close(process.fd_backup[0]);
-	close(process.fd_backup[1]);
-	close(process.fd_backup[2]);
 }

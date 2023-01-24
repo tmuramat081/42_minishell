@@ -6,11 +6,11 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:59:01 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/16 00:48:25 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/22 21:35:41 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "terminal.h"
 
 /**
 * @file main.c

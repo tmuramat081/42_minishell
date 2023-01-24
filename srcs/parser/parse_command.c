@@ -23,7 +23,7 @@
 #include "parser.h"
 #include "lexer.h"
 #include "libast.h"
-#include "minishell.h"
+#include "terminal.h"
 
 /**
  * @note
@@ -86,12 +86,10 @@ t_ast_node	*parse_simple_cmd(t_vector *tokens, t_token **curr)
 {
 	t_ast_node	*node;
 
-	puts("start:command");
 	if ((*curr)->type & TOKEN_END)
 		return (NULL);
 	node = ast_node_create();
 	node->command = parse_suffix(tokens, curr);
 	ast_node_set_type(node, NODE_COMMAND);
-	puts("end:command");
 	return (node);
 }

@@ -22,7 +22,7 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "minishell.h"
+#include "terminal.h"
 
 
 static int print_env(t_hashmap_data *map_data, void *data)

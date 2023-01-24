@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   astree_get.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:25:16 by event             #+#    #+#             */
-/*   Updated: 2023/01/16 08:25:17 by event            ###   ########.fr       */
+/*   Updated: 2023/01/24 23:56:37 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,19 @@ size_t	ast_count_redirects(t_redirect *redirects)
 char	*ast_get_command_name(t_command *command)
 {
 	return (command->arguments->argument);
+}
+
+size_t		ast_count_pipeline(t_ast_node *node)
+{
+	size_t		count;
+	t_ast_node	*tmp_node;
+
+	tmp_node = node;
+	count = 0;
+	while (tmp_node)
+	{
+		count += 1;
+		tmp_node = tmp_node->right;
+	}
+	return (count);
 }

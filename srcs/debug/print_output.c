@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "terminal.h"
 #include "constant.h"
 #include "ft_printf.h"
 

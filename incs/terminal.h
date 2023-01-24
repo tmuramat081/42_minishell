@@ -1,5 +1,5 @@
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef TERMINAL_H
+# define TERMINAL_H
 
 # ifdef DEBUG
 #  define DEBUG 1
@@ -28,6 +28,7 @@ typedef struct s_env {
 typedef struct s_shell {
 	t_hashmap	*envs;
 	char		*prompt;
+	int			exit_status;
 }	t_shell;
 
 /************* terinal ***************/

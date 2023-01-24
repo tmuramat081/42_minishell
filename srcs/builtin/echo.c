@@ -9,7 +9,7 @@
  *
  */
 
-#include "minishell.h"
+#include "terminal.h"
 #include "ft_printf.h"
 
 int	is_n_option(const char *s)

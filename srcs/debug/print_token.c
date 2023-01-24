@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2023
  *
  */
-#include "minishell.h"
+#include "terminal.h"
 #include "lexer.h"
 #include "parser.h"
 #include "ft_printf.h"
