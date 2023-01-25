@@ -27,7 +27,7 @@ typedef struct s_pipe {
 typedef struct s_process {
 	char		**argv;
 	t_redirect	*redirects;
-	bool		has_child;
+	bool		is_solo;
 }	t_process;
 
 

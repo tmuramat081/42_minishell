@@ -4,7 +4,7 @@
 
 
 /**
- * @brief パイプ内のコマンドを再帰的に実行する。
+ * @brief パイプ間のコマンドを再帰的に実行する。
  * @param node
  * @param process
  * @param msh
@@ -39,11 +39,11 @@ void	exec_pipeline_recursive(t_ast_node *node, t_process process, t_shell *msh, 
 void	exec_pipeline(t_ast_node *node, t_process process, t_shell *msh)
 {
 	t_pipe	pipe;
-	size_t	process_cnt;
-
-	signal(SIGCHLD, SIG_IGN);
+	
+	process.is_solo = false;
+	if (ast_count_pipeline(node) <= 1)
+		process.is_solo = true;
 	pipe = pipe_init();
-	process_cnt = ast_count_pipeline(node);
 	pipe_fd_backup(&pipe);
 	exec_pipeline_recursive(node, process, msh, pipe);
 	wait_all_child_processes();

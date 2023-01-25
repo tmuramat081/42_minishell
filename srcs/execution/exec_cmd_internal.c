@@ -55,5 +55,6 @@ t_builtin_fn search_builtin(char *args)
 void	exec_internal_command(t_builtin_fn builtin_cmd, t_process process, t_shell *msh)
 {
 	(*builtin_cmd)(process.argv, msh);
-	exit(EXIT_FAILURE);
+	if (process.is_solo == false)
+		exit(EXIT_FAILURE);
 }
