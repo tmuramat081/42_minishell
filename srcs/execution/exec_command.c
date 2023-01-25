@@ -52,21 +52,26 @@ static void set_command_process(t_process *process, t_command *command)
  */
 void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh, t_pipe pipe)
 {
+	pid_t	pid;
 	t_builtin_fn builtin_command;
 
 	if (!node)
 		return ;
-//	puts(ast_get_command_name(node->command));
-	if (create_child_process() == 0)
+	set_command_process(&process, node->command);
+	builtin_command = search_builtin(process.argv[0]);
+	if (builtin_command && process.is_solo == true)
+		pid = 0;
+	else
+		pid = create_child_process();
+	if (pid == 0)
 	{
-		set_command_process(&process, node->command);
 		set_pipeline(pipe);
 		if (ast_count_redirects(process.redirects) > 0)
 			set_redirection(process);
-		builtin_command = search_builtin(process.argv[0]);
 		if (builtin_command)
 			exec_internal_command(builtin_command, process, msh);
 		else
 			exec_external_command(process, msh);
 	}
 }
+
