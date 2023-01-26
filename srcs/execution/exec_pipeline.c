@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_pipeline.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/27 01:02:45 by event             #+#    #+#             */
+/*   Updated: 2023/01/27 01:02:46 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "execution.h"
 #include "libast.h"
 #include <signal.h>
-
 
 /**
  * @brief パイプ間のコマンドを再帰的に実行する。
@@ -10,7 +21,8 @@
  * @param msh
  * @param pipe
  */
-void	exec_pipeline_recursive(t_ast_node *node, t_process process, t_shell *msh, t_pipe pipe)
+void	exec_pipeline_recursive(t_ast_node *node, t_process process, \
+			t_shell *msh, t_pipe pipe)
 {
 	if (node->type & NODE_COMMAND)
 	{
@@ -39,7 +51,7 @@ void	exec_pipeline_recursive(t_ast_node *node, t_process process, t_shell *msh, 
 void	exec_pipeline(t_ast_node *node, t_process process, t_shell *msh)
 {
 	t_pipe	pipe;
-	
+
 	process.is_solo = false;
 	if (ast_count_pipeline(node) <= 1)
 		process.is_solo = true;
