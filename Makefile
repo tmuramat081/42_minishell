@@ -33,6 +33,9 @@ SRCS := \
 	parser/parse_redirect.c \
 	parser/parser_utils.c \
 	expansion/expand.c \
+	expansion/expand_environ.c \
+	expansion/ft_wordexp.c \
+	expansion/ft_wordexp_utils.c \
 	execution/execute.c \
 	execution/exec_line.c \
 	execution/exec_pipeline.c \

@@ -47,6 +47,7 @@ MEM_SRCS = ft_bzero.c \
 		ft_memset.c \
 		ft_memswap.c \
 		ft_xmalloc.c \
+		ft_realloc.c \
 		ft_memcat.c \
 		ft_qsort.c
 MTH_SRCS = ft_abs.c \

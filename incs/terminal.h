@@ -41,6 +41,7 @@ void		sort_environs(t_env *env);
 void		ignore_signal(void);
 
 //********** debug command ********/
+void		boot_minishell_dev(t_shell *msh);
 void		print_tokens(t_vector *tokens);
 void		print_nodes(t_ast_node *node);
 void		print_output(void);
