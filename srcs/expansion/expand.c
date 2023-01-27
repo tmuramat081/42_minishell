@@ -2,7 +2,7 @@
 #include "terminal.h"
 #include "libast.h"
 /**
- * @brief 抽象構文木を捜査し、コマンドの場合に展開処理を行う。
+* @brief 抽象構文木の各ノードを走査し、それがコマンドである場合は展開を試みる。
  *
  * @param node
  * @param msh

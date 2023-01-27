@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:59:01 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/22 21:35:41 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/26 08:52:45 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ int	main(void)
 	t_shell	*msh;
 
 	msh = init_minishell();
-	boot_minishell(msh);
+	if (DEBUG)
+		boot_minishell_dev(msh);
+	else
+		boot_minishell(msh);
 	return (0);
 }

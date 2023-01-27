@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   boot.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/25 03:09:42 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/26 08:51:21 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	put_banner(void)
 }
 
 /** コマンド入力を待機 */
-void	boot_minishell(t_shell	*msh)
+void	boot_minishell_dev(t_shell	*msh)
 {
 	char		*line;
 	t_vector	*lexed_tokens;
@@ -65,11 +65,38 @@ void	boot_minishell(t_shell	*msh)
 		if(DEBUG)
 			print_tokens(lexed_tokens);
 		syntax_tree = parser(lexed_tokens, msh);
-		expand(syntax_tree, msh);
 		if(DEBUG)
 			print_nodes(syntax_tree);
+		expand(syntax_tree, msh);
 		if(DEBUG)
 			print_output();
+		execute_syntax_tree(syntax_tree, msh);
+		free(line);
+	}
+	exit(EXIT_FAILURE);
+}
+
+
+/** コマンド入力を待機 */
+void	boot_minishell(t_shell	*msh)
+{
+	char		*line;
+	t_vector	*lexed_tokens;
+	t_ast_node	*syntax_tree;
+
+	line = NULL;
+	ignore_signal();
+	put_banner();
+	while (true)
+	{
+		line = readline(msh->prompt);
+		if (!line)
+			break ;
+		else if (*line)
+			add_history(line);
+		lexer(line, &lexed_tokens);
+		syntax_tree = parser(lexed_tokens, msh);
+		expand(syntax_tree, msh);
 		execute_syntax_tree(syntax_tree, msh);
 		free(line);
 	}

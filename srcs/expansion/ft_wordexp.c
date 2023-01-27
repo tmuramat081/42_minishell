@@ -1,89 +1,122 @@
 #include "expansion.h"
-#include <assert.h>
+#include "libft.h"
 
-typedef struct s_wordwxp
+/**
+ * @brief 環境変数を検索し、見つかればその文字列を返す。見つからなければ空文字列を返す。
+ *
+ * @param key
+ * @param environ
+ * @return char*
+ */
+char    *search_environment(char *key, t_hashmap *environ)
 {
-	size_t	we_wordc;		/* Count of words matched.  */
-	char	**we_wordv;		/* List of expanded words.  */
-	size_t	we_offs;		/* Slots to reserve in `we_wordv'.  */
-}	t_wordexp;
+    char    *value;
 
-static char *_w_addchar(char *buff, size_t *act_len, size_t *max_len, char ch)
-{
-	char *old_buff;
-
-	if (*act_len == *max_len)
-	{
-		old_buff = buff;
-		assert (!buff || *max_len != 0);
-		*max_len += 100;
-		buff = (char *)ft_realloc(buff, 1 + *max_len);
-		if (!buff)
-			free(old_buff);
-	}
-	if (buff != NULL)
-	{
-		buff[*act_len] = ch;
-		buff[++(*act_len)] = '\0';
-	}
-	return (buff);
+    if (!ft_hashmap_find(environ, key, (void **)&value))
+        return (ft_calloc(1, sizeof(char)));
+    return (value);
 }
 
-static char	*_w_addmem(char *buff, size_t *act_len, size_t *max_len, const char *str, size_t len)
+/**
+ * @brief 環境変数が波括弧{}で閉じられているか判定する 
+ * 
+ * @param str 
+ * @param var_start 
+ * @param offset 
+ * @return true 
+ * @return false 
+ */
+bool	is_valid_syntax(char *str, size_t var_start, size_t *offset)
 {
-	char *old_buff;
-
-	if (*act_len + len > *max_len)
+	if (str[var_start] == '{')
 	{
-		old_buff = buff;
-		assert (buff == NULL || *max_len != 0);
-		*max_len += ft_max(2 * len, 100);
-		buff = ft_realloc(old_buff, 1 + *max_len);
-		if (!buff)
-			free(old_buff);
-	}
-	if (buff)
-	{
-		*((char *) ft_mempcpy(&buff[*act_len], str, len)) = '\0';
-		*act_len += len;
-	}
-	return (buff);
-}
-
-static char *_w_addstr(char *buff, size_t *act_len, size_t *max_len, const char *str)
-{
-	size_t len;
-
-	assert(str != NULL);
-	len = strlen(str);
-	return (add_mem(buff, act_len, max_len, str, len));
-}
-
-static char *_w_newword (size_t *act_len, size_t *max_len)
-{
-	*act_len = *max_len = 0;
-	return NULL;
-}
-
-static int parse_dollars(char **word, size_t *word_len, size_t *max_len, const char *words, size_t *offset, int flags)
-{
-
-}
-
-int ft_wordexp_env(const char *words, t_wordexp *wordexp, int flag)
-{
-	size_t words_offset;
-	size_t word_length;
-	size_t max_length;
-	char *word;
-
-	word = ft_newword(word_length, max_length);
-	while(words[words_offset])
-	{
-		if (words[words_offset])
+		if (str[*offset] == '}')
 		{
-			parse_dollar(&word,
+			++*offset;
+			return (true);
 		}
-		words_offset++;
+		return (false);
 	}
+	return(true);
+}
+
+/**
+ * @brief 環境変数の終端までインデックスを進める。
+ * 
+ * @param str 
+ * @param offset 
+ */
+void	forward_to_var_end(char *str, size_t *offset)
+{
+	while (true)
+	{
+		++*offset;
+		if (!ft_isalnum(str[*offset]) && str[*offset] != '_')
+			break ;
+	}
+}
+
+/**
+ * @brief $以降の文字列を走査する。 
+ * 
+ * @param str 
+ * @param offset 
+ * @param environ 
+ */
+char *parse_dollar(char *str, size_t *offset, t_hashmap *environ)
+{
+	size_t	var_start;
+	size_t	var_end;
+	char	*var;
+
+	if (str[*offset] == '{')
+		++*offset;
+	var_start = *offset;
+	if (ft_isalpha(str[*offset]) || str[*offset] == '_')
+	{
+		forward_to_var_end(str, offset);
+		var_end = *offset;
+		if (is_valid_syntax(str, var_start - 1, offset))
+		{
+			var = ft_substr(str, var_start, var_end - var_start);
+			return(search_environment(var, environ));
+		}
+		else
+			abort();
+	}
+	return (NULL);
+}
+
+/**
+ * @brief 文字列に含まれる環境変数を展開する。
+ *
+ * @param word
+ * @param environ
+ * @return int 成功した場合は0を返す。構文エラーの場合は1を返す。 
+ */
+int	ft_wordexp_env(char *words, char **buff, t_hashmap *environ)
+{
+	size_t		offset;
+	size_t		act_len;
+	size_t		max_len;
+	char 		*env;
+
+	*buff = w_newword(&act_len, &max_len);
+	offset = 0;
+	while(words[offset])
+	{
+		if (words[offset] == '$')
+		{
+			++offset;
+			env = parse_dollar(words, &offset, environ);
+			*buff = w_addstr(*buff, &act_len, &max_len, env);
+
+		}
+		else
+		{
+			*buff = w_addchar(*buff, &act_len, &max_len, words[offset]);
+			++offset;
+		}
+	}
+	return (0);
 }
