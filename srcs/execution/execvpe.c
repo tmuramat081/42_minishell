@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execvpe.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/27 01:14:38 by event             #+#    #+#             */
+/*   Updated: 2023/01/27 01:26:40 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /**
  * @file execvpe.c
  * @author tmuramat (tmuramat@student.42tokyo.jp)
@@ -21,7 +33,7 @@
  * @param envp
  * @return char*
  */
-char 	*get_environ_value(char *const envp[], char *key)
+char	*get_environ_value(char *const envp[], char *key)
 {
 	size_t	i;
 	size_t	key_len;
@@ -41,11 +53,12 @@ char 	*get_environ_value(char *const envp[], char *key)
 
 /**
  * @brief 実行可能なエラーかどうかを判定する。
- * @details EACEESS:アクセス権限がない, ENOENT:パスが存在しない, ESTALE:ファイルハンドルが古い, ENOTDIR: ディレクトリではない, ENODEV: デバイスが存在しない, ETIMEDOUT: 操作がタイムアウトした
+ * @details EACEESS:アクセス権限がない, ENOENT:パスが存在しない, ESTALE:ファイルハンドルが古い,
+ * ENOTDIR: ディレクトリではない, ENODEV: デバイスが存在しない, ETIMEDOUT: 操作がタイムアウトした
  * @return true　上記のエラーである場合
  * @return false 上記以外のエラーである場合
  */
-static bool is_expected_error()
+static bool	is_expected_error()
 {
 	if (errno == EACCES || errno == ENOENT
 		|| errno == ESTALE || errno == ENOTDIR
@@ -62,7 +75,8 @@ static bool is_expected_error()
  * @param argv
  * @param envp
  */
-void	try_executable_path(char **paths, const char *file, char *const argv[], char *const envp[])
+void	try_executable_path(char **paths, const char *file, \
+			char *const argv[], char *const envp[])
 {
 	size_t	i;
 	char	*buffer;
@@ -74,8 +88,10 @@ void	try_executable_path(char **paths, const char *file, char *const argv[], cha
 	while (paths[i])
 	{
 		path_len = ft_strlen(paths[i]);
-		buffer = (char *)ft_xmalloc(sizeof(char) * (file_len + path_len + 1 + 1));
-		ft_snprintf(buffer, file_len + path_len + 1 + 1, "%s/%s", paths[i], file);
+		buffer = (char *)ft_xmalloc(sizeof(char) * \
+					(file_len + path_len + 1 + 1));
+		ft_snprintf(buffer, file_len + path_len + 1 + 1, \
+					"%s/%s", paths[i], file);
 		execve(buffer, argv, envp);
 		if (!is_expected_error())
 			return ;
@@ -86,7 +102,8 @@ void	try_executable_path(char **paths, const char *file, char *const argv[], cha
 
 /**
  * @brief execvpeの実装
- * @details ※GNU標準関数ではない（v - 引数配列渡し, p - PATH自動参照, e - 環境変数指定）。また、fileに'/'が含まれる場合はPATHを参照しない。
+ * @details ※GNU標準関数ではない（v - 引数配列渡し, p - PATH自動参照,
+ * e - 環境変数指定）。また、fileに'/'が含まれる場合はPATHを参照しない。
  * @param file  コマンド名
  * @param argv　起動引数
  * @param envp　環境変数

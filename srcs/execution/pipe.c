@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/27 01:32:30 by event             #+#    #+#             */
+/*   Updated: 2023/01/27 01:32:31 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "execution.h"
 
 t_pipe	pipe_init(void)
 {
-	t_pipe piped;
+	t_pipe	piped;
 
 	piped = (t_pipe){};
 	piped.reader = STDIN_FILENO;
@@ -13,7 +25,7 @@ t_pipe	pipe_init(void)
 
 void	pipe_update(t_pipe *piped)
 {
-	int tmp[2];
+	int	tmp[2];
 
 	if (pipe(tmp) < 0)
 	{
@@ -22,7 +34,6 @@ void	pipe_update(t_pipe *piped)
 	piped->reader = tmp[0];
 	piped->writer = tmp[1];
 }
-
 
 void	pipe_fd_backup(t_pipe *pipe)
 {

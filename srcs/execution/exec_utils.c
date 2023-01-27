@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/27 01:22:53 by event             #+#    #+#             */
+/*   Updated: 2023/01/27 01:22:54 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /**
  * @file exec_utils.c
  * @author tmuramat (tmuramat@student.42tokyo.jp)
@@ -31,7 +43,7 @@ char	**convert_vector_to_array(t_vector *src)
 	i = 0;
 	while (!ft_vector_is_empty(src))
 	{
-		if(!ft_vector_pop_back(src, &env))
+		if (!ft_vector_pop_back(src, &env))
 			return (NULL);
 		if (env.key && env.value)
 		{

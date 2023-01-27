@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_command.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/27 01:06:28 by event             #+#    #+#             */
+/*   Updated: 2023/01/27 01:06:29 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "terminal.h"
 #include "execution.h"
 #include "libast.h"
@@ -16,9 +28,9 @@ static char	**init_arguments(t_argument *arguments)
 {
 	char	**argv;
 	size_t	i;
-    size_t  argc;
+	size_t	argc;
 
-    argc = ast_count_arguments(arguments);
+	argc = ast_count_arguments(arguments);
 	argv = (char **)ft_xmalloc(sizeof(t_ast_node) * (argc + 1));
 	i = 0;
 	while (arguments)
@@ -38,7 +50,7 @@ static char	**init_arguments(t_argument *arguments)
  * @param command
  * @return t_process*
  */
-static void set_command_process(t_process *process, t_command *command)
+static void	set_command_process(t_process *process, t_command *command)
 {
 	process->argv = init_arguments(command->arguments);
 	process->redirects = command->redirects;
@@ -50,10 +62,11 @@ static void set_command_process(t_process *process, t_command *command)
  * @param node
  * @param msh
  */
-void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh, t_pipe pipe)
+void	exec_simple_cmd(t_ast_node *node, t_process process, \
+			t_shell *msh, t_pipe pipe)
 {
-	pid_t	pid;
-	t_builtin_fn builtin_command;
+	pid_t			pid;
+	t_builtin_fn	builtin_command;
 
 	if (!node)
 		return ;
@@ -74,4 +87,3 @@ void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh, t_pipe p
 			exec_external_command(process, msh);
 	}
 }
-

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/27 01:25:52 by event             #+#    #+#             */
+/*   Updated: 2023/01/27 01:25:53 by event            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /**
  * @file execute.c
  * @author tmuramat (tmuramat@student.42tokyo.jp)
@@ -19,9 +31,9 @@
  * @param syntax_tree 抽象構文木
  * @param msh
  */
-void execute_syntax_tree(t_ast_node *syntax_tree, t_shell *msh)
+void	execute_syntax_tree(t_ast_node *syntax_tree, t_shell *msh)
 {
-	t_process process;
+	t_process	process;
 
 	if (!syntax_tree)
 		return ;
