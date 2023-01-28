@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   boot.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/26 08:51:21 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/01/29 01:32:00 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,11 @@ void	put_banner(void)
 		ft_printf("%s\n", BANNER);
 }
 
-/** コマンド入力を待機 */
+/**
+ * @brief コマンド入力を待機する（デバッグ用）
+ *
+ * @param msh
+ */
 void	boot_minishell_dev(t_shell	*msh)
 {
 	char		*line;
@@ -59,17 +63,14 @@ void	boot_minishell_dev(t_shell	*msh)
 			break ;
 		else if (*line)
 			add_history(line);
-		if(DEBUG)
-			print_input(line);
+		print_input(line);
 		lexer(line, &lexed_tokens);
-		if(DEBUG)
-			print_tokens(lexed_tokens);
+		print_tokens(lexed_tokens);
 		syntax_tree = parser(lexed_tokens, msh);
-		if(DEBUG)
-			print_nodes(syntax_tree);
+		print_nodes(syntax_tree);
 		expand(syntax_tree, msh);
-		if(DEBUG)
-			print_output();
+		print_commands(syntax_tree);
+		print_output();
 		execute_syntax_tree(syntax_tree, msh);
 		free(line);
 	}

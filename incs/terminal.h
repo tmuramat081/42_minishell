@@ -44,6 +44,7 @@ void		ignore_signal(void);
 void		boot_minishell_dev(t_shell *msh);
 void		print_tokens(t_vector *tokens);
 void		print_nodes(t_ast_node *node);
+void		print_commands(t_ast_node *node);
 void		print_output(void);
 void		print_input(char *line);
 char		*get_node_type(t_node_type	type);

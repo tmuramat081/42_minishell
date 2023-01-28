@@ -14,7 +14,6 @@
 typedef struct s_wordexp {
 	size_t		act_len;
 	size_t		max_len;
-	int			error;
 	t_hashmap	*envs;
 }	t_wordexp;
 
@@ -24,6 +23,7 @@ void		expand_environs(t_command *command, t_hashmap *environ);
 int			ft_wordexp(char *words, char **buff, t_hashmap *environ);
 int			we_parse_dollar(char *words, char **buff, t_wordexp *wp, size_t *offset);
 int			we_parse_quote(char *words, char **buff, t_wordexp *wp, size_t *offset);
+int			we_parse_params(char *words, char **buff, t_wordexp *wp, size_t *offset);
 
 t_wordexp	w_newword(t_hashmap *environs);
 char		*w_addstr(char *buff, t_wordexp *wp, const char *str);

@@ -12,16 +12,17 @@
 void	expand_environs(t_command *command, t_hashmap *environ)
 {
 	t_argument	*curr;
-	char		*p_we;
+	char		*buff;
 
 	curr = command->arguments;
 	while (curr)
 	{
-		if (curr->type & NODE_WORD && ft_strchr(curr->argument, '$'))
+		if (curr->type & NODE_WORD)
 		{
-			ft_wordexp(curr->argument, &p_we, environ);
+			buff = NULL;
+			ft_wordexp(curr->argument, &buff, environ);
 			free(curr->argument);
-			curr->argument = p_we;
+			curr->argument = ft_strdup(buff);
 		}
 		curr = curr->next;
 	}

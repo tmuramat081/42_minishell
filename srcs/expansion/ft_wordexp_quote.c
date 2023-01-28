@@ -47,7 +47,7 @@ static int	we_parse_single_quote(char *words, char **buff, t_wordexp *wp, size_t
 
 int		we_parse_quote(char *words, char **buff, t_wordexp *wp, size_t *offset)
 {
-	if (words[*(offset - 1)] == '\'')
+	if (words[*offset - 1] == '\'')
 		return (we_parse_single_quote(words, buff, wp, offset));
 	return (we_parse_double_quote(words, buff, wp, offset));
 }
