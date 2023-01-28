@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/25 23:06:59 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/28 04:48:38 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,36 +80,58 @@ void	print_envs(t_hashmap *envs)
 	sort_envs(envs);
 }
 
-t_env	split_envptr(char *envp)
+/**
+ * @brief 文字列をkeyとvalueに分解し、env構造体に格納する。
+ *
+ * @param str 分割する文字列
+ * @return t_env
+ */
+t_env	parse_environ(char *str)
 {
-	t_env env;
-	size_t	i;
+	t_env	environ;
+	char	*p_sep;
 
-	i = 0;
-	while (envp[i] != '\0' && envp[i] != '=')
+	environ = (t_env){};
+	p_sep = strchr(str, '=');
+	if (p_sep)
 	{
-		i++;
+		*p_sep = '\0';
+		environ.key = str;
+		environ.value = (char *)(p_sep+1);
+		puts(environ.key);
+		puts(environ.value);
 	}
-	envp[i] = '\0';
-	env.key = envp;
-	env.value = &envp[i + 1];
-	return (env);
+	return (environ);
 }
 
-void insert_env(char **args, t_hashmap *map)
+/**
+ * @brief 文字列の配列を環境変数に追加する。
+ *
+ * @param args
+ * @param map
+ */
+void insert_env(char **args, t_hashmap *environs)
 {
 	size_t i;
-	t_env env;
+	t_env new_env;
 
 	i = 0;
 	while (args[i] != NULL)
 	{
-		env = split_envptr(args[i]);
-		ft_hashmap_insert(map, env.key, env.value);
+		new_env = parse_environ(args[i]);
+		if (new_env.key && new_env.value)
+			ft_hashmap_insert(environs, new_env.key, new_env.value);
 		i++;
 	}
 }
 
+/**
+ * @brief ビルトイン関数：export
+ *
+ * @param args
+ * @param msh
+ * @return int
+ */
 int	builtin_export(char **args, t_shell *msh)
 {
 	int	argc;

@@ -10,7 +10,7 @@ endif
 SRCS_DIR := srcs/
 SRCS := \
 	main.c \
-	terminal/environs.c \
+	terminal/environ.c \
 	terminal/prompt.c \
 	terminal/boot.c \
 	terminal/signal.c \

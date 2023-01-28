@@ -28,7 +28,7 @@
 static int print_env(t_hashmap_data *map_data, void *data)
 {
 	(void)data;
-	ft_printf("%s=\"%s\"\n", map_data->key, map_data->value);
+	ft_printf("%s=%s\n", map_data->key, map_data->value);
 	return (1);
 }
 
