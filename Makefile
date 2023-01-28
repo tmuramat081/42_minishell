@@ -35,6 +35,8 @@ SRCS := \
 	expansion/expand.c \
 	expansion/expand_environ.c \
 	expansion/ft_wordexp.c \
+	expansion/ft_wordexp_dollar.c \
+	expansion/ft_wordexp_quote.c \
 	expansion/ft_wordexp_utils.c \
 	execution/execute.c \
 	execution/exec_line.c \

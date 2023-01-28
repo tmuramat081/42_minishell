@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_general.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:06:30 by event             #+#    #+#             */
-/*   Updated: 2023/01/17 19:06:31 by event            ###   ########.fr       */
+/*   Updated: 2023/01/28 18:24:44 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ bool	is_redirection(int c)
 
 bool	is_delimiter(int c)
 {
-	if (ft_isspace(c) || ft_isquote(c) || ft_isnull(c)
+	if (ft_isspace(c) || ft_isnull(c)
 		|| is_redirection(c) || c == '|' || c == ';')
 		return (true);
 	return (false);
@@ -45,8 +45,8 @@ bool	is_delimiter(int c)
 /**
  * @brief 状態遷移：通常（ここから各状態に遷移する）。
  *
- * @param tokenizer 
- * @return void* 
+ * @param tokenizer
+ * @return void*
  */
 void	*lex_general(t_tokenizer *tokenizer)
 {

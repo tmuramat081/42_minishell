@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/28 04:48:38 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/28 18:28:06 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,13 @@ int	set_priority_queue(t_hashmap_data *hash_data, void *p_pqueue)
 	return (HASHMAP_SUCCESS);
 }
 
-void	sort_envs(t_hashmap *envs)
+
+/**
+ * @brief ASCII順にソートされた環境変数を一覧表示する。
+ *
+ * @param envs
+ */
+void	print_sorted_envs(t_hashmap *envs)
 {
 	t_env		*env;
 	t_pqueue	*pqueue;
@@ -75,11 +81,6 @@ void	sort_envs(t_hashmap *envs)
 	}
 }
 
-void	print_envs(t_hashmap *envs)
-{
-	sort_envs(envs);
-}
-
 /**
  * @brief 文字列をkeyとvalueに分解し、env構造体に格納する。
  *
@@ -92,14 +93,12 @@ t_env	parse_environ(char *str)
 	char	*p_sep;
 
 	environ = (t_env){};
-	p_sep = strchr(str, '=');
+	p_sep = ft_strchr(str, '=');
 	if (p_sep)
 	{
 		*p_sep = '\0';
 		environ.key = str;
-		environ.value = (char *)(p_sep+1);
-		puts(environ.key);
-		puts(environ.value);
+		environ.value = p_sep + 1;
 	}
 	return (environ);
 }
@@ -138,7 +137,7 @@ int	builtin_export(char **args, t_shell *msh)
 
 	argc = ft_matrixlen((const char **)args);
 	if (argc == 1)
-		print_envs(msh->envs);
+		print_sorted_envs(msh->envs);
 	else
 		insert_env(&args[1], msh->envs);
 	return (0);
