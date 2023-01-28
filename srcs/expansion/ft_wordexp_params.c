@@ -16,7 +16,6 @@ char	*search_environment(char *key, t_hashmap *environ)
 	return (value);
 }
 
-
 int we_envsubst(char *words, char **buff, t_wordexp *wp, size_t var_start, size_t var_end)
 {
 	char	*var;

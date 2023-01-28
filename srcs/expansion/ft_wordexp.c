@@ -7,7 +7,7 @@
  * @param word　展開元となる文字列
  * @param buff 展開された文字列が格納されるアドレス
  * @param environ　展開に使用する環境変数
- * @return int 成功した場合は0を返す。構文エラーの場合は0以外を返す。
+ * @return int 成功した場合は0を返す。構文エラーの場合は対応する値を返す。
  */
 int	ft_wordexp(char *words, char **buff, t_hashmap *environs)
 {
@@ -34,6 +34,5 @@ int	ft_wordexp(char *words, char **buff, t_hashmap *environs)
 			++offset;
 		}
 	}
-	puts(*buff);
 	return (FTWRDE_SUCCESS);
 }
