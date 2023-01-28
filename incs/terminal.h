@@ -39,6 +39,7 @@ void		boot_minishell(t_shell *msh);
 void		put_bunner(void);
 void		sort_environs(t_env *env);
 void		ignore_signal(void);
+void		handle_error(char *message, char *command);
 
 //********** debug command ********/
 void		boot_minishell_dev(t_shell *msh);

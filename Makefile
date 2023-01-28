@@ -14,6 +14,7 @@ SRCS := \
 	terminal/prompt.c \
 	terminal/boot.c \
 	terminal/signal.c \
+	terminal/error.c \
 	lexer/lexer.c \
 	lexer/tokenizer.c \
 	lexer/formatter.c \
