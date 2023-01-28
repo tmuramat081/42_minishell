@@ -9,20 +9,21 @@
  * @param command
  * @param environ
  */
-void    expand_environs(t_command *command, t_hashmap *environ)
+void	expand_environs(t_command *command, t_hashmap *environ)
 {
-    t_argument  *curr;
-    char        *pwordexp;
+	t_argument	*curr;
+	char		*buff;
 
-    curr = command->arguments;
-    while (curr)
-    {
-        if (curr->type & NODE_WORD && ft_strchr(curr->argument, '$'))
-        {
-			ft_wordexp_env(curr->argument, &pwordexp, environ);
-            free(curr->argument);
-            curr->argument = pwordexp;
-        }
-        curr = curr->next;
+	curr = command->arguments;
+	while (curr)
+	{
+		if (curr->type & NODE_WORD)
+		{
+			buff = NULL;
+			ft_wordexp(curr->argument, &buff, environ);
+			free(curr->argument);
+			curr->argument = ft_strdup(buff);
+		}
+		curr = curr->next;
 	}
 }

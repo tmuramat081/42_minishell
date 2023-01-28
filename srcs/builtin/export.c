@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/25 23:06:59 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/28 18:28:06 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,13 @@ int	set_priority_queue(t_hashmap_data *hash_data, void *p_pqueue)
 	return (HASHMAP_SUCCESS);
 }
 
-void	sort_envs(t_hashmap *envs)
+
+/**
+ * @brief ASCII順にソートされた環境変数を一覧表示する。
+ *
+ * @param envs
+ */
+void	print_sorted_envs(t_hashmap *envs)
 {
 	t_env		*env;
 	t_pqueue	*pqueue;
@@ -75,48 +81,63 @@ void	sort_envs(t_hashmap *envs)
 	}
 }
 
-void	print_envs(t_hashmap *envs)
+/**
+ * @brief 文字列をkeyとvalueに分解し、env構造体に格納する。
+ *
+ * @param str 分割する文字列
+ * @return t_env
+ */
+t_env	parse_environ(char *str)
 {
-	sort_envs(envs);
-}
+	t_env	environ;
+	char	*p_sep;
 
-t_env	split_envptr(char *envp)
-{
-	t_env env;
-	size_t	i;
-
-	i = 0;
-	while (envp[i] != '\0' && envp[i] != '=')
+	environ = (t_env){};
+	p_sep = ft_strchr(str, '=');
+	if (p_sep)
 	{
-		i++;
+		*p_sep = '\0';
+		environ.key = str;
+		environ.value = p_sep + 1;
 	}
-	envp[i] = '\0';
-	env.key = envp;
-	env.value = &envp[i + 1];
-	return (env);
+	return (environ);
 }
 
-void insert_env(char **args, t_hashmap *map)
+/**
+ * @brief 文字列の配列を環境変数に追加する。
+ *
+ * @param args
+ * @param map
+ */
+void insert_env(char **args, t_hashmap *environs)
 {
 	size_t i;
-	t_env env;
+	t_env new_env;
 
 	i = 0;
 	while (args[i] != NULL)
 	{
-		env = split_envptr(args[i]);
-		ft_hashmap_insert(map, env.key, env.value);
+		new_env = parse_environ(args[i]);
+		if (new_env.key && new_env.value)
+			ft_hashmap_insert(environs, new_env.key, new_env.value);
 		i++;
 	}
 }
 
+/**
+ * @brief ビルトイン関数：export
+ *
+ * @param args
+ * @param msh
+ * @return int
+ */
 int	builtin_export(char **args, t_shell *msh)
 {
 	int	argc;
 
 	argc = ft_matrixlen((const char **)args);
 	if (argc == 1)
-		print_envs(msh->envs);
+		print_sorted_envs(msh->envs);
 	else
 		insert_env(&args[1], msh->envs);
 	return (0);

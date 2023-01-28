@@ -30,7 +30,11 @@ static int	_hash_insert(t_hashmap *map, char *key, void *value)
 	while (map->data[i].in_use == true)
 	{
 		if (ft_strcmp(map->data[i].key, key) == 0)
+		{
+			map->data[i].key = key;
+			map->data[i].value = value;
 			return (HASHMAP_FAILURE);
+		}
 		else
 			i = map->mask & (i + PRIME_2);
 	}

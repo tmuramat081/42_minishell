@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   formatter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:05:09 by event             #+#    #+#             */
-/*   Updated: 2023/01/17 19:05:10 by event            ###   ########.fr       */
+/*   Updated: 2023/01/28 18:29:37 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_token	*format_space(t_token *token)
 	return (token);
 }
 
-static t_token	*format_quote(t_token *token)
+t_token	*format_quote(t_token *token)
 {
 	char	*formatted;
 
@@ -40,13 +40,12 @@ static t_token	*format_quote(t_token *token)
 
 /**
  * @brief 切り出したトークンを整形する。
- * 
- * @param token 
+ *
+ * @param token
  */
 void	format_token(t_token *token)
 {
 	if (!token || !token->data)
 		return ;
 	format_space(token);
-	format_quote(token);
 }

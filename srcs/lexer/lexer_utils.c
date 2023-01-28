@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:11:48 by event             #+#    #+#             */
-/*   Updated: 2023/01/17 19:11:49 by event            ###   ########.fr       */
+/*   Updated: 2023/01/29 01:51:26 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
  * @brief 解析対象の対象を一文字進める。
  *
  * @param tokenizer
- * @return char*
+ * @return char* 進める前の文字
  */
 char	next(t_tokenizer *tk)
 {

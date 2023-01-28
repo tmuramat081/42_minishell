@@ -10,7 +10,7 @@ endif
 SRCS_DIR := srcs/
 SRCS := \
 	main.c \
-	terminal/environs.c \
+	terminal/environ.c \
 	terminal/prompt.c \
 	terminal/boot.c \
 	terminal/signal.c \
@@ -35,6 +35,9 @@ SRCS := \
 	expansion/expand.c \
 	expansion/expand_environ.c \
 	expansion/ft_wordexp.c \
+	expansion/ft_wordexp_dollar.c \
+	expansion/ft_wordexp_quote.c \
+	expansion/ft_wordexp_params.c \
 	expansion/ft_wordexp_utils.c \
 	execution/execute.c \
 	execution/exec_line.c \
@@ -56,6 +59,7 @@ SRCS := \
 	builtin/exit.c \
 	debug/print_token.c \
 	debug/print_tree.c \
+	debug/print_command.c \
 	debug/print_output.c
 
 OBJS_DIR := objs/

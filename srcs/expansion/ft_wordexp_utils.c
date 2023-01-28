@@ -1,60 +1,65 @@
-#include "execution.h"
+#include "expansion.h"
 #include "libft.h"
+#include <assert.h>
 
-static char	*_w_addmem(char *buff, size_t *act_len, size_t *max_len, const char *str, size_t len)
+static char	*_w_addmem(char *buff, t_wordexp *we, const char *str, size_t len)
 {
-	char *old_buff;
+	char	*old_buff;
+	char	*p_end;
 
-	if (*act_len + len > *max_len)
+	if (we->act_len + len > we->max_len)
 	{
 		old_buff = buff;
-		assert (buff == NULL || *max_len != 0);
-		*max_len += ft_max(2 * len, 100);
-		buff = ft_realloc(old_buff, 1 + *max_len);
+		we->max_len += (len * 2);
+		buff = ft_realloc(old_buff, 1 + we->max_len);
 		if (!buff)
 			free(old_buff);
 	}
 	if (buff)
 	{
-		*((char *) ft_mempcpy(&buff[*act_len], str, len)) = '\0';
-		*act_len += len;
+		p_end = ft_mempcpy(&buff[we->act_len], str, len);
+		*p_end = '\0';
+		we->act_len += len;
 	}
 	return (buff);
 }
 
-char *w_addstr(char *buff, size_t *act_len, size_t *max_len, const char *str)
+char	*w_addstr(char *buff, t_wordexp *wp, const char *str)
 {
-	size_t len;
+	size_t	len;
 
-	assert(str != NULL);
+	if (!str)
+		exit (EXIT_FAILURE);
 	len = ft_strlen(str);
-	return (_w_addmem(buff, act_len, max_len, str, len));
+	return (_w_addmem(buff, wp, str, len));
 }
 
-char *w_addchar(char *buff, size_t *act_len, size_t *max_len, char ch)
+char	*w_addchar(char *buff, t_wordexp *wp, char ch)
 {
-	char *old_buff;
+	char	*old_buff;
 
-	if (*act_len == *max_len)
+	if (wp->act_len == wp->max_len)
 	{
 		old_buff = buff;
-		assert (!buff || *max_len != 0);
-		*max_len += 10;
-		buff = (char *)ft_realloc(buff, 1 + *max_len);
+		wp->max_len += 100;
+		buff = (char *)ft_realloc(old_buff, 1 + wp->max_len);
 		if (!buff)
 			free(old_buff);
 	}
-	if (buff != NULL)
+	if (buff)
 	{
-		buff[*act_len] = ch;
-		buff[++(*act_len)] = '\0';
+		buff[wp->act_len] = ch;
+		buff[++wp->act_len] = '\0';
 	}
 	return (buff);
 }
 
-char *w_newword (size_t *act_len, size_t *max_len)
+t_wordexp	w_newword(t_hashmap *environs)
 {
-	*act_len = *max_len = 0;
-	return (NULL);
-}
+	t_wordexp	wordexp;
 
+	wordexp.act_len = 0;
+	wordexp.max_len = 0;
+	wordexp.envs = environs;
+	return (wordexp);
+}
