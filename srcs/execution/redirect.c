@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:17:55 by event             #+#    #+#             */
-/*   Updated: 2023/01/27 01:17:56 by event            ###   ########.fr       */
+/*   Updated: 2023/01/29 17:05:27 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "terminal.h"
 #include "execution.h"
+#include "expansion.h"
 #include "parser.h"
 #include "libast.h"
 #include "ft_printf.h"
@@ -25,20 +26,30 @@ void	close_file(int fd)
 }
 
 /**
- * @brief ファイルをオープンする。
- *
+ * @brief ファイルをオープンし、オープンしたfdの値を取得する。
+ * @detail heredocの場合は入力処理を呼び出し、入力したfdを取得する。
  * @param redirect_type
  * @return int
  */
 static int	open_file(t_redirect redirect)
 {
 	const int	file_mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
+	int			fd;
 
-	if (redirect.dir & NODE_RDIR_OUTPUT)
-		return (open(redirect.file, O_WRONLY | O_CREAT | O_TRUNC, file_mode));
-	else if (redirect.dir & NODE_RDIR_APPEND)
-		return (open(redirect.file, O_WRONLY | O_CREAT | O_APPEND, file_mode));
-	return (open(redirect.file, O_RDONLY));
+	fd = -1;
+	if (redirect.type & NODE_RDIR_OUTPUT)
+		fd = open(redirect.file, O_WRONLY | O_CREAT | O_TRUNC, file_mode);
+	else if (redirect.type & NODE_RDIR_APPEND)
+		fd = open(redirect.file, O_WRONLY | O_CREAT | O_APPEND, file_mode);
+	else if (redirect.type & NODE_RDIR_INPUT)
+		fd = open(redirect.file, O_RDONLY);
+	else if (redirect.type & NODE_RDIR_HEREDOC)
+		fd = heredoc_redirect(redirect.file);
+	if (fd < 0)
+	{
+		exit(EXIT_FAILURE);
+	}
+	return (fd);
 }
 
 /**
@@ -56,10 +67,6 @@ void	set_redirection(t_process process)
 	while (redirects)
 	{
 		old_fd = open_file(*redirects);
-		if (old_fd == -1)
-		{
-			exit(EXIT_FAILURE);
-		}
 		new_fd = redirects->fd;
 		if (dup2(old_fd, new_fd) < 0)
 		{

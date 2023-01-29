@@ -40,6 +40,7 @@ SRCS := \
 	expansion/ft_wordexp_quote.c \
 	expansion/ft_wordexp_params.c \
 	expansion/ft_wordexp_utils.c \
+	expansion/heredoc.c \
 	execution/execute.c \
 	execution/exec_line.c \
 	execution/exec_pipeline.c \
@@ -179,7 +180,7 @@ run: ${NAME}
 	@./${NAME}
 
 #: [debug] Print debug info.
-dev: #clean
+dev: clean
 	@${MAKE} FOR_DEBUG=1 --no-print-directory
 
 #: Push to git repository.

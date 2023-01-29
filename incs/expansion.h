@@ -19,6 +19,7 @@ typedef struct s_wordexp {
 
 void		expand(t_ast_node *syntax_tree, t_shell *msh);
 void		expand_environs(t_command *command, t_hashmap *environ);
+void		expand_heredoc(t_command *command);
 
 int			ft_wordexp(char *words, char **buff, t_hashmap *environ);
 int			we_parse_dollar(char *words, char **buff, t_wordexp *wp, size_t *offset);
@@ -28,5 +29,8 @@ int			we_parse_params(char *words, char **buff, t_wordexp *wp, size_t *offset);
 t_wordexp	w_newword(t_hashmap *environs);
 char		*w_addstr(char *buff, t_wordexp *wp, const char *str);
 char		*w_addchar(char *buff, t_wordexp *wp, char ch);
+
+char		*heredoc_read(char *here_end);
+int			heredoc_redirect(char *here_end);
 
 #endif

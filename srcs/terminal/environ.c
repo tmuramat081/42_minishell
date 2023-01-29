@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   environs.c                                         :+:      :+:    :+:   */
+/*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:18:28 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/22 21:35:41 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/29 15:29:47 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_env	parse_envp(char *str_env)
 	t_env	env;
 	char	**splitted;
 
-	splitted =  ft_split(str_env, '=');
+	splitted = ft_split(str_env, '=');
 	env.key = splitted[0];
 	env.value = splitted[1];
 	return (env);

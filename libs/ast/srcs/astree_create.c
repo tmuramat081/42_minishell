@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   astree_create.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:22:11 by event             #+#    #+#             */
-/*   Updated: 2023/01/21 20:57:19 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/01/29 16:57:21 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_redirect	*ast_redirect_create(int dir, int fd, char *file)
 	new_redirect = malloc(sizeof(t_redirect));
 	if (!new_redirect)
 		return (NULL);
-	new_redirect->dir = dir;
+	new_redirect->type = dir;
 	new_redirect->fd = fd;
 	new_redirect->file = file;
 	new_redirect->next = NULL;

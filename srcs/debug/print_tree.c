@@ -45,7 +45,7 @@ void	print_node_command(t_command *command)
 	redirect_tmp = command->redirects;
 	while (redirect_tmp)
 	{
-		ft_printf("dir:%d%s file:%s ", redirect_tmp->fd, get_node_type(redirect_tmp->dir), redirect_tmp->file);
+		ft_printf("type:%d%s file:%s ", redirect_tmp->fd, get_node_type(redirect_tmp->type), redirect_tmp->file);
 		redirect_tmp = redirect_tmp->next;
 	}
 	arg_tmp = command->arguments;
