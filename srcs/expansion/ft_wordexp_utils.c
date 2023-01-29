@@ -30,7 +30,7 @@ char	*w_addstr(char *buff, t_wordexp *wp, const char *str)
 
 	if (!str)
 		exit (EXIT_FAILURE);
-	len = ft_strlen(str);
+	len = ft_max(1, ft_strlen(str));
 	return (_w_addmem(buff, wp, str, len));
 }
 
