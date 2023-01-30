@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   boot.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/29 01:32:00 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/30 23:13:49 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 #include "parser.h"
 #include "expansion.h"
 #include "execution.h"
+
+int g_status = 0;
 
 /**
  * @brief 起動時バナーを表示する
