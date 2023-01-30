@@ -1,19 +1,21 @@
 #include "expansion.h"
 #include "execution.h"
+#include "constant.h"
 
 void	heredoc_prompt(t_pipe pipe, char *here_end)
 {
-	const char	*pronpt = "> ";
 	char		*line;
+	char		*document;
 
+	document = ft_strdup("");
 	while (true)
 	{
-		line = readline(pronpt);
+		line = readline(HEREDOC_PROMPT);
 		if (!line)
 			break ;
-		write(pipe.writer, line, ft_strlen(line));
-		if (ft_strcmp(line, here_end) == 0)
+		else if (ft_strcmp(line, here_end) == 0)
 			break ;
+		ft_putendl_fd(line, pipe.writer);
 		free(line);
 	}
 }
@@ -23,14 +25,15 @@ int	heredoc_redirect(char	*here_end)
 	t_pipe	pipe;
 	pid_t	pid;
 
-	pipe = pipe_init();
+	pipe_update(&pipe);
 	pid = create_child_process();
 	if (pid == 0)
 	{
-		close(pipe.reader);
+		close_file(pipe.reader);
 		heredoc_prompt(pipe, here_end);
+		exit(EXIT_SUCCESS);
 	}
-	else
-		wait_child_process(pid);
+	close_file(pipe.writer);
+	wait_child_process(pid);
 	return (pipe.reader);
 }

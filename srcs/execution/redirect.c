@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:17:55 by event             #+#    #+#             */
-/*   Updated: 2023/01/29 17:05:27 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/31 01:37:15 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	open_file(t_redirect redirect)
 	const int	file_mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 	int			fd;
 
-	fd = -1;
+	fd = 0;
 	if (redirect.type & NODE_RDIR_OUTPUT)
 		fd = open(redirect.file, O_WRONLY | O_CREAT | O_TRUNC, file_mode);
 	else if (redirect.type & NODE_RDIR_APPEND)
@@ -46,9 +46,7 @@ static int	open_file(t_redirect redirect)
 	else if (redirect.type & NODE_RDIR_HEREDOC)
 		fd = heredoc_redirect(redirect.file);
 	if (fd < 0)
-	{
 		exit(EXIT_FAILURE);
-	}
 	return (fd);
 }
 
