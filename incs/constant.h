@@ -15,9 +15,10 @@
 # define MOVE "\033[1F"
 # define CR "\033[1G"
 
-/** Prompt */
 # define PROMPT_NAME "m-shell"
+# define HEREDOC_PROMPT "> "
 # define PROMPT_LEN 20
+/** Prompt */
 # define BANNER \
 "\n\
 .##.....##..........######..##.....##.########.##.......##......\n\

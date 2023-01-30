@@ -30,11 +30,10 @@ SRCS := \
 	parser/parse_line.c \
 	parser/parse_command.c \
 	parser/parse_pipeline.c \
-	parser/parse_argument.c \
 	parser/parse_redirect.c \
+	parser/parse_argument.c \
 	parser/parser_utils.c \
 	expansion/expand.c \
-	expansion/expand_environ.c \
 	expansion/ft_wordexp.c \
 	expansion/ft_wordexp_dollar.c \
 	expansion/ft_wordexp_quote.c \
@@ -50,7 +49,8 @@ SRCS := \
 	execution/exec_utils.c \
 	execution/redirect.c \
 	execution/process.c \
-	execution/pipe.c \
+	execution/heredoc.c \
+	execution/pipeline.c \
 	builtin/export.c \
 	builtin/unset.c \
 	builtin/echo.c \
