@@ -7,7 +7,7 @@
  * @param environ
  * @return char*
  */
-char	*search_environment(char *key, t_hashmap *environ)
+static char	*search_environment(char *key, t_hashmap *environ)
 {
 	char	*value;
 
@@ -16,7 +16,7 @@ char	*search_environment(char *key, t_hashmap *environ)
 	return (value);
 }
 
-int we_envsubst(char *words, char **buff, t_wordexp *wp, size_t var_start, size_t var_end)
+static int we_envsubst(char *words, char **buff, t_wordexp *wp, size_t var_start, size_t var_end)
 {
 	char	*var;
 	char	*env;
@@ -39,7 +39,7 @@ int we_envsubst(char *words, char **buff, t_wordexp *wp, size_t var_start, size_
  * @return true
  * @return false
  */
-bool	is_valid_syntax(char *str, size_t var_start, size_t *offset)
+static bool	is_valid_syntax(char *str, size_t var_start, size_t *offset)
 {
 	if (str[var_start - 1] == '{')
 	{
@@ -59,10 +59,8 @@ bool	is_valid_syntax(char *str, size_t var_start, size_t *offset)
  * @param str
  * @param offset
  */
-void	forward_to_var_end(char *words, char **buff, t_wordexp *wp, size_t *offset)
+static void	forward_to_var_end(char *words, size_t *offset)
 {
-	(void)buff;
-	(void)wp;
 	while (true)
 	{
 		++*offset;
@@ -81,7 +79,7 @@ int	we_parse_params(char *words, char **buff, t_wordexp *wp, size_t *offset)
 	var_start = *offset;
 	if (ft_isalpha(words[*offset]) || words[*offset] == '_')
 	{
-		forward_to_var_end(words, buff, wp, offset);
+		forward_to_var_end(words, offset);
 		var_end = *offset;
 		if (is_valid_syntax(words, var_start, offset))
 			we_envsubst(words, buff, wp, var_start, var_end);

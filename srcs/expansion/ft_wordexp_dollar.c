@@ -1,6 +1,30 @@
 #include "expansion.h"
 #include "libft.h"
 
+
+char	*get_exit_status(void)
+{
+	extern int	g_status;
+	char		*exit_status;
+
+	exit_status = ft_itoa(g_status);
+	if (!exit_status)
+		exit(EXIT_FAILURE);
+	return (exit_status);
+}
+
+int we_parse_special(char *words, char **buff, t_wordexp *wp, size_t *offset)
+{
+	char *exit_status;
+	(void)words;
+
+	++*offset;
+	exit_status = get_exit_status();
+	*buff = w_addstr(*buff, wp, exit_status);
+	free(exit_status);
+	return (FTWRDE_SUCCESS);
+}
+
 /**
  * @brief '$'以降の文字列を走査する。
  * @detail '{}'以外の括弧は未実装
@@ -10,10 +34,15 @@
  */
 int	we_parse_dollar(char *words, char **buff, t_wordexp *wp, size_t *offset)
 {
+
 	if (words[*offset] == '"' || words[*offset] == '\0')
 	{
 		*buff = w_addchar(*buff, wp, '$');
 		return (FTWRDE_SUCCESS);
+	}
+	else if (words[*offset] == '0')
+	{
+		return (we_parse_special(words, buff, wp, offset));
 	}
 	else
 	{
