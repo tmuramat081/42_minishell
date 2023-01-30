@@ -33,7 +33,7 @@ int	heredoc_redirect(char	*here_end)
 		heredoc_prompt(pipe, here_end);
 		exit(EXIT_SUCCESS);
 	}
-	close_file(pipe.writer);
 	wait_child_process(pid);
+	close_file(pipe.writer);
 	return (pipe.reader);
 }
