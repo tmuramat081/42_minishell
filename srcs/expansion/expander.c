@@ -51,7 +51,7 @@ static void	expand_node(t_ast_node *node, t_shell *msh)
  * @param syntax_tree
  * @param msh
  */
-void	expand(t_ast_node *syntax_tree, t_shell *msh)
+void	expander(t_ast_node *syntax_tree, t_shell *msh)
 {
 	expand_node(syntax_tree, msh);
 }

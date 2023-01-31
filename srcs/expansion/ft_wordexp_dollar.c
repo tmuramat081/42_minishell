@@ -8,15 +8,15 @@ char	*get_exit_status(void)
 	char		*exit_status;
 
 	exit_status = ft_itoa(g_status);
+	puts(exit_status);
 	if (!exit_status)
 		exit(EXIT_FAILURE);
 	return (exit_status);
 }
 
-int we_parse_special(char *words, char **buff, t_wordexp *wp, size_t *offset)
+int we_parse_special(char **buff, t_wordexp *wp, size_t *offset)
 {
 	char *exit_status;
-	(void)words;
 
 	++*offset;
 	exit_status = get_exit_status();
@@ -40,9 +40,9 @@ int	we_parse_dollar(char *words, char **buff, t_wordexp *wp, size_t *offset)
 		*buff = w_addchar(*buff, wp, '$');
 		return (FTWRDE_SUCCESS);
 	}
-	else if (words[*offset] == '0')
+	else if (words[*offset] == '?')
 	{
-		return (we_parse_special(words, buff, wp, offset));
+		return (we_parse_special(buff, wp, offset));
 	}
 	else
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_internal.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:21:57 by event             #+#    #+#             */
-/*   Updated: 2023/01/29 03:18:24 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/31 03:21:48 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ t_builtin_fn	search_builtin(char *args)
 void	exec_internal_command(t_builtin_fn builtin_cmd, \
 			t_process process, t_shell *msh)
 {
-	(*builtin_cmd)(process.argv, msh);
+
+	extern int g_status;
+	
+	g_status = (*builtin_cmd)(process.argv, msh);
 	if (process.is_solo == false)
 		exit(EXIT_FAILURE);
 }

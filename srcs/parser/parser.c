@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:16:55 by event             #+#    #+#             */
-/*   Updated: 2023/01/17 19:16:58 by event            ###   ########.fr       */
+/*   Updated: 2023/01/31 23:59:09 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,11 @@
  * @param msh shellのステータスを管理する構造体
  * @return t_ast* 抽象構文木
  */
-t_ast_node	*parser(t_vector *tokens, t_shell *msh)
+void	parser(t_vector *tokens, t_ast_node **syntax_tree, t_shell *msh)
 {
-	t_ast_node	*syntax_tree;
 	t_token		*curr_token;
 
 	(void)msh;
 	curr_token = ft_vector_front(tokens);
-	syntax_tree = parse_command_line(tokens, &curr_token);
-	return (syntax_tree);
+	*syntax_tree = parse_command_line(tokens, &curr_token);
 }

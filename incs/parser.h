@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 10:21:31 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/22 21:35:41 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/31 23:54:55 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "ft_deque.h"
 # include "terminal.h"
 
-t_ast_node	*parser(t_vector *tokens, t_shell *msh);
+void        parser(t_vector *tokens, t_ast_node **node, t_shell *msh);
 t_ast_node	*parse_command_line(t_vector *tokens, t_token **curr);
 t_ast_node	*parse_pipeline(t_vector *tokens, t_token **curr);
 t_argument	*parse_argument(t_vector *tokens, t_token **curr);
