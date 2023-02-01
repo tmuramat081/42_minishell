@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_external.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:18:48 by event             #+#    #+#             */
-/*   Updated: 2023/01/29 03:24:11 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/31 15:44:44 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@
  */
 void	exec_external_command(t_process process, t_shell *msh)
 {
+	extern int g_status;
+	
 	ft_execvpe(process.argv[0], process.argv, construct_environ(msh->envs));
 	handle_error("command not found", process.argv[0]);
-	exit(EXIT_FAILURE);
+	exit(127);
 }

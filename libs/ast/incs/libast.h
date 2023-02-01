@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libast.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:09:23 by event             #+#    #+#             */
-/*   Updated: 2023/01/25 03:10:05 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/01 00:20:29 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ struct s_argument
  */
 struct s_redirect
 {
-	t_node_type		dir;
+	t_node_type		type;
 	int				fd;
 	char			*file;
 	t_redirect		*next;

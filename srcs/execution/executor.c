@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:25:52 by event             #+#    #+#             */
-/*   Updated: 2023/01/27 01:25:53 by event            ###   ########.fr       */
+/*   Updated: 2023/01/31 23:57:02 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
  * @param syntax_tree 抽象構文木
  * @param msh
  */
-void	execute_syntax_tree(t_ast_node *syntax_tree, t_shell *msh)
+void	executor(t_ast_node *syntax_tree, t_shell *msh)
 {
 	t_process	process;
 

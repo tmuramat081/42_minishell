@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:24:01 by event             #+#    #+#             */
-/*   Updated: 2023/01/27 01:34:39 by event            ###   ########.fr       */
+/*   Updated: 2023/01/31 15:43:12 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,17 @@ pid_t	create_child_process(void)
 	return (pid);
 }
 
-void	wait_all_child_processes()
+void	wait_all_child_processes(void)
 {
+	extern int g_status;
 	int	status;
 
-	while ((wait(&status) > 0));
+	while ((waitpid(-1, &status, 0) > 0))
+		;
+	if (WIFEXITED(status))
+	{
+		g_status = WEXITSTATUS(status);
+	}
 }
 
 void	wait_child_process(pid_t pid)
@@ -39,6 +45,3 @@ void	wait_child_process(pid_t pid)
 
 	waitpid(pid, &status, 0);
 }
-
-// l26: else if (pid > 0)
-// l27:	ft_printf("create process:%d\n", (int)pid);
