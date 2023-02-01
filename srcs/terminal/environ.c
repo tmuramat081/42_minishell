@@ -6,10 +6,11 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:18:28 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/29 15:29:47 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/01 23:35:45 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "terminal.h"
 /*
  * @file environs.c
  * @author tmuramat (tmuramat@student.42tokyo.jp)
@@ -21,23 +22,44 @@
  *
  */
 
-#include "terminal.h"
+char	*ft_getenv(const char *key, t_hashmap *envs)
+{
+	char	*p_value;
+
+	if (!ft_hashmap_find(envs, key, (void **)&p_value))
+		return (NULL);
+	return (p_value);
+}
+
+int	ft_setenv(t_env *env, t_hashmap *envs, int overwrite)
+{
+	if (overwrite == 0 && !ft_hashmap_find(envs, env->key, NULL))
+		return (0);
+	ft_hashmap_insert(envs, env->key, env->value);
+	return (0);
+}
 
 /**
- * @brief 環境変数の文字列を'='で分割し、 keyとvalueからなるenv構造体を作成する。
+ * @brief 文字列をkeyとvalueに分解し、env構造体に格納する。
  *
- * @param str_env
+ * @param str 分割する文字列
  * @return t_env
  */
-t_env	parse_envp(char *str_env)
+t_env	parse_environ(const char *str)
 {
-	t_env	env;
-	char	**splitted;
+	t_env	environ;
+	char	*p_sep;
 
-	splitted = ft_split(str_env, '=');
-	env.key = splitted[0];
-	env.value = splitted[1];
-	return (env);
+	if (!str)
+		exit(EXIT_FAILURE);
+	environ = (t_env){};
+	p_sep = ft_strchr(str, '=');
+	if (p_sep)
+	{
+		environ.key = ft_strndup(str, p_sep - str + 1);
+		environ.value = ft_strdup(p_sep + 1);
+	}
+	return (environ);
 }
 
 /**
@@ -45,7 +67,7 @@ t_env	parse_envp(char *str_env)
  *
  * @return t_hashmap*
  */
-t_hashmap	*init_environ()
+t_hashmap	*init_environ(void)
 {
 	extern char	**environ;
 	t_hashmap	*env_table;
@@ -56,8 +78,8 @@ t_hashmap	*init_environ()
 	i = 0;
 	while (environ[i])
 	{
-		env = parse_envp(environ[i]);
-		ft_hashmap_insert(env_table, env.key, (void *)env.value);
+		env = parse_environ(environ[i]);
+		ft_setenv(&env, env_table, 1);
 		i++;
 	}
 	return (env_table);

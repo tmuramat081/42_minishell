@@ -22,6 +22,7 @@ static void	expand_word(t_command *command, t_hashmap *environ)
 			ft_wordexp(curr->argument, &buff, environ);
 			free(curr->argument);
 			curr->argument = ft_strdup(buff);
+			free(buff);
 		}
 		curr = curr->next;
 	}

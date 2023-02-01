@@ -10,7 +10,20 @@
  */
 #include "terminal.h"
 #include "constant.h"
+#include "ft_printf.h"
 #include "ft_snprintf.h"
+
+/**
+ * @brief 起動時バナーの表示
+ *
+ */
+void	put_banner(void)
+{
+	if (DEBUG)
+		ft_printf("%s%s%s\n", RED, BANNER_DEV, DEFAULT);
+	else
+		ft_printf("%s\n", BANNER);
+}
 
 /**
  * @brief プロンプト名を生成する

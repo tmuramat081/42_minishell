@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/28 18:28:06 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/01 23:22:01 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,27 +81,7 @@ void	print_sorted_envs(t_hashmap *envs)
 	}
 }
 
-/**
- * @brief 文字列をkeyとvalueに分解し、env構造体に格納する。
- *
- * @param str 分割する文字列
- * @return t_env
- */
-t_env	parse_environ(char *str)
-{
-	t_env	environ;
-	char	*p_sep;
 
-	environ = (t_env){};
-	p_sep = ft_strchr(str, '=');
-	if (p_sep)
-	{
-		*p_sep = '\0';
-		environ.key = str;
-		environ.value = p_sep + 1;
-	}
-	return (environ);
-}
 
 /**
  * @brief 文字列の配列を環境変数に追加する。

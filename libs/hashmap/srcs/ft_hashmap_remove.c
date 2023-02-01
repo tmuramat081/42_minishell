@@ -6,13 +6,13 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 16:42:14 by kkohki            #+#    #+#             */
-/*   Updated: 2022/12/18 02:29:49 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/01 23:36:39 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_hashmap.h"
 
-int	ft_hashmap_remove(t_hashmap *map, char *key)
+int	ft_hashmap_remove(t_hashmap *map, const char *key)
 {
 	size_t	i;
 	size_t	hashed_key;

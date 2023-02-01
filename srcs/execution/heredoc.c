@@ -1,13 +1,12 @@
 #include "expansion.h"
 #include "execution.h"
 #include "constant.h"
+#include <readline/readline.h>
 
 void	heredoc_prompt(t_pipe pipe, char *here_end)
 {
 	char		*line;
-	char		*document;
 
-	document = ft_strdup("");
 	while (true)
 	{
 		line = readline(HEREDOC_PROMPT);

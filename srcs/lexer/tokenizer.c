@@ -3,26 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:12:13 by event             #+#    #+#             */
-/*   Updated: 2023/01/17 19:12:14 by event            ###   ########.fr       */
+/*   Updated: 2023/02/02 03:44:58 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "libft.h"
-
-/**
- * @brief 字句解析器の管理情報を削除する。
- *
- * @param tokenizer
- */
-void	delete_tokenizer(t_tokenizer *tokenizer)
-{
-	ft_vector_delete(&tokenizer->tokens);
-	free(tokenizer);
-}
 
 /**
  * @brief 字句解析器の管理情報を初期化する。

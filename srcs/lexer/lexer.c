@@ -3,21 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:10:46 by event             #+#    #+#             */
-/*   Updated: 2023/01/17 19:11:00 by event            ###   ########.fr       */
+/*   Updated: 2023/02/02 04:57:26 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
  * @file lexer.c
- * @author tmuramat (tmuramat@student.42tokyo.jp)
  * @brief 字句解析のエントリーポイント
  * @version 0.1
  * @date 2023-01-01
- *
- * @copyright Copyright (c) 2023
  *
  */
 
@@ -42,4 +39,5 @@ void	lexer(char *line, t_vector **tokens)
 		tokenizer->state = next_fn(tokenizer);
 	}
 	*tokens = tokenizer->tokens;
+	free(tokenizer);
 }
