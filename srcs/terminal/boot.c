@@ -6,7 +6,7 @@
 /*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/30 23:13:49 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/02/01 00:32:01 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 int g_status = 0;
 
 /**
- * @brief 起動時バナーを表示する
+ * @brief 起動時バナーの表示
  *
  */
 void	put_banner(void)
@@ -45,7 +45,45 @@ void	put_banner(void)
 }
 
 /**
- * @brief コマンド入力を待機する（デバッグ用）
+ * @brief 入力・字句解析・構文解析に使ったメモリを解放 
+ * 
+ * @param line 
+ * @param lexed_tokens 
+ * @param syntax_tree 
+ */
+static void free_buffers(char *line, t_vector *lexed_tokens, t_ast_node *syntax_tree)
+{
+	ft_vector_delete(&lexed_tokens);
+	ast_node_delete(syntax_tree);
+	free(line);
+}
+
+/** コマンド入力の待機 */
+void	boot_minishell(t_shell	*msh)
+{
+	char		*line;
+	t_vector	*lexed_tokens;
+	t_ast_node	*syntax_tree;
+
+	line = NULL;
+	while (true)
+	{
+		line = readline(msh->prompt);
+		if (!line)
+			break ;
+		else if (*line)
+			add_history(line);
+		lexer(line, &lexed_tokens);
+		parser(lexed_tokens, &syntax_tree, msh);
+		expander(syntax_tree, msh);
+		executor(syntax_tree, msh);
+		free_buffers(line, lexed_tokens, syntax_tree);
+	}
+	exit(EXIT_FAILURE);
+}
+
+/**
+ * @brief コマンド入力の待機（デバッグ用）
  *
  * @param msh
  */
@@ -56,8 +94,6 @@ void	boot_minishell_dev(t_shell	*msh)
 	t_ast_node	*syntax_tree;
 
 	line = NULL;
-	ignore_signal();
-	put_banner();
 	while (true)
 	{
 		line = readline(msh->prompt);
@@ -68,40 +104,13 @@ void	boot_minishell_dev(t_shell	*msh)
 		print_input(line);
 		lexer(line, &lexed_tokens);
 		print_tokens(lexed_tokens);
-		syntax_tree = parser(lexed_tokens, msh);
+		parser(lexed_tokens, &syntax_tree, msh);
 		print_nodes(syntax_tree);
-		expand(syntax_tree, msh);
+		expander(syntax_tree, msh);
 		print_commands(syntax_tree);
 		print_output();
-		execute_syntax_tree(syntax_tree, msh);
-		free(line);
-	}
-	exit(EXIT_FAILURE);
-}
-
-
-/** コマンド入力を待機 */
-void	boot_minishell(t_shell	*msh)
-{
-	char		*line;
-	t_vector	*lexed_tokens;
-	t_ast_node	*syntax_tree;
-
-	line = NULL;
-	ignore_signal();
-	put_banner();
-	while (true)
-	{
-		line = readline(msh->prompt);
-		if (!line)
-			break ;
-		else if (*line)
-			add_history(line);
-		lexer(line, &lexed_tokens);
-		syntax_tree = parser(lexed_tokens, msh);
-		expand(syntax_tree, msh);
-		execute_syntax_tree(syntax_tree, msh);
-		free(line);
+		executor(syntax_tree, msh);
+		free_buffers(line, lexed_tokens, syntax_tree);
 	}
 	exit(EXIT_FAILURE);
 }

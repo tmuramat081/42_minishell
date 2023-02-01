@@ -33,13 +33,13 @@ SRCS := \
 	parser/parse_redirect.c \
 	parser/parse_argument.c \
 	parser/parser_utils.c \
-	expansion/expand.c \
+	expansion/expander.c \
 	expansion/ft_wordexp.c \
 	expansion/ft_wordexp_dollar.c \
 	expansion/ft_wordexp_quote.c \
 	expansion/ft_wordexp_params.c \
 	expansion/ft_wordexp_utils.c \
-	execution/execute.c \
+	execution/executor.c \
 	execution/exec_line.c \
 	execution/exec_pipeline.c \
 	execution/exec_command.c \
@@ -179,7 +179,7 @@ run: ${NAME}
 	@./${NAME}
 
 #: [debug] Print debug info.
-dev: #clean
+dev: clean
 	@${MAKE} FOR_DEBUG=1 --no-print-directory
 
 #: Push to git repository.

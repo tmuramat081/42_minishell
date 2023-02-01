@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:24:01 by event             #+#    #+#             */
-/*   Updated: 2023/01/29 23:35:38 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/01/31 15:43:12 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,15 @@ pid_t	create_child_process(void)
 
 void	wait_all_child_processes(void)
 {
+	extern int g_status;
 	int	status;
 
-	while ((wait(&status) > 0))
+	while ((waitpid(-1, &status, 0) > 0))
 		;
+	if (WIFEXITED(status))
+	{
+		g_status = WEXITSTATUS(status);
+	}
 }
 
 void	wait_child_process(pid_t pid)

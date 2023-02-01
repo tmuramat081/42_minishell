@@ -17,7 +17,7 @@ typedef struct s_wordexp {
 	t_hashmap	*envs;
 }	t_wordexp;
 
-void		expand(t_ast_node *syntax_tree, t_shell *msh);
+void		expander(t_ast_node *syntax_tree, t_shell *msh);
 void		expand_environs(t_command *command, t_hashmap *environ);
 void		expand_heredoc(t_command *command);
 

@@ -6,7 +6,7 @@
 /*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:59:01 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/26 08:52:45 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/02/01 02:09:30 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_shell	*init_minishell(void)
  ***************************************************************
  *	function: main
  *
- *  A re-implemention of Linux Bash shell.
+ *  A re-implemention of the Linux Bash shell.
  ***************************************************************
 */
 int	main(void)
@@ -46,6 +46,8 @@ int	main(void)
 	t_shell	*msh;
 
 	msh = init_minishell();
+	ignore_signal();
+	put_banner();
 	if (DEBUG)
 		boot_minishell_dev(msh);
 	else

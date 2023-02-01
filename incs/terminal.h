@@ -36,7 +36,7 @@ t_shell		*init_minishell(void);
 t_hashmap	*init_environ(void);
 char		*get_prompt(void);
 void		boot_minishell(t_shell *msh);
-void		put_bunner(void);
+void		put_banner(void);
 void		sort_environs(t_env *env);
 void		ignore_signal(void);
 void		handle_error(char *message, char *command);

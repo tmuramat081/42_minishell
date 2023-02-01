@@ -40,10 +40,10 @@ int		builtin_exit(char **argv, t_shell *msh);
 int		builtin_cd(char **argv, t_shell *msh);
 int		builtin_pwd(char **argv, t_shell *msh);
 
+void	executor(t_ast_node *syntax_tree, t_shell *msh);
 void	exec_command_line(t_ast_node *node, t_process process, t_shell *msh);
 void	exec_pipeline(t_ast_node *node, t_process process, t_shell *msh);
 void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh, t_pipe pipe);
-void	execute_syntax_tree(t_ast_node *syntax_tree, t_shell *msh);
 void	exec_internal_command(t_builtin_fn builtin_cmd, t_process process, t_shell *msh);
 void	exec_external_command(t_process process, t_shell *msh);
 
