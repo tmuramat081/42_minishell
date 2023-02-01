@@ -8,10 +8,10 @@ static void print_command(t_ast_node *node)
 	curr = node->command->arguments;
 	while (curr)
 	{
-		ft_printf("%s\n", curr->argument);
+		ft_printf("%s, ", curr->argument);
 		curr = curr->next;
 	}
-
+	ft_printf("\n");
 }
 
 static void	print_commands_rec(t_ast_node *node)

@@ -14,8 +14,8 @@
 # define DEL "\033[2K"
 # define MOVE "\033[1F"
 # define CR "\033[1G"
-
 /** Prompt */
+
 # define PROMPT_NAME "m-shell"
 # define PROMPT_LEN 20
 # define BANNER \

@@ -1,8 +1,7 @@
 #include "expansion.h"
 #include "libft.h"
 
-
-char	*get_exit_status(void)
+static char	*get_exit_status(void)
 {
 	extern int	g_status;
 	char		*exit_status;
@@ -13,10 +12,9 @@ char	*get_exit_status(void)
 	return (exit_status);
 }
 
-int we_parse_special(char *words, char **buff, t_wordexp *wp, size_t *offset)
+static int	we_parse_special(char **buff, t_wordexp *wp, size_t *offset)
 {
-	char *exit_status;
-	(void)words;
+	char	*exit_status;
 
 	++*offset;
 	exit_status = get_exit_status();
@@ -42,7 +40,7 @@ int	we_parse_dollar(char *words, char **buff, t_wordexp *wp, size_t *offset)
 	}
 	else if (words[*offset] == '0')
 	{
-		return (we_parse_special(words, buff, wp, offset));
+		return (we_parse_special(buff, wp, offset));
 	}
 	else
 	{

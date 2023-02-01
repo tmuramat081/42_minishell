@@ -11,7 +11,7 @@
 
 typedef int (*t_builtin_fn)(char **, t_shell *);
 
-typedef struct s_builtinｊ{
+typedef struct s_builtin {
 	char 			*symbol;
 	t_builtin_fn	func;
 }	t_builtin;
@@ -29,7 +29,6 @@ typedef struct s_process {
 	t_redirect	*redirects;
 	bool		is_solo;
 }	t_process;
-
 
 /********* Builtin commands **********/
 int		builtin_unset(char **argv, t_shell *msh);
