@@ -18,7 +18,8 @@ int	builtin_pwd(char **arg, t_shell *msh)
 
 	(void)msh;
 	(void)arg;
-	if (getcwd(buf, sizeof(buf)) != NULL)
-		ft_printf("%s\n", buf);
+	if (!getcwd(buf, sizeof(buf)))
+		return (-1);
+	ft_printf("%s\n", buf);
 	return (0);
 }
