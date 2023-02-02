@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:11:48 by event             #+#    #+#             */
-/*   Updated: 2023/02/02 05:14:20 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/02 15:04:33 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,15 @@ void	prev(t_tokenizer *tokenizer)
  */
 void	emit(t_tokenizer *tk, t_token_type token_type)
 {
-	t_token	*token;
+	t_token	token;
 
-	token = (t_token *)ft_xmalloc(sizeof(t_token));
-	if (token_type == TOKEN_END)
-		token->data = NULL;
+	if (token_type & TOKEN_END)
+		token.data = NULL;
 	else
-		token->data = ft_substr(tk->str, tk->start, tk->pos - tk->start);
-	token->type = token_type;
-	format_token(token);
-	ft_vector_push_back(tk->tokens, token);
+		token.data = ft_substr(tk->str, tk->start, tk->pos - tk->start);
+	token.type = token_type;
+	format_token(&token);
+	ft_vector_push_back(tk->tokens, &token);
 	tk->start = tk->pos;
 }
 

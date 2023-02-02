@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:18:28 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/01 23:35:45 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/02 15:05:55 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_env	parse_environ(const char *str)
 	p_sep = ft_strchr(str, '=');
 	if (p_sep)
 	{
-		environ.key = ft_strndup(str, p_sep - str + 1);
+		environ.key = ft_strndup(str, p_sep - str);
 		environ.value = ft_strdup(p_sep + 1);
 	}
 	return (environ);
