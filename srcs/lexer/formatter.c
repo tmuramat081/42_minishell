@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:05:09 by event             #+#    #+#             */
-/*   Updated: 2023/01/28 18:29:37 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/01 23:49:17 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,6 @@ static t_token	*format_space(t_token *token)
 	char	*formatted;
 
 	formatted = ft_strtrim(token->data, " ");
-	free(token->data);
-	token->data = formatted;
-	return (token);
-}
-
-t_token	*format_quote(t_token *token)
-{
-	char	*formatted;
-
-	if (token->type == TOKEN_STR_SQUOTE)
-		formatted = ft_strtrim(token->data, "\'");
-	else if (token->type == TOKEN_STR_DQUOTE)
-		formatted = ft_strtrim(token->data, "\"");
-	else
-		formatted = ft_strdup(token->data);
 	free(token->data);
 	token->data = formatted;
 	return (token);

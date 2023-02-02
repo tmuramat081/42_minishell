@@ -6,7 +6,7 @@
 /*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:59:01 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/01 02:09:30 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/02/02 09:45:06 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_shell	*init_minishell(void)
 */
 int	main(void)
 {
-	t_shell	*msh;
+	t_shell *msh;
 
 	msh = init_minishell();
 	ignore_signal();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   astree_delete.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:24:14 by event             #+#    #+#             */
-/*   Updated: 2023/02/01 02:31:29 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/02/02 04:37:05 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	ast_arguments_delete(t_argument *arguments)
 	while (arguments)
 	{
 		tmp = arguments->next;
-		if (arguments->argument)
-			free(arguments->argument);
+		free(arguments->argument);
+		arguments->argument = NULL;
 		free(arguments);
 		arguments = tmp;
 	}
@@ -35,8 +35,8 @@ void	ast_redirects_delete(t_redirect *redirects)
 	while (redirects)
 	{
 		tmp = redirects->next;
-		if (redirects->file)
-			free(redirects->file);
+		free(redirects->file);
+		redirects->file = NULL;
 		free(redirects);
 		redirects = tmp;
 	}

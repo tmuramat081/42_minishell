@@ -11,8 +11,6 @@
 # include <stdlib.h>
 # include <string.h>
 # include <assert.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # include "libft.h"
 # include "constant.h"
 # include "ft_hashmap.h"
@@ -33,11 +31,21 @@ typedef struct s_shell {
 
 /************* terinal ***************/
 t_shell		*init_minishell(void);
-t_hashmap	*init_environ(void);
-char		*get_prompt(void);
 void		boot_minishell(t_shell *msh);
-void		put_banner(void);
+
+/******* Environent variables ********/
+t_hashmap	*init_environ(void);
+t_env		parse_environ(const char *str);
 void		sort_environs(t_env *env);
+char		*ft_getenv(const char *key, t_hashmap *envs);
+int			ft_setenv(t_env *env, t_hashmap *envs, int overwrite);
+
+
+/*************  Prompt ***************/
+char		*get_prompt(void);
+void		put_banner(void);
+
+/*************  Signal ***********/
 void		ignore_signal(void);
 void		handle_error(char *message, char *command);
 

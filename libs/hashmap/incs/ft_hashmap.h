@@ -77,7 +77,7 @@ int			ft_hashmap_insert(t_hashmap *map, char *key, void *value);
  * @param key　キーとなる文字列
  * @return int　成功なら1が帰る。キーが見つからない場合は0が返る。
  */
-int			ft_hashmap_remove(t_hashmap *map, char *key);
+int			ft_hashmap_remove(t_hashmap *map, const char *key);
 
 /**
  * @brief 格納されている各データを第2引数で指定した関数に渡す
@@ -91,7 +91,7 @@ int			ft_hashmap_iterate(t_hashmap *map, \
 				int(*f)(t_hashmap_data *, void *), void *data);
 void		ft_hashmap_clear(t_hashmap *map);
 int			ft_hashmap_resize(t_hashmap *map);
-int			ft_hashmap_find(t_hashmap *map, char *key, void **arg);
+int			ft_hashmap_find(t_hashmap *map, const char *key, void **arg);
 size_t		ft_strlen(const char *str);
 void		*ft_memset(void *p, int c, size_t len);
 int			ft_strcmp(const char *s1, const char *s2);

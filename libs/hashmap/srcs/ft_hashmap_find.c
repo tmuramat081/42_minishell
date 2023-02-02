@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_hashmap_find.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 07:22:02 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/12/17 17:11:51 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/02/01 23:36:26 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_hashmap.h"
 
-int	ft_hashmap_find(t_hashmap *map, char *key, void **arg)
+int	ft_hashmap_find(t_hashmap *map, const char *key, void **arg)
 {
 	size_t	i;
 	size_t	hashed_key;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   boot.c                                             :+:      :+:    :+:   */
+/*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/01 00:32:01 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/02/02 15:01:42 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,36 +23,34 @@
 
 #include "terminal.h"
 #include "libast.h"
-#include "ft_snprintf.h"
 #include "constant.h"
-#include "ft_printf.h"
 #include "parser.h"
 #include "expansion.h"
 #include "execution.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 
 int g_status = 0;
 
-/**
- * @brief 起動時バナーの表示
- *
- */
-void	put_banner(void)
+void	delete_token(void *p_token, void *p_item)
 {
-	if (DEBUG)
-		ft_printf("%s%s%s\n", RED, BANNER_DEV, DEFAULT);
-	else
-		ft_printf("%s\n", BANNER);
+	t_token	*token;
+
+	(void)p_item;
+	token = (t_token *)p_token;
+	free(token->data);
 }
 
 /**
- * @brief 入力・字句解析・構文解析に使ったメモリを解放 
- * 
- * @param line 
- * @param lexed_tokens 
- * @param syntax_tree 
+ * @brief 入力・字句解析・構文解析に使ったメモリを解放する
+ *
+ * @param line
+ * @param lexed_tokens
+ * @param syntax_tree
  */
-static void free_buffers(char *line, t_vector *lexed_tokens, t_ast_node *syntax_tree)
+static void	free_buffers(char *line, t_vector *lexed_tokens, t_ast_node *syntax_tree)
 {
+	ft_vector_foreach(lexed_tokens, delete_token, NULL);
 	ft_vector_delete(&lexed_tokens);
 	ast_node_delete(syntax_tree);
 	free(line);

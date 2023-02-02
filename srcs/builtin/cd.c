@@ -1,22 +1,6 @@
 #include "ft_hashmap.h"
 #include "terminal.h"
 
-char	*ft_getenv(char *key, t_hashmap *envs)
-{
-	char *p_value;
-
-	if (!ft_hashmap_find(envs, key, (void **)&p_value))
-		return (NULL);
-	return (p_value);
-}
-
-int	ft_setenv(t_env *env, t_hashmap *envs, int overwrite)
-{
-	if (overwrite == 0 && !ft_hashmap_find(envs, env->key, NULL))
-		return (0);
-	ft_hashmap_insert(envs, env->key, env->value);
-	return (0);
-}
 
 /**
  * @file cd.c
