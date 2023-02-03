@@ -58,4 +58,6 @@ void set_ignore_signal(void)
 	sa.sa_handler = SIG_IGN;
 	if (sigaction(SIGQUIT, &sa, NULL) == -1)
 		exit(EXIT_FAILURE);
+	if (sigaction(SIGSTOP, &sa, NULL) == -1)
+		exit(EXIT_FAILURE);
 }
