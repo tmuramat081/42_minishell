@@ -43,7 +43,7 @@ void		put_banner(void);
 
 /*************  Signal ***********/
 void		set_ignore_signal(void);
-void		reset_ignore_signal(void);
+void		set_signal(int signal, void(*sighandler)(int));
 void		handle_error(char *message, char *command);
 
 //********** debug command ********/

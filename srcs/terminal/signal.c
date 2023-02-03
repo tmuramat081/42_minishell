@@ -18,7 +18,6 @@
 
 void	ignore_sighandler(int sig)
 {
-	(void)sig;
 	if (sig == SIGINT)
 	{
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
@@ -27,15 +26,15 @@ void	ignore_sighandler(int sig)
 	}
 }
 
-void	reset_ignore_signal(void)
+void	set_signal(int signal, void (*sighandler)(int))
 {
-	struct sigaction sa;
+	struct sigaction	sa;
 
 	sa = (struct sigaction){};
 	sigemptyset(&sa.sa_mask);
-	sa.sa_handler = SIG_DFL;
 	sa.sa_flags = 0;
-	if (sigaction(SIGINT, &sa, NULL) == -1)
+	sa.sa_handler = sighandler;
+	if (sigaction(signal, &sa, NULL) < 0)
 		exit(EXIT_FAILURE);
 }
 
@@ -47,17 +46,7 @@ void	reset_ignore_signal(void)
 */
 void set_ignore_signal(void)
 {
-	struct sigaction sa;
-
-	sa = (struct sigaction){};
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sa.sa_handler = ignore_sighandler;
-	if (sigaction(SIGINT, &sa, NULL) == -1)
-		exit(EXIT_FAILURE);
-	sa.sa_handler = SIG_IGN;
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
-		exit(EXIT_FAILURE);
-	if (sigaction(SIGTSTP, &sa, NULL) == -1)
-		exit(EXIT_FAILURE);
+	set_signal(SIGINT, ignore_sighandler);
+	set_signal(SIGQUIT, SIG_IGN);
+	set_signal(SIGTSTP, SIG_IGN);
 }

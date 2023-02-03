@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:06:28 by event             #+#    #+#             */
-/*   Updated: 2023/02/02 04:49:40 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/04 01:58:16 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	exec_simple_cmd(t_ast_node *node, t_process process, \
 		pid = create_child_process();
 	if (pid == 0)
 	{
+		set_signal(SIGQUIT, SIG_DFL);
 		set_pipeline(pipe);
 		if (ast_count_redirects(process.redirects) > 0)
 			set_redirection(process);
