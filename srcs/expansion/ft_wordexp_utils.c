@@ -41,7 +41,7 @@ char	*w_addchar(char *buff, t_wordexp *wp, char ch)
 	if (wp->act_len == wp->max_len)
 	{
 		old_buff = buff;
-		wp->max_len += 100;
+		wp->max_len += 16;
 		buff = (char *)ft_realloc(old_buff, 1 + wp->max_len);
 		if (!buff)
 			free(old_buff);
