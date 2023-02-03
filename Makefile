@@ -2,7 +2,8 @@
 NAME := minishell
 NAME_DEV := minishell_dev
 CC := gcc
-CFLAGS := -Wall -Wextra -Werror -MMD -MP
+CFLAGS := -Wall -Wextra -Werror -MMD -MP -I $(shell brew --prefix readline)/include
+LDFLAGS := -lreadline -lhistory -L$(shell brew --prefix readline)/lib
 ifdef FOR_DEBUG
 NAME := ${NAME_DEV}
 DFLAGS := -g -D DEBUG -fsanitize=address
@@ -85,8 +86,6 @@ LIBHASHMAP := ${LIBHASHMAP_DIR}libhashmap.a
 LIBAST_DIR := libs/ast/
 LIBAST := ${LIBAST_DIR}libast.a
 
-LIBREADLINE := -lreadline
-
 INCS := \
 	-I./incs/ \
 	-I./${LIBFT_DIR}incs/ \
@@ -117,8 +116,8 @@ PROGRESS = $(eval SRC_CNT = $(shell expr ${SRC_CNT} + 1)) \
 	${PRINTF} "${DEL}${GREEN}[ %d/%d (%d%%) ] ${CC} ${CFLAGS} $< ...${DEFAULT}${CR}" $(SRC_CNT) $(SRC_TOT) $(SRC_PCT)
 
 # Main commands
-${NAME}: ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHMAP} ${LIBAST} ${OBJS}
-	@${CC} ${CFLAGS} ${DFLAGS} ${INCS} ${OBJS} ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHMAP} ${LIBAST} ${LIBREADLINE} -o $@
+${NAME}: ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHMAP} ${LIBAST} ${OBJS} echo-character-off
+	@${CC} ${CFLAGS} ${DFLAGS} ${INCS} ${OBJS} ${LIBFT} ${LIBDEQUE} ${LIBVECTOR} ${LIBPQUEUE} ${LIBHASHMAP} ${LIBAST} ${LDFLAGS} -o $@
 	@echo "\n${BLUE}--- ${NAME} is up to date! ---${DEFAULT}"
 
 ${LIBFT}:
@@ -200,6 +199,9 @@ nm:
 #: Check source files.
 echo:
 	@echo ${SRCS}
+
+echo-character-off:
+	@echo "set echo-control-characters off" >> ~/.inputrc
 
 #: Display all commands.
 help:
