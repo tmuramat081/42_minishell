@@ -1,3 +1,4 @@
+#include "terminal.h"
 #include "expansion.h"
 #include "execution.h"
 #include "constant.h"
@@ -28,6 +29,7 @@ int	heredoc_redirect(char	*here_end)
 	pid = create_child_process();
 	if (pid == 0)
 	{
+		set_ignore_signal();
 		close_file(pipe.reader);
 		heredoc_prompt(pipe, here_end);
 		exit(EXIT_SUCCESS);

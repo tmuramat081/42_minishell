@@ -7,10 +7,6 @@
 #  define DEBUG 0
 # endif
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <assert.h>
 # include "libft.h"
 # include "constant.h"
 # include "ft_hashmap.h"
@@ -46,7 +42,8 @@ char		*get_prompt(void);
 void		put_banner(void);
 
 /*************  Signal ***********/
-void		ignore_signal(void);
+void		set_ignore_signal(void);
+void		reset_ignore_signal(void);
 void		handle_error(char *message, char *command);
 
 //********** debug command ********/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/02 15:01:42 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/02/04 00:36:54 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,14 @@ void	boot_minishell(t_shell	*msh)
 	t_vector	*lexed_tokens;
 	t_ast_node	*syntax_tree;
 
+	set_ignore_signal();
 	line = NULL;
 	while (true)
 	{
 		line = readline(msh->prompt);
 		if (!line)
 			break ;
-		else if (*line)
+		if (*line)
 			add_history(line);
 		lexer(line, &lexed_tokens);
 		parser(lexed_tokens, &syntax_tree, msh);
