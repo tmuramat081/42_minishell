@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:19:13 by event             #+#    #+#             */
-/*   Updated: 2023/01/17 19:20:31 by event            ###   ########.fr       */
+/*   Updated: 2023/02/04 16:23:45 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,12 @@
  */
 void	next_token(t_vector *tokens, t_token **curr)
 {
-	*curr = (t_token *)ft_vector_next(tokens, *curr, 1);
+	t_token	*next;
+
+	next = (t_token *)ft_vector_next(tokens, *curr, 1);
+	if (!next)
+		exit(0);
+	*curr = next;
 }
 
 /**

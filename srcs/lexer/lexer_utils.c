@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:11:48 by event             #+#    #+#             */
-/*   Updated: 2023/02/04 13:34:25 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/04 16:37:55 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	token_emit(t_tokenizer *tk, t_token_type token_type)
 	else
 		token.data = ft_substr(tk->str, tk->start, tk->pos - tk->start);
 	token.type = token_type;
-	format_token(&token);
+	format_space(&token);
 	ft_vector_push_back(tk->tokens, &token);
 	tk->start = tk->pos;
 }
