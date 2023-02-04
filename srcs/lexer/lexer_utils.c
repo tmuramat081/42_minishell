@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:11:48 by event             #+#    #+#             */
-/*   Updated: 2023/02/02 15:04:33 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/02/04 13:34:25 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,18 @@
 #include "terminal.h"
 #include "lexer.h"
 
+char	token_current(t_tokenizer *tk)
+{
+	return (tk->str[tk->pos]);
+}
+
 /**
  * @brief 解析対象の対象を一文字進める。
  *
  * @param tokenizer
- * @return char* 進める前の文字
+ * @return char* 現在の文字
  */
-char	next(t_tokenizer *tk)
+char	token_next(t_tokenizer *tk)
 {
 	char	current;
 
@@ -45,7 +50,7 @@ char	next(t_tokenizer *tk)
  *
  * @param tokenizer
  */
-void	prev(t_tokenizer *tokenizer)
+void	token_prev(t_tokenizer *tokenizer)
 {
 	tokenizer->pos -= 1;
 }
@@ -56,7 +61,7 @@ void	prev(t_tokenizer *tokenizer)
  * @param tk
  * @param ttype
  */
-void	emit(t_tokenizer *tk, t_token_type token_type)
+void	token_emit(t_tokenizer *tk, t_token_type token_type)
 {
 	t_token	token;
 
@@ -76,12 +81,12 @@ void	emit(t_tokenizer *tk, t_token_type token_type)
  * @param tokenizer
  * @return char* 次の解析対象にあたる文字
  */
-char	peek(t_tokenizer *tokenizer)
+char	token_peek(t_tokenizer *tokenizer)
 {
 	char	next_c;
 
-	next_c = next(tokenizer);
+	next_c = token_next(tokenizer);
 	if (next_c != '\0')
-		prev(tokenizer);
+		token_prev(tokenizer);
 	return (next_c);
 }

@@ -23,7 +23,7 @@ static int we_envsubst(char *words, char **buff, t_wordexp *wp, size_t var_start
 
 	var = ft_substr(words, var_start, var_end - var_start);
 	env = search_environment(var, wp->envs);
-	*buff = w_addstr(*buff, wp, env);
+	*buff = we_addstr(*buff, wp, env);
 	if (!*buff)
 		return (FTWRDE_NOSPACE);
 	free(var);

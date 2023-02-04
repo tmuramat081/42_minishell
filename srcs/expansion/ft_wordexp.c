@@ -14,7 +14,7 @@ int	ft_wordexp(char *words, char **buff, t_hashmap *environs)
 	size_t		offset;
 	t_wordexp	wp;
 
-	wp = w_newword(environs);
+	wp = we_newword(environs);
 	offset = 0;
 	while (words[offset])
 	{
@@ -30,7 +30,7 @@ int	ft_wordexp(char *words, char **buff, t_hashmap *environs)
 		}
 		else
 		{
-			*buff = w_addchar(*buff, &wp, words[offset]);
+			*buff = we_addchar(*buff, &wp, words[offset]);
 			++offset;
 		}
 	}

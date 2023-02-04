@@ -2,7 +2,7 @@
 #include "libft.h"
 #include <assert.h>
 
-static char	*_w_addmem(char *buff, t_wordexp *we, const char *str, size_t len)
+static char	*_we_addmem(char *buff, t_wordexp *we, const char *str, size_t len)
 {
 	char	*old_buff;
 	char	*p_end;
@@ -24,17 +24,17 @@ static char	*_w_addmem(char *buff, t_wordexp *we, const char *str, size_t len)
 	return (buff);
 }
 
-char	*w_addstr(char *buff, t_wordexp *wp, const char *str)
+char	*we_addstr(char *buff, t_wordexp *wp, const char *str)
 {
 	size_t	len;
 
 	if (!str)
 		exit (EXIT_FAILURE);
 	len = ft_max(1, ft_strlen(str));
-	return (_w_addmem(buff, wp, str, len));
+	return (_we_addmem(buff, wp, str, len));
 }
 
-char	*w_addchar(char *buff, t_wordexp *wp, char ch)
+char	*we_addchar(char *buff, t_wordexp *wp, char ch)
 {
 	char	*old_buff;
 
@@ -54,7 +54,7 @@ char	*w_addchar(char *buff, t_wordexp *wp, char ch)
 	return (buff);
 }
 
-t_wordexp	w_newword(t_hashmap *environs)
+t_wordexp	we_newword(t_hashmap *environs)
 {
 	t_wordexp	wordexp;
 

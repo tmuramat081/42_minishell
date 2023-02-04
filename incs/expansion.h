@@ -26,9 +26,9 @@ int			we_parse_dollar(char *words, char **buff, t_wordexp *wp, size_t *offset);
 int			we_parse_quote(char *words, char **buff, t_wordexp *wp, size_t *offset);
 int			we_parse_params(char *words, char **buff, t_wordexp *wp, size_t *offset);
 
-t_wordexp	w_newword(t_hashmap *environs);
-char		*w_addstr(char *buff, t_wordexp *wp, const char *str);
-char		*w_addchar(char *buff, t_wordexp *wp, char ch);
+t_wordexp	we_newword(t_hashmap *environs);
+char		*we_addstr(char *buff, t_wordexp *wp, const char *str);
+char		*we_addchar(char *buff, t_wordexp *wp, char ch);
 
 char		*heredoc_read(char *here_end);
 int			heredoc_redirect(char *here_end);
