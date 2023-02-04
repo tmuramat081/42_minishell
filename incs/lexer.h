@@ -17,25 +17,19 @@ struct s_tokenizer {
 
 typedef enum e_token_type {
 	TOKEN_NONE = 0,
-	TOKEN_STR_PLAIN = (1 << 0),
-	TOKEN_STR_SQUOTE = (1 << 1),
-	TOKEN_STR_DQUOTE = (1 << 2),
-	TOKEN_RDIR_INPUT = (1 << 3),
-	TOKEN_RDIR_APPEND = (1 << 4),
-	TOKEN_RDIR_OUTPUT = (1 << 5),
-	TOKEN_RDIR_HEREDOC = (1 << 6),
-	TOKEN_PIPELINE = (1 << 7),
-	TOKEN_AMPERSAND = (1 << 8),
-	TOKEN_SEMICOLON = (1 << 9),
-	TOKEN_END = (1 << 10),
+	TOKEN_STR = (1 << 0),
+	TOKEN_RDIR_INPUT = (1 << 1),
+	TOKEN_RDIR_APPEND = (1 << 2),
+	TOKEN_RDIR_OUTPUT = (1 << 3),
+	TOKEN_RDIR_HEREDOC = (1 << 4),
+	TOKEN_PIPELINE = (1 << 5),
+	TOKEN_AMPERSAND = (1 << 6),
+	TOKEN_SEMICOLON = (1 << 7),
+	TOKEN_END = (1 << 8),
 	TOKEN_RDIR = TOKEN_RDIR_INPUT
 				| TOKEN_RDIR_OUTPUT
 				| TOKEN_RDIR_APPEND
 				| TOKEN_RDIR_HEREDOC,
-	TOKEN_STR_QUOTE = TOKEN_STR_SQUOTE
-					| TOKEN_STR_DQUOTE,
-	TOKEN_STR = TOKEN_STR_PLAIN
-				| TOKEN_STR_QUOTE,
 	TOKEN_ALL = ~0,
 }	t_token_type;
 
@@ -48,10 +42,11 @@ void			lexer(char *line, t_vector **tokens);
 t_tokenizer		*init_tokenizer(char *line);
 void			delete_tokenizer(t_tokenizer *tokenizer);
 void			format_token(t_token *token);
-char			next(t_tokenizer *tokenizer);
-void			prev(t_tokenizer *tokenizer);
-void			emit(t_tokenizer *tk, t_token_type ttype);
-char			peek(t_tokenizer *tokenizer);
+char			token_next(t_tokenizer *tokenizer);
+void			token_prev(t_tokenizer *tokenizer);
+void			token_emit(t_tokenizer *tk, t_token_type ttype);
+char			token_peek(t_tokenizer *tokenizer);
+char			token_current(t_tokenizer *tokenizer);
 bool			is_redirection(int c);
 bool			is_delimiter(int c);
 void			*lex_general(t_tokenizer *tokenizer);

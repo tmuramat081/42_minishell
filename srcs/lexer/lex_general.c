@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:06:30 by event             #+#    #+#             */
-/*   Updated: 2023/02/02 05:07:54 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/04 13:29:04 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	*lex_general(t_tokenizer *tokenizer)
 {
 	char	next_c;
 
-	next_c = peek(tokenizer);
+	next_c = token_peek(tokenizer);
 	if (ft_isspace(next_c) == true)
 		return (lex_whitespace);
 	else if (ft_isnull(next_c) == true)
@@ -65,6 +65,6 @@ void	*lex_general(t_tokenizer *tokenizer)
 		return (lex_delimiter);
 	else
 		return (lex_string);
-	emit(tokenizer, TOKEN_NONE);
+	token_emit(tokenizer, TOKEN_NONE);
 	return (NULL);
 }

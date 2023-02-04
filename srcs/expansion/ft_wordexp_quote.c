@@ -12,14 +12,17 @@ static int	we_parse_double_quote(char *words, char **buff, t_wordexp *wp, size_t
 	while (words[*offset])
 	{
 		if (words[*offset] == '"')
+		{
+			++*offset;
 			return (FTWRDE_SUCCESS);
-		if (words[*offset] == '$')
+		}
+		else if (words[*offset] == '$')
 		{
 			return (we_parse_dollar(words, buff, wp, offset));
 		}
 		else
 		{
-			*buff = w_addchar(*buff, wp, words[*offset]);
+			*buff = we_addchar(*buff, wp, words[*offset]);
 			if (!*buff)
 				return (FTWRDE_NOSPACE);
 		}
@@ -32,14 +35,17 @@ static int	we_parse_single_quote(char *words, char **buff, t_wordexp *wp, size_t
 {
 	while (words[*offset])
 	{
-		if (words[*offset] != '\'')
+		if (words[*offset] == '\'')
 		{
-			*buff = w_addchar(*buff, wp, words[*offset]);
+			++*offset;
+			return (FTWRDE_SUCCESS);
+		}
+		else
+		{
+			*buff = we_addchar(*buff, wp, words[*offset]);
 			if (!*buff)
 				return (FTWRDE_NOSPACE);
 		}
-		else
-			return (FTWRDE_SUCCESS);
 		++*offset;
 	}
 	return (FTWRDE_SYNTAX);
@@ -48,6 +54,12 @@ static int	we_parse_single_quote(char *words, char **buff, t_wordexp *wp, size_t
 int		we_parse_quote(char *words, char **buff, t_wordexp *wp, size_t *offset)
 {
 	if (words[*offset - 1] == '\'')
-		return (we_parse_single_quote(words, buff, wp, offset));
-	return (we_parse_double_quote(words, buff, wp, offset));
+	{
+		we_parse_single_quote(words, buff, wp, offset);
+	}
+	else if (words[*offset - 1] == '"')
+	{
+		we_parse_double_quote(words, buff, wp, offset);
+	}
+	return (0);
 }

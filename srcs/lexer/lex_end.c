@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_end.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:06:02 by event             #+#    #+#             */
-/*   Updated: 2023/02/02 14:52:07 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/02/04 13:29:00 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	*lex_error(t_tokenizer *tokenizer)
  */
 void	*lex_eof(t_tokenizer *tokenizer)
 {
-	next(tokenizer);
-	emit(tokenizer, TOKEN_END);
+	token_next(tokenizer);
+	token_emit(tokenizer, TOKEN_END);
 	return (NULL);
 }

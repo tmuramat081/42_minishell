@@ -19,7 +19,7 @@ static int	we_parse_special(char **buff, t_wordexp *wp, size_t *offset)
 
 	++*offset;
 	exit_status = get_exit_status();
-	*buff = w_addstr(*buff, wp, exit_status);
+	*buff = we_addstr(*buff, wp, exit_status);
 	free(exit_status);
 	return (FTWRDE_SUCCESS);
 }
@@ -33,10 +33,9 @@ static int	we_parse_special(char **buff, t_wordexp *wp, size_t *offset)
  */
 int	we_parse_dollar(char *words, char **buff, t_wordexp *wp, size_t *offset)
 {
-
 	if (words[*offset] == '"' || words[*offset] == '\0')
 	{
-		*buff = w_addchar(*buff, wp, '$');
+		*buff = we_addchar(*buff, wp, '$');
 		return (FTWRDE_SUCCESS);
 	}
 	else if (words[*offset] == '?')

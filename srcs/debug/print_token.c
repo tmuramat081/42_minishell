@@ -13,19 +13,10 @@
 #include "parser.h"
 #include "ft_printf.h"
 
-char	*get_str_type(t_token_type type)
-{
-	if (type == TOKEN_STR_SQUOTE)
-		return ("[STR_S_QUOTE]");
-	else if (type == TOKEN_STR_DQUOTE)
-		return ("[STR_D_QUOTE]");
-	return ("[STR_PLAIN]");
-}
-
 char *get_type_name(t_token_type type)
 {
 	if (type & TOKEN_STR)
-		return (get_str_type(type));
+		return ("[STRING]");
 	else if (type & TOKEN_RDIR_OUTPUT)
 		return ("[RDIR_OUTPUT]");
 	else if (type & TOKEN_RDIR_APPEND)

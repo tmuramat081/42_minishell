@@ -21,10 +21,10 @@ static void	expand_word(t_command *command, t_hashmap *environ)
 			buff = NULL;
 			ft_wordexp(curr->argument, &buff, environ);
 			free(curr->argument);
-			if (!buff)
-				curr->argument = ft_strdup("");
-			else
+			if (buff)
 				curr->argument = ft_strdup(buff);
+			else
+				curr->argument = ft_strdup("");
 			free(buff);
 		}
 		curr = curr->next;

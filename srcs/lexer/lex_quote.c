@@ -6,12 +6,11 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:07:45 by event             #+#    #+#             */
-/*   Updated: 2023/01/29 03:03:22 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/04 13:31:39 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-
 
 static void	*lex_double_quote(t_tokenizer *tokenizer)
 {
@@ -19,13 +18,15 @@ static void	*lex_double_quote(t_tokenizer *tokenizer)
 
 	while (true)
 	{
-		tmp_c = next(tokenizer);
+		tmp_c = token_next(tokenizer);
 		if (tmp_c == '\0')
 			return (lex_error);
 		else if (tmp_c == '"')
+
 			break ;
 	}
-	emit(tokenizer, TOKEN_STR_DQUOTE);
+	if (token_current(tokenizer) == '\0')
+		token_emit(tokenizer, TOKEN_STR);
 	return (lex_general);
 }
 
@@ -35,13 +36,14 @@ static void	*lex_single_quote(t_tokenizer *tokenizer)
 
 	while (true)
 	{
-		tmp_c = next(tokenizer);
+		tmp_c = token_next(tokenizer);
 		if (tmp_c == '\0')
 			return (lex_error);
 		else if (tmp_c == '\'')
 			break ;
 	}
-	emit(tokenizer, TOKEN_STR_SQUOTE);
+	if (token_current(tokenizer) == '\0')
+		token_emit(tokenizer, TOKEN_STR);
 	return (lex_general);
 }
 
@@ -55,7 +57,7 @@ void	*lex_quote(t_tokenizer *tokenizer)
 {
 	char	quote_c;
 
-	quote_c = next(tokenizer);
+	quote_c = token_next(tokenizer);
 	if (quote_c == '\'')
 		lex_single_quote(tokenizer);
 	else if (quote_c == '"')
