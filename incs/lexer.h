@@ -41,7 +41,7 @@ typedef struct s_token {
 void			lexer(char *line, t_vector **tokens);
 t_tokenizer		*init_tokenizer(char *line);
 void			delete_tokenizer(t_tokenizer *tokenizer);
-void			format_token(t_token *token);
+void			format_space(t_token *token);
 char			token_next(t_tokenizer *tokenizer);
 void			token_prev(t_tokenizer *tokenizer);
 void			token_emit(t_tokenizer *tk, t_token_type ttype);
