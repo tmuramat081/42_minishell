@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/04 01:42:24 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/04 15:22:15 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	boot_minishell_dev(t_shell	*msh)
 	line = NULL;
 	while (true)
 	{
+		set_ignore_signal();
 		line = readline(msh->prompt);
 		if (!line)
 			break ;

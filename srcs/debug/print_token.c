@@ -46,7 +46,7 @@ static void	print_token(void *p_str, void *p_index)
 	token = p_str;
 	type = get_type_name(token->type);
 	ft_printf("[%*d] %*s %*s\n", 2, *index, 20, token->data, 20, type);
-	(*index)++;
+	++*index;
 }
 
 void	print_tokens(t_vector *tokens)

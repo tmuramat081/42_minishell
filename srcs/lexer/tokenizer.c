@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:12:13 by event             #+#    #+#             */
-/*   Updated: 2023/02/04 09:50:56 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/04 15:14:32 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_tokenizer	*init_tokenizer(char *line)
 	tokenizer->start = 0;
 	tokenizer->pos = 0;
 	tokenizer->state = lex_general;
-	tokenizer->tokens = ft_vector_init(sizeof(t_token), 16);
+	tokenizer->tokens = ft_vector_init(sizeof(t_token), 32);
 	if (!tokenizer->tokens)
 		return (NULL);
 	return (tokenizer);
