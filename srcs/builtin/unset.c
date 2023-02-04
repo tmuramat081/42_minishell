@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:29 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/01/22 21:35:41 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/05 00:38:42 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,15 @@
 #include "ft_hashmap.h"
 #include "terminal.h"
 
-int	builtin_unset(char **arg, t_shell *msh)
+int	builtin_unset(char **args, t_shell *msh)
 {
 	size_t	i;
 
 	i = 0;
-	while (arg[i])
+	while (args[i])
 	{
-		ft_hashmap_remove(msh->envs, arg[i]);
+		if (!ft_unsetenv(args[i], msh->envs))
+			return (-1);
 		i++;
 	}
 	return (0);

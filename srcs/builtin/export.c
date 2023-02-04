@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/01 23:22:01 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/04 22:17:26 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	set_priority_queue(t_hashmap_data *hash_data, void *p_pqueue)
 	return (HASHMAP_SUCCESS);
 }
 
-
 /**
  * @brief ASCII順にソートされた環境変数を一覧表示する。
  *
@@ -81,18 +80,16 @@ void	print_sorted_envs(t_hashmap *envs)
 	}
 }
 
-
-
 /**
  * @brief 文字列の配列を環境変数に追加する。
  *
  * @param args
  * @param map
  */
-void insert_env(char **args, t_hashmap *environs)
+void	insert_env(char **args, t_hashmap *environs)
 {
-	size_t i;
-	t_env new_env;
+	size_t	i;
+	t_env	new_env;
 
 	i = 0;
 	while (args[i] != NULL)

@@ -26,8 +26,8 @@ int	builtin_cd(char **args, t_shell *msh)
 		path = args[1];
 	if (chdir(path))
 	{
-		ft_putendl_fd("error", 2);
-		return (+1);
+		ft_putendl_fd(MSG_NO_FILE_DIR, 2);
+		return (1);
 	}
 	return (0);
 }

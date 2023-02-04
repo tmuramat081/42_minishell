@@ -14,12 +14,12 @@
 
 int	builtin_pwd(char **arg, t_shell *msh)
 {
-	char	buf[BUFSIZ];
+	char	buff[BUFSIZ];
 
 	(void)msh;
 	(void)arg;
-	if (!getcwd(buf, sizeof(buf)))
+	if (!getcwd(buff, sizeof(buff)))
 		return (-1);
-	ft_printf("%s\n", buf);
+	ft_putendl_fd(buff, STDOUT_FILENO);
 	return (0);
 }

@@ -12,46 +12,54 @@
 #include "terminal.h"
 #include "ft_printf.h"
 
-int	is_n_option(const char *s)
+int	is_n_option(const char *str)
 {
-	if (ft_strncmp(s, "-n", 2))
+	if (ft_strcmp(str, "-n") != 0)
 		return (0);
-	s++;
-	while (*s == 'n')
-		s++;
-	if (!(*s))
+	str++;
+	while (*str == 'n')
+		str++;
+	if (!(*str))
 		return (1);
 	return (0);
 }
 
-int	builtin_echo(const char **args, t_shell *msh)
+bool	parse_option(char **args, size_t *i)
+{
+	bool	is_newline;
+
+	is_newline = true;
+	while (args[*i] && is_n_option(args[*i]))
+	{
+		is_newline = false;
+		++*i;
+	}
+	return (is_newline);
+}
+
+int	builtin_echo(char **args, t_shell *msh)
 {
 	size_t	i;
 	size_t	len;
-	bool	not_work;
+	bool	is_newline;
 
 	(void)msh;
-	len = ft_matrixlen(args);
+	len = ft_matrixlen((const char **)args);
 	if (len == 1)
 	{
-		ft_printf("\n");
+		ft_putstr_fd("\n", STDOUT_FILENO);
 		return (0);
 	}
 	i = 1;
-	not_work = false;
-	while (args[i] && is_n_option(args[i]))
-	{
-		not_work = true;
-		i++;
-	}
+	is_newline = parse_option(args, &i);
 	while (i < len)
 	{
-		ft_printf("%s", args[i]);
+		ft_putstr_fd(args[i], STDOUT_FILENO);
 		i++;
-		if (i < len)
-			ft_printf(" ");
+		if (i != len)
+			ft_putstr_fd(" ", STDOUT_FILENO);
 	}
-	if (not_work == false)
-		ft_printf("\n");
+	if (is_newline == true)
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (0);
 }
