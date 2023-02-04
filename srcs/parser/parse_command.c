@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:13:08 by event             #+#    #+#             */
-/*   Updated: 2023/01/17 19:13:09 by event            ###   ########.fr       */
+/*   Updated: 2023/02/04 14:11:33 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,5 @@ t_ast_node	*parse_simple_cmd(t_vector *tokens, t_token **curr)
 		return (NULL);
 	node = ast_node_create();
 	node->command = parse_suffix(tokens, curr);
-	ast_node_set_type(node, NODE_COMMAND);
 	return (node);
 }

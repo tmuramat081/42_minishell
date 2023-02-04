@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   astree_create.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:22:11 by event             #+#    #+#             */
-/*   Updated: 2023/02/01 02:05:53 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/02/04 14:29:40 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,7 @@ t_ast_node	*ast_node_create(void)
 	node = (t_ast_node *)malloc(sizeof(t_ast_node));
 	if (!node)
 		return (NULL);
-	node->command = ast_command_create();
-	if (!node->command)
-	{
-		ast_node_delete(node);
-		return (NULL);
-	}
+	node->command = NULL;
 	node->left = NULL;
 	node->right = NULL;
 	return (node);
