@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 16:42:14 by kkohki            #+#    #+#             */
-/*   Updated: 2023/02/01 23:36:39 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/04 23:40:27 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ int	ft_hashmap_remove(t_hashmap *map, const char *key)
 	{
 		if (ft_strcmp(map->data[i].key, key) == 0)
 		{
+			free(map->data[i].key);
 			map->data[i].key = NULL;
+			if (map->destr)
+				(map->destr)(map->data[i].value);
 			map->data[i].value = NULL;
 			map->data[i].in_use = false;
 			map->len -= 1;

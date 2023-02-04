@@ -20,6 +20,16 @@ static bool	_is_over_load_factor(t_hashmap *map)
 	return (false);
 }
 
+static void	_replace_data(t_hashmap *map, t_hashmap_data *data, \
+	char *new_key, void *new_value)
+{
+	free(data->key);
+	data->key = new_key;
+	if (map->destr)
+		(map->destr)(data->value);
+	data->value = new_value;
+}
+
 static int	_hash_insert(t_hashmap *map, char *key, void *value)
 {
 	size_t	i;
@@ -31,8 +41,7 @@ static int	_hash_insert(t_hashmap *map, char *key, void *value)
 	{
 		if (ft_strcmp(map->data[i].key, key) == 0)
 		{
-			map->data[i].key = key;
-			map->data[i].value = value;
+			_replace_data(map, map->data, key, value);
 			return (HASHMAP_FAILURE);
 		}
 		else

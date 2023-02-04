@@ -43,6 +43,7 @@ typedef struct s_hashmap {
 	size_t			len;
 	size_t			cap;
 	size_t			(*hash)(const void *);
+	void			(*destr)(void *);
 }	t_hashmap;
 
 /**
@@ -51,7 +52,7 @@ typedef struct s_hashmap {
  * @param hash ハッシュ関数。NULLで既定の関数が呼ばれる。
  * @return t_hashmap*　ハッシュマップ構造体
  */
-t_hashmap	*ft_hashmap_init(size_t(*hash)(const void *data));
+t_hashmap	*ft_hashmap_init(size_t(*hash)(const void *data), void(*destr)(void *));
 
 /**
  * @brief メモリをfreeするための関数。最後に忘れず呼び出す。

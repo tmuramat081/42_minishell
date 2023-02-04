@@ -19,7 +19,8 @@ size_t	default_hash(const void	*data)
 	return ((size_t)data);
 }
 
-t_hashmap	*ft_hashmap_init(size_t(*hash)(const void *data))
+t_hashmap	*ft_hashmap_init(size_t(*hash)(const void *data), \
+	void(*destr)(void *))
 {
 	t_hashmap	*new_map;
 
@@ -33,6 +34,10 @@ t_hashmap	*ft_hashmap_init(size_t(*hash)(const void *data))
 		new_map->hash = hashmap_hash_int;
 	else
 		new_map->hash = hash;
+	if (!destr)
+		new_map->destr = free;
+	else
+		new_map->destr = destr;
 	new_map->data = malloc(sizeof(t_hashmap_data) * new_map->cap);
 	if (!new_map->data)
 	{
