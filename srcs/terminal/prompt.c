@@ -35,6 +35,6 @@ char	*get_prompt(void)
 	char	*prompt;
 
 	prompt = (char *)ft_xmalloc(sizeof(char) * PROMPT_LEN);
-	ft_snprintf(prompt, PROMPT_LEN, "%s > ", PROMPT_NAME);
+	ft_snprintf(prompt, PROMPT_LEN, "%s%s > %s", GREEN, PROMPT_NAME, DEFAULT);
 	return (prompt);
 }

@@ -1,6 +1,10 @@
 #ifndef CONSTANT_H
 # define CONSTANT_H
 
+/** Error messages */
+# define MSG_NO_FILE_DIR "No such file or directory"
+# define MSG_CMD_NOT_FOUND "command not found"
+
 /** Escape sequences */
 # define DEFAULT "\033[0;0m"
 # define BOLD "\033[1m"
@@ -18,10 +22,8 @@
 /** Prompt */
 # define PROMPT_NAME "m-shell"
 # define HEREDOC_PROMPT "> "
-# define PROMPT_LEN 20
-/** Prompt */
-# define BANNER \
-"\n\
+# define PROMPT_LEN 64
+# define BANNER "\n\
 .##.....##..........######..##.....##.########.##.......##......\n\
 .###...###.........##....##.##.....##.##.......##.......##......\n\
 .####.####.........##.......##.....##.##.......##.......##......\n\

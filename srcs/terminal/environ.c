@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:18:28 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/02 15:05:55 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/02/04 23:41:14 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,36 @@ char	*ft_getenv(const char *key, t_hashmap *envs)
 	return (p_value);
 }
 
+int	ft_putenv(t_env *env, t_hashmap *envs)
+{
+	int	ok;
+
+	ok = ft_hashmap_insert(envs, env->key, env->value);
+	if (!ok)
+		return (-1);
+	return (0);
+}
+
 int	ft_setenv(t_env *env, t_hashmap *envs, int overwrite)
 {
-	if (overwrite == 0 && !ft_hashmap_find(envs, env->key, NULL))
-		return (0);
-	ft_hashmap_insert(envs, env->key, env->value);
+	int	ok;
+
+	if (overwrite == 0)
+	{
+		ok = ft_hashmap_find(envs, env->key, NULL);
+		if (!ok)
+			return (0);
+	}
+	return (ft_putenv(env, envs));
+}
+
+int	ft_unsetenv(const char *key, t_hashmap *envs)
+{
+	int	ok;
+
+	ok = ft_hashmap_remove(envs, key);
+	if (!ok)
+		return (-1);
 	return (0);
 }
 
@@ -74,7 +99,7 @@ t_hashmap	*init_environ(void)
 	t_env		env;
 	size_t		i;
 
-	env_table = ft_hashmap_init(NULL);
+	env_table = ft_hashmap_init(NULL, NULL);
 	i = 0;
 	while (environ[i])
 	{
