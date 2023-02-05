@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:18:28 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/05 19:54:08 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/02/06 01:04:45 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static bool is_valid_key(const char *key)
 	}
 	return (true);
 }
-
 /**
  * @brief 文字列をkeyとvalueに分解し、env構造体に格納する。
  *
@@ -51,7 +50,10 @@ t_env	parse_environ(const char *str)
 		free(env.key);
 		return ((t_env){NULL, NULL});
 	}
-	env.value = ft_strdup(p_sep + 1);
+	if (*p_sep == '\0')
+		env.value = ft_strdup("");
+	else
+		env.value = ft_strdup(p_sep + 1);
 	if (!env.value)
 	{
 		free(env.key);
@@ -61,8 +63,8 @@ t_env	parse_environ(const char *str)
 }
 
 /**
- * @brief グローバル変数'environ'から環境変数を取得する
- *
+ * @brief グローバル変数'environ'から環境変数を取得する。
+ * @detail $OLDPWDは空文字列で初期化する。
  * @return t_hashmap*
  */
 t_hashmap	*init_environ(void)
@@ -81,5 +83,7 @@ t_hashmap	*init_environ(void)
 			ft_setenv(&env, env_table, 1);
 		i++;
 	}
+	env = parse_environ("OLDPWD");
+	ft_putenv(&env, env_table);
 	return (env_table);
 }

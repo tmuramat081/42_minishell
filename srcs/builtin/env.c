@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/05 00:08:09 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/06 01:10:20 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,17 @@
 
 static int	print_env(t_hashmap_data *map_data, void *data)
 {
+	char *key;
+	char *value;
+
 	(void)data;
-	ft_printf("%s=%s\n", map_data->key, map_data->value);
+	if (map_data->key && map_data->value)
+	{
+		key = map_data->key;
+		value = (char *)map_data->value;
+		if (*key && *value)
+			ft_printf("%s=%s\n", map_data->key, map_data->value);
+	}
 	return (1);
 }
 

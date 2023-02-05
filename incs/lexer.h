@@ -49,6 +49,7 @@ char			token_peek(t_tokenizer *tokenizer);
 char			token_current(t_tokenizer *tokenizer);
 bool			is_redirection(int c);
 bool			is_delimiter(int c);
+bool			ft_isquote(int c);
 void			*lex_general(t_tokenizer *tokenizer);
 void			*lex_whitespace(t_tokenizer *tokenizer);
 void			*lex_quote(t_tokenizer *tokenizer);
