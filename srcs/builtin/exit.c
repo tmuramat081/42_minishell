@@ -20,7 +20,7 @@ void	put_error(char *message, char *arg)
 	exit(255);
 }
 
-int	input_args(char *arg)
+static int	input_args(char *arg)
 {
 	char	*endptr;
 	long	long_num;
@@ -31,23 +31,29 @@ int	input_args(char *arg)
 	endptr = NULL;
 	long_num = ft_strtol_d(arg, &endptr);
 	if( (long_num == LONG_MIN || long_num == LONG_MAX) && errno == ERANGE)
+	{
 		put_error("numeric argument required", arg);
+	}
 	else if (*endptr || endptr == arg)
+	{
 		put_error("numeric argument required", arg);
+	}
 	return ((int)long_num);
 }
 
 void	builtin_exit(char **argv)
 {
-	size_t	i;
 	int		status;
 	size_t 	argc;
+	extern	int g_status;
 
-	i = 1;
 	argc = ft_matrixlen((const char**)argv);
 	if (argc > 2)
-		put_error("too many arguments", NULL);
-	status = input_args(argv[i]);
+		handle_error(MSG_TOO_MANY_ARGS, NULL);
+	if (argc == 1)
+		status = input_args(argv[1]);
+	else
+		exit(g_status);
 	exit(status);
 }
 

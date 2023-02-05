@@ -3,65 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:18:28 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/04 23:41:14 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/05 19:54:08 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "terminal.h"
-/*
- * @file environs.c
- * @author tmuramat (tmuramat@student.42tokyo.jp)
- * @brief 環境変数の初期化
- * @version 0.1
- * @date 2023-01-01
- *
- * @copyright Copyright (c) 2023
- *
- */
+#include <ctype.h>
 
-char	*ft_getenv(const char *key, t_hashmap *envs)
+static bool is_valid_key(const char *key)
 {
-	char	*p_value;
+	size_t	i;
 
-	if (!ft_hashmap_find(envs, key, (void **)&p_value))
-		return (NULL);
-	return (p_value);
-}
-
-int	ft_putenv(t_env *env, t_hashmap *envs)
-{
-	int	ok;
-
-	ok = ft_hashmap_insert(envs, env->key, env->value);
-	if (!ok)
-		return (-1);
-	return (0);
-}
-
-int	ft_setenv(t_env *env, t_hashmap *envs, int overwrite)
-{
-	int	ok;
-
-	if (overwrite == 0)
+	if (!key || !*key)
+		return (false);
+	if (ft_isdigit(key[0]))
+		return (false);
+	i = 0;
+	while (key[i])
 	{
-		ok = ft_hashmap_find(envs, env->key, NULL);
-		if (!ok)
-			return (0);
+		if (!ft_isalnum(key[i]) && key[i] != '_')
+			return (false);
+		i++;
 	}
-	return (ft_putenv(env, envs));
-}
-
-int	ft_unsetenv(const char *key, t_hashmap *envs)
-{
-	int	ok;
-
-	ok = ft_hashmap_remove(envs, key);
-	if (!ok)
-		return (-1);
-	return (0);
+	return (true);
 }
 
 /**
@@ -72,19 +39,25 @@ int	ft_unsetenv(const char *key, t_hashmap *envs)
  */
 t_env	parse_environ(const char *str)
 {
-	t_env	environ;
+	t_env	env;
 	char	*p_sep;
 
 	if (!str)
 		exit(EXIT_FAILURE);
-	environ = (t_env){};
-	p_sep = ft_strchr(str, '=');
-	if (p_sep)
+	p_sep = ft_strchrnul(str, '=');
+	env.key = ft_strndup(str, p_sep - str);
+	if (is_valid_key(env.key) == false)
 	{
-		environ.key = ft_strndup(str, p_sep - str);
-		environ.value = ft_strdup(p_sep + 1);
+		free(env.key);
+		return ((t_env){NULL, NULL});
 	}
-	return (environ);
+	env.value = ft_strdup(p_sep + 1);
+	if (!env.value)
+	{
+		free(env.key);
+		return ((t_env){NULL, NULL});
+	}
+	return (env);
 }
 
 /**
@@ -104,7 +77,8 @@ t_hashmap	*init_environ(void)
 	while (environ[i])
 	{
 		env = parse_environ(environ[i]);
-		ft_setenv(&env, env_table, 1);
+		if (env.key && env.value)
+			ft_setenv(&env, env_table, 1);
 		i++;
 	}
 	return (env_table);

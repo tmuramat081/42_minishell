@@ -4,6 +4,8 @@
 /** Error messages */
 # define MSG_NO_FILE_DIR "No such file or directory"
 # define MSG_CMD_NOT_FOUND "command not found"
+# define MSG_NOT_VALID_ID "not a valid identifier"
+# define MSG_TOO_MANY_ARGS "too many arguments"
 
 /** Escape sequences */
 # define DEFAULT "\033[0;0m"

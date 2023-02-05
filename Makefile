@@ -13,6 +13,7 @@ SRCS := \
 	main.c \
 	terminal/terminal.c \
 	terminal/environ.c \
+	terminal/ft_envs.c \
 	terminal/prompt.c \
 	terminal/signal.c \
 	terminal/error.c \

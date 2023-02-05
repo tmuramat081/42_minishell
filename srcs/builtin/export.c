@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/04 22:17:26 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/05 19:26:42 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 #include "ft_pqueue.h"
 #include "ft_hashmap.h"
 
-int	compare_key(const void *p_data1, const void *p_data2)
+static int	compare_key(const void *p_data1, const void *p_data2)
 {
 	const t_env	*env1 = p_data1;
 	const t_env	*env2 = p_data2;
@@ -45,7 +45,7 @@ int	compare_key(const void *p_data1, const void *p_data2)
  *
  *
 */
-int	set_priority_queue(t_hashmap_data *hash_data, void *p_pqueue)
+static int	set_priority_queue(t_hashmap_data *hash_data, void *p_pqueue)
 {
 	t_env		*env;
 	t_pqueue	*pqueue;
@@ -65,12 +65,12 @@ int	set_priority_queue(t_hashmap_data *hash_data, void *p_pqueue)
  *
  * @param envs
  */
-void	print_sorted_envs(t_hashmap *envs)
+static int		print_sorted_envs(t_hashmap *envs)
 {
 	t_env		*env;
 	t_pqueue	*pqueue;
 
-	pqueue = ft_priority_queue_init(32, compare_key);
+	pqueue = ft_priority_queue_init(1, compare_key);
 	ft_hashmap_iterate(envs, set_priority_queue, pqueue);
 	while (!ft_priority_queue_is_empty(pqueue))
 	{
@@ -78,6 +78,7 @@ void	print_sorted_envs(t_hashmap *envs)
 		ft_printf("dexlare -x %s=\"%s\"\n", env->key, env->value);
 		free(env);
 	}
+	return (0);
 }
 
 /**
@@ -86,19 +87,24 @@ void	print_sorted_envs(t_hashmap *envs)
  * @param args
  * @param map
  */
-void	insert_env(char **args, t_hashmap *environs)
+static int	insert_env(char **args, t_hashmap *environs)
 {
 	size_t	i;
 	t_env	new_env;
 
-	i = 0;
+	i = 1;
 	while (args[i] != NULL)
 	{
 		new_env = parse_environ(args[i]);
-		if (new_env.key && new_env.value)
-			ft_hashmap_insert(environs, new_env.key, new_env.value);
+		if (!new_env.key || !new_env.value)
+		{
+			handle_error(MSG_NOT_VALID_ID, args[0]);
+			return (1);
+		}
+		ft_hashmap_insert(environs, new_env.key, new_env.value);
 		i++;
 	}
+	return (0);
 }
 
 /**
@@ -114,8 +120,6 @@ int	builtin_export(char **args, t_shell *msh)
 
 	argc = ft_matrixlen((const char **)args);
 	if (argc == 1)
-		print_sorted_envs(msh->envs);
-	else
-		insert_env(&args[1], msh->envs);
-	return (0);
+		return (print_sorted_envs(msh->envs));
+	return (insert_env(&args[0], msh->envs));
 }
