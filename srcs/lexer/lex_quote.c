@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:07:45 by event             #+#    #+#             */
-/*   Updated: 2023/02/04 13:31:39 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/05 21:07:13 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void	*lex_double_quote(t_tokenizer *tokenizer)
 		if (tmp_c == '\0')
 			return (lex_error);
 		else if (tmp_c == '"')
-
 			break ;
 	}
 	if (token_current(tokenizer) == '\0')
