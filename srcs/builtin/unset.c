@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:29 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/05 00:38:42 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/05 20:15:55 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,10 @@ int	builtin_unset(char **args, t_shell *msh)
 {
 	size_t	i;
 
-	i = 0;
+	i = 1;
 	while (args[i])
 	{
-		if (!ft_unsetenv(args[i], msh->envs))
-			return (-1);
+		ft_unsetenv(args[i], msh->envs);
 		i++;
 	}
 	return (0);
