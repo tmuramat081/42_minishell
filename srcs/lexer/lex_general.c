@@ -6,21 +6,21 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:06:30 by event             #+#    #+#             */
-/*   Updated: 2023/02/04 13:29:04 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/05 21:21:14 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "libft.h"
 
-static bool	ft_isquote(int c)
+bool	ft_isquote(int c)
 {
 	if (c == '\'' || c == '"')
 		return (true);
 	return (false);
 }
 
-static bool	ft_isnull(int c)
+bool	ft_isnull(int c)
 {
 	if (c == '\0')
 		return (true);

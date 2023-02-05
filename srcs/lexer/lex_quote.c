@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:07:45 by event             #+#    #+#             */
-/*   Updated: 2023/02/05 21:07:13 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/05 21:30:44 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	*lex_double_quote(t_tokenizer *tokenizer)
 		else if (tmp_c == '"')
 			break ;
 	}
-	if (token_current(tokenizer) == '\0')
+	if (is_delimiter(token_current(tokenizer)) == true)
 		token_emit(tokenizer, TOKEN_STR);
 	return (lex_general);
 }
@@ -41,7 +41,7 @@ static void	*lex_single_quote(t_tokenizer *tokenizer)
 		else if (tmp_c == '\'')
 			break ;
 	}
-	if (token_current(tokenizer) == '\0')
+	if (is_delimiter(token_current(tokenizer)) == true)
 		token_emit(tokenizer, TOKEN_STR);
 	return (lex_general);
 }
