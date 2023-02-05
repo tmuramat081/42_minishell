@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/05 19:26:42 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/02/06 01:16:30 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,21 @@ static int	set_priority_queue(t_hashmap_data *hash_data, void *p_pqueue)
  */
 static int		print_sorted_envs(t_hashmap *envs)
 {
-	t_env		*env;
 	t_pqueue	*pqueue;
+	t_env		*env;
 
 	pqueue = ft_priority_queue_init(1, compare_key);
 	ft_hashmap_iterate(envs, set_priority_queue, pqueue);
 	while (!ft_priority_queue_is_empty(pqueue))
 	{
 		ft_priority_queue_pop(pqueue, (void **)&env);
-		ft_printf("dexlare -x %s=\"%s\"\n", env->key, env->value);
+		if (ft_strcmp(env->key, "_") != 0)
+		{
+			if (!*env->value)
+				ft_printf("declare -x %s\n", env->key);
+			else
+				ft_printf("declare -x %s=\"%s\"\n", env->key, env->value);
+		}
 		free(env);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 19:49:17 by tmuramat          #+#    #+#             */
-/*   Updated: 2022/02/25 19:49:18 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/06 00:23:30 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strdup(const char *src)
 	size_t	len;
 
 	len = ft_strlen(src);
-	p = (char *) malloc (sizeof(char) * len + 1);
+	p = (char *) malloc (sizeof(char) * (len + 1));
 	if (!p)
 		return (NULL);
 	ft_strlcpy(p, src, len + 1);

@@ -41,7 +41,7 @@ static int	_hash_insert(t_hashmap *map, char *key, void *value)
 	{
 		if (ft_strcmp(map->data[i].key, key) == 0)
 		{
-			_replace_data(map, map->data, key, value);
+			_replace_data(map, &map->data[i], key, value);
 			return (HASHMAP_FAILURE);
 		}
 		else
