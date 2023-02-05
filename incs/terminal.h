@@ -36,6 +36,7 @@ void		sort_environs(t_env *env);
 char		*ft_getenv(const char *key, t_hashmap *envs);
 int			ft_setenv(t_env *env, t_hashmap *envs, int overwrite);
 int			ft_unsetenv(const char *key, t_hashmap *envs);
+int	ft_putenv(t_env *env, t_hashmap *envs);
 
 /*************  Prompt ***************/
 char		*get_prompt(void);
