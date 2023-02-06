@@ -8,12 +8,12 @@
  * @param command
  * @param environ
  */
-static void	expand_word(t_command *command, t_hashmap *environ)
+static void	expand_arguments(t_argument *arguments, t_hashmap *environ)
 {
 	t_argument	*curr;
 	char		*buff;
 
-	curr = command->arguments;
+	curr = arguments;
 	while (curr)
 	{
 		if (curr->type & NODE_WORD)
@@ -32,6 +32,35 @@ static void	expand_word(t_command *command, t_hashmap *environ)
 }
 
 /**
+ * @brief リダクレクトのファイル名をすべて走査し、単語の展開を試みる。
+ *
+ * @param redirects
+ * @param environ
+ */
+static void	expand_filenames(t_redirect *redirects, t_hashmap *environ)
+{
+	t_redirect	*curr;
+	char		*buff;
+
+	curr = redirects;
+	while (curr)
+	{
+		if (curr->type & NODE_RDIR)
+		{
+			buff = NULL;
+			ft_wordexp(curr->file, &buff, environ);
+			free(curr->file);
+			if (buff)
+				curr->file = ft_strdup(buff);
+			else
+				curr->file = ft_strdup("");
+			free(buff);
+		}
+		curr = curr->next;
+	}
+}
+
+/**
 * @brief 抽象構文木の各ノードを走査し、それがコマンドである場合は展開を試みる。
  *
  * @param node
@@ -43,7 +72,8 @@ static void	expand_node(t_ast_node *node, t_shell *msh)
 		return ;
 	if (node->type & NODE_COMMAND)
 	{
-		expand_word(node->command, msh->envs);
+		expand_arguments(node->command->arguments, msh->envs);
+		expand_filenames(node->command->redirects, msh->envs);
 	}
 	expand_node(node->left, msh);
 	expand_node(node->right, msh);

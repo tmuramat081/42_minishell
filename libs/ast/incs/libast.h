@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libast.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:09:23 by event             #+#    #+#             */
-/*   Updated: 2023/02/01 00:20:29 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/02/06 01:37:20 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ enum	e_node_type {
 	NODE_RDIR_HEREDOC	= (1 << 5),
 	NODE_COMMAND		= (1 << 6),
 	NODE_WORD			= (1 << 7),
-	NODE_WORD_ESC		= (1 << 8),
+	NODE_RDIR			= NODE_RDIR_INPUT | NODE_RDIR_APPEND \
+						| NODE_RDIR_OUTPUT | NODE_RDIR_HEREDOC,
 	NODE_ALL			= ~0
 };
 
