@@ -27,6 +27,7 @@
 #include "ft_hashmap.h"
 #include "ft_printf.h"
 #include <sys/stat.h>
+#include <sys/types.h>
 
 /**
  * @brief 環境変数テーブルからPATHの値を取得する。
@@ -113,9 +114,19 @@ bool exists_file(const char *path)
 	struct stat st;
 	
 	if (stat(path, &st) != 0)
-		return (0);
-	return ((st.st_mode & S_IFMT) == S_IFREG);		
+		return (false);
+	return (S_ISREG(st.st_mode));
 }
+
+bool is_directory(const char *path)
+{
+	struct stat st;
+
+	if (stat(path, &st) != 0)
+		return (false);
+	return (S_ISDIR(st.st_mode));
+}
+
 
 /**
  * @brief execvpeの実装
@@ -138,10 +149,16 @@ int	ft_execvpe(const char *file, char *const argv[], char *const envp[])
 	}
 	if (ft_strchr(file, '/'))
 	{
-		if (exists_file(argv[0]) == false)
+		execve(file, argv, envp);
+		if (is_directory(file))
 		{
 			errno = EISDIR;
 			return (-1);
+		}
+		else if (!exists_file(file))
+		{
+			handle_error(MSG_NO_FILE_DIR, argv[0]);
+			exit(127);
 		}
 		return (execve(file, argv, envp));
 	}

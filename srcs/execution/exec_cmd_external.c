@@ -6,7 +6,7 @@
 /*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:18:48 by event             #+#    #+#             */
-/*   Updated: 2023/02/07 00:34:25 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/02/07 01:20:56 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	exec_external_command(t_process process, t_shell *msh)
 	{
 		handle_error(MSG_IS_DIRECTORY, cmd_name);
 		exit(126);
-		
 	}
 	else if (errno == EACCES)
 	{
