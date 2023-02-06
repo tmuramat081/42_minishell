@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:06:28 by event             #+#    #+#             */
-/*   Updated: 2023/02/04 01:58:16 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/06 23:42:23 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static char	**init_arguments(t_argument *arguments)
 	i = 0;
 	while (arguments)
 	{
-		argv[i] = ft_strdup(arguments->argument);
+		if (*arguments->argument)
+			argv[i++] = ft_strdup(arguments->argument);
 		arguments = arguments->next;
-		i++;
 	}
 	argv[i] = NULL;
 	return (argv);

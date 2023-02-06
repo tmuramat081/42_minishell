@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execvpe.c                                          :+:      :+:    :+:   */
+/*   ft_execvpe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:14:38 by event             #+#    #+#             */
-/*   Updated: 2023/02/02 04:17:59 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/07 00:439:41 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #include "ft_snprintf.h"
 #include "ft_hashmap.h"
 #include "ft_printf.h"
+#include <sys/stat.h>
 
 /**
  * @brief 環境変数テーブルからPATHの値を取得する。
@@ -58,8 +59,10 @@ char	*get_environ_value(char *const envp[], char *key)
  * @return true　上記のエラーである場合
  * @return false 上記以外のエラーである場合
  */
-static bool	is_expected_error()
+static bool	is_expected_error(bool *seen_eaccess)
 {
+	if (errno == EACCES)
+		*seen_eaccess = true;
 	if (errno == EACCES || errno == ENOENT
 		|| errno == ESTALE || errno == ENOTDIR
 		|| errno == ENODEV || errno == ETIMEDOUT)
@@ -75,14 +78,16 @@ static bool	is_expected_error()
  * @param argv
  * @param envp
  */
-void	try_executable_path(char **paths, const char *file, \
+int	try_executable_path(char **paths, const char *file, \
 			char *const argv[], char *const envp[])
 {
 	size_t	i;
 	char	*buffer;
 	size_t	path_len;
 	size_t	file_len;
+	bool	seen_eaccess;
 
+	seen_eaccess = false;
 	file_len = ft_strlen(file);
 	i = 0;
 	while (paths[i])
@@ -93,11 +98,23 @@ void	try_executable_path(char **paths, const char *file, \
 		ft_snprintf(buffer, file_len + path_len + 1 + 1, \
 					"%s/%s", paths[i], file);
 		execve(buffer, argv, envp);
-		if (!is_expected_error())
-			return ;
+		if (!is_expected_error(&seen_eaccess))
+			return (-1);
 		free(buffer);
 		i++;
 	}
+	if (seen_eaccess == true)
+		errno = EACCES;
+	return (-1);
+}
+
+bool exists_file(const char *path)
+{
+	struct stat st;
+	
+	if (stat(path, &st) != 0)
+		return (0);
+	return ((st.st_mode & S_IFMT) == S_IFREG);		
 }
 
 /**
@@ -119,15 +136,18 @@ int	ft_execvpe(const char *file, char *const argv[], char *const envp[])
 		errno = ENOENT;
 		return (-1);
 	}
-	if (ft_strchr(file, '/') != NULL)
+	if (ft_strchr(file, '/'))
 	{
-		execve(file, argv, envp);
-		return (-1);
+		if (exists_file(argv[0]) == false)
+		{
+			errno = EISDIR;
+			return (-1);
+		}
+		return (execve(file, argv, envp));
 	}
 	raw_path = get_environ_value(envp, "PATH=");
 	if (!raw_path)
 		return (-1);
 	paths = ft_split(raw_path, ':');
-	try_executable_path(paths, file, argv, envp);
-	return (-1);
+	return (try_executable_path(paths, file, argv, envp));
 }

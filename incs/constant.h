@@ -8,6 +8,7 @@
 # define MSG_TOO_MANY_ARGS "too many arguments"
 # define MSG_NUM_ARG_REQUIRED "numeric argument required"
 # define MSG_IS_DIRECTORY "is a directory"
+# define MSG_PERMISSION_DENIED "Permission denied"
 
 /** Escape sequences */
 # define DEFAULT "\033[0;0m"
