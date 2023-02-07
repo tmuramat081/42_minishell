@@ -28,7 +28,6 @@ typedef struct s_process {
 	char		**argv;
 	t_redirect	*redirects;
 	bool		is_solo;
-	bool		is_last;
 }	t_process;
 
 /********* Builtin commands **********/
@@ -59,7 +58,7 @@ void	close_file(int fd);
 
 /**********  Process **********/
 pid_t	create_child_process(void);
-void	wait_all_child_processes();
+void	wait_all_child_processes(size_t cnt);
 void	wait_child_process(pid_t pid);
 
 /********** Pipeline **********/

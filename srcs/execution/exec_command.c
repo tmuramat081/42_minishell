@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:06:28 by event             #+#    #+#             */
-/*   Updated: 2023/02/08 01:13:34 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/08 01:28:10 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 #include "libast.h"
 #include <fcntl.h>
 #include <unistd.h>
-
-int g_pid;
 
 /**
  * @brief　コマンド引数のリストを文字列の配列に変換する。
@@ -66,8 +64,6 @@ void	exec_cmd_as_child(t_process process, t_shell *msh, t_pipe pipe, t_builtin_f
 	extern int g_status;
 
 	pid = create_child_process();
-	if (process.is_last == true)
-		g_pid = pid;
 	if (pid == 0)
 	{
 		set_signal(SIGQUIT, SIG_DFL);

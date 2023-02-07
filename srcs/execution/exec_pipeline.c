@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:02:45 by event             #+#    #+#             */
-/*   Updated: 2023/02/08 01:18:51 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/08 01:29:51 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	exec_pipeline_recursive(t_ast_node *node, t_process process, \
 	if (node->type & NODE_COMMAND)
 	{
 		pipe.state = PIPE_STDIN;
-		process.is_last = true;
 		exec_simple_cmd(node, process, msh, pipe);
 	}
 	else
@@ -38,7 +37,6 @@ void	exec_pipeline_recursive(t_ast_node *node, t_process process, \
 		close_file(pipe.writer);
 		close_file(pipe.in_fd);
 		pipe.in_fd = pipe.reader;
-		process.is_last = false;
 		if (node->right)
 			exec_pipeline_recursive(node->right, process, msh, pipe);
 	}
@@ -53,13 +51,15 @@ void	exec_pipeline_recursive(t_ast_node *node, t_process process, \
 void	exec_pipeline(t_ast_node *node, t_process process, t_shell *msh)
 {
 	t_pipe	pipe;
+	size_t	cnt;
 
 	process.is_solo = false;
-	if (ast_count_pipeline(node) <= 1)
+	cnt = ast_count_pipeline(node);
+	if (cnt <= 1)
 		process.is_solo = true;
 	pipe = pipe_init();
 	pipe_fd_backup(&pipe);
 	exec_pipeline_recursive(node, process, msh, pipe);
-	wait_all_child_processes();
+	wait_all_child_processes(cnt);
 	pipe_fd_restore(pipe);
 }
