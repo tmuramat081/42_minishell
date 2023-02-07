@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:02:45 by event             #+#    #+#             */
-/*   Updated: 2023/02/08 00:41:10 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/08 01:18:51 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	exec_pipeline_recursive(t_ast_node *node, t_process process, \
 	if (node->type & NODE_COMMAND)
 	{
 		pipe.state = PIPE_STDIN;
+		process.is_last = true;
 		exec_simple_cmd(node, process, msh, pipe);
 	}
 	else
@@ -37,6 +38,7 @@ void	exec_pipeline_recursive(t_ast_node *node, t_process process, \
 		close_file(pipe.writer);
 		close_file(pipe.in_fd);
 		pipe.in_fd = pipe.reader;
+		process.is_last = false;
 		if (node->right)
 			exec_pipeline_recursive(node->right, process, msh, pipe);
 	}

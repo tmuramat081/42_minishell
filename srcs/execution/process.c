@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:24:01 by event             #+#    #+#             */
-/*   Updated: 2023/02/08 00:40:13 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/08 01:19:37 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,23 @@ pid_t	create_child_process(void)
 	return (pid);
 }
 
-void	wait_all_child_processes(size_t	cnt)
+void	wait_all_child_processes(void)
 {
+	extern int	g_pid;
 	extern int	g_status;
 	int			status;
+	pid_t		pid;
 
-	while ((waitpid(-1, &status, 0) > 0))
-		;
-	if (WIFEXITED(status))
+	while (true)
 	{
-		g_status = WEXITSTATUS(status);
+		pid = waitpid(-1, &status, 0);
+		if (pid == g_pid)
+		{
+			if (WIFEXITED(status))
+				g_status = WEXITSTATUS(status);
+		}
+		else if (pid < 0)
+			break ;
 	}
 }
 
