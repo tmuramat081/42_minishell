@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:21:57 by event             #+#    #+#             */
-/*   Updated: 2023/02/08 01:23:17 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/08 01:51:47 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_builtin_fn	search_builtin(t_process *process)
 {
 	size_t	i;
 
-	if (!process || !process->argv)
+	if (!process || !process->argv || !process->argv[0])
 		return (NULL);
 	i = 0;
 	while (g_builtins[i].symbol)

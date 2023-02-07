@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:06:28 by event             #+#    #+#             */
-/*   Updated: 2023/02/08 01:28:10 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/08 01:48:02 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	**init_arguments(t_argument *arguments)
 	size_t	argc;
 
 	argc = ast_count_arguments(arguments);
-	argv = (char **)ft_xmalloc(sizeof(t_ast_node) * (argc + 1));
+	argv = (char **)ft_xmalloc(sizeof(char *) * (argc + 1));
 	i = 0;
 	while (arguments)
 	{

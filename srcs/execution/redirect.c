@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:17:55 by event             #+#    #+#             */
-/*   Updated: 2023/02/07 23:53:47 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/08 05:00:11 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,22 @@ void	close_file(int fd)
 {
 	if (close(fd) < 0)
 		exit(EXIT_FAILURE);
+}
+
+int	xopen(const char *pathname, int flags, mode_t mode)
+{
+	int	fd;
+
+	if (mode)
+		fd = open(pathname, flags, mode);
+	else
+		fd = open(pathname, flags);
+	if (fd < 0)
+	{
+		handle_error(MSG_NO_FILE_DIR, (char *)pathname);
+		return (EXIT_FAILURE);
+	}
+	return (fd);
 }
 
 /**
@@ -65,7 +81,10 @@ int	set_redirection(t_process process)
 		old_fd = open_file(*redirects);
 		if (old_fd < 0)
 		{
-			handle_error(MSG_NO_FILE_DIR, redirects->file);
+			if (errno == EACCES)
+				handle_error(MSG_PERMISSION_DENIED, redirects->file);
+			else
+				handle_error(MSG_NO_FILE_DIR, redirects->file);
 			return (-1);
 		}
 		new_fd = redirects->fd;
