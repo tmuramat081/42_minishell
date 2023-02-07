@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:06:28 by event             #+#    #+#             */
-/*   Updated: 2023/02/06 23:42:23 by kkohki           ###   ########.fr       */
+/*   Updated: 2023/02/08 00:05:04 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,42 @@ static char	**init_arguments(t_argument *arguments)
 	return (argv);
 }
 
-/**
- * @brief コマンド実行プロセスを初期化する。
- *
- * @details 引数・リダイレクト・パイプの設定を行う。
- * @param command
- * @return t_process*
- */
-static void	set_command_process(t_process *process, t_command *command)
+void	exec_cmd_as_parent(t_process process, t_shell *msh, t_builtin_fn builtin_cmd)
 {
-	process->argv = init_arguments(command->arguments);
-	process->redirects = command->redirects;
+	extern int g_status;
+
+	if (ast_count_redirects(process.redirects) > 0)
+	{
+		if (set_redirection(process) == -1)
+		{
+			g_status = 1;
+			return ;
+		}
+	}
+	exec_internal_command(builtin_cmd, process, msh);
+}
+
+void	exec_cmd_as_child(t_process process, t_shell *msh, t_pipe pipe, t_builtin_fn builtin_cmd)
+{
+	pid_t			pid;
+	extern int g_status;
+
+	pid = create_child_process();
+	if (pid == 0)
+	{
+		set_signal(SIGQUIT, SIG_DFL);
+		set_pipeline(pipe);
+		if (ast_count_redirects(process.redirects) > 0
+			&& set_redirection(process) < 0)
+		{
+			g_status = 1;
+			return ;
+		}
+		if (builtin_cmd)
+			exec_internal_command(builtin_cmd, process, msh);
+		else
+			exec_external_command(process, msh);
+	}
 }
 
 /**
@@ -62,30 +87,18 @@ static void	set_command_process(t_process *process, t_command *command)
  * @param node
  * @param msh
  */
-void	exec_simple_cmd(t_ast_node *node, t_process process, \
-			t_shell *msh, t_pipe pipe)
+void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh, t_pipe pipe)
 {
-	pid_t			pid;
-	t_builtin_fn	builtin_command;
+	t_builtin_fn	builtin_cmd;
 
 	if (!node)
 		return ;
-	set_command_process(&process, node->command);
-	builtin_command = search_builtin(process.argv[0]);
-	if (builtin_command && process.is_solo == true)
-		pid = 0;
+	process.argv = init_arguments(node->command->arguments);
+	process.redirects = node->command->redirects;
+	builtin_cmd = search_builtin(&process);
+	if (builtin_cmd && process.is_solo)
+		exec_cmd_as_parent(process, msh, builtin_cmd);
 	else
-		pid = create_child_process();
-	if (pid == 0)
-	{
-		set_signal(SIGQUIT, SIG_DFL);
-		set_pipeline(pipe);
-		if (ast_count_redirects(process.redirects) > 0)
-			set_redirection(process);
-		if (builtin_command)
-			exec_internal_command(builtin_command, process, msh);
-		else
-			exec_external_command(process, msh);
-	}
+		exec_cmd_as_child(process, msh, pipe, builtin_cmd);
 	ft_free_matrix(&process.argv);
 }

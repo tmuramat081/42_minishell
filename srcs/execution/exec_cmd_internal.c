@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:21:57 by event             #+#    #+#             */
-/*   Updated: 2023/02/02 04:05:06 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/07 23:27:04 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,19 @@ static const t_builtin	g_builtins[8] = {
 {NULL, NULL},
 };
 
-t_builtin_fn	search_builtin(char *args)
+t_builtin_fn	search_builtin(t_process *process)
 {
 	size_t	i;
 
-	if (!args)
+	if (!process || !process->argv)
 		return (NULL);
 	i = 0;
 	while (g_builtins[i].symbol)
 	{
-		if (!ft_strcmp(args, g_builtins[i].symbol))
+		if (!ft_strcmp(process->argv[0], g_builtins[i].symbol))
+		{
 			return ((t_builtin_fn)g_builtins[i].func);
+		}
 		i++;
 	}
 	return (NULL);

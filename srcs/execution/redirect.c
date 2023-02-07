@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:17:55 by event             #+#    #+#             */
-/*   Updated: 2023/01/31 01:37:15 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/07 23:53:47 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ static int	open_file(t_redirect redirect)
 		fd = open(redirect.file, O_RDONLY);
 	else if (redirect.type & NODE_RDIR_HEREDOC)
 		fd = heredoc_redirect(redirect.file);
-	if (fd < 0)
-		exit(EXIT_FAILURE);
 	return (fd);
 }
 
@@ -55,7 +53,7 @@ static int	open_file(t_redirect redirect)
  * @details 新規にファイルを開き（open）、入力／出力先に指定（dup2）する。
  * @param process
  */
-void	set_redirection(t_process process)
+int	set_redirection(t_process process)
 {
 	int			old_fd;
 	int			new_fd;
@@ -65,13 +63,19 @@ void	set_redirection(t_process process)
 	while (redirects)
 	{
 		old_fd = open_file(*redirects);
+		if (old_fd < 0)
+		{
+			handle_error(MSG_NO_FILE_DIR, redirects->file);
+			return (-1);
+		}
 		new_fd = redirects->fd;
 		if (dup2(old_fd, new_fd) < 0)
 		{
-			close(old_fd);
+			close_file(old_fd);
 			exit(EXIT_FAILURE);
 		}
 		close_file(old_fd);
 		redirects = redirects->next;
 	}
+	return (0);
 }
