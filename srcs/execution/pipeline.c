@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
+/*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:32:30 by event             #+#    #+#             */
-/*   Updated: 2023/01/27 01:32:31 by event            ###   ########.fr       */
+/*   Updated: 2023/02/09 05:24:15 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	pipe_update(t_pipe *piped)
 	}
 	piped->reader = tmp[0];
 	piped->writer = tmp[1];
+	printf("update: %d\n", piped->reader);
+	printf("update: %d\n", piped->writer);
 }
 
 void	pipe_fd_backup(t_pipe *pipe)
@@ -54,9 +56,9 @@ void	set_pipeline(t_pipe pipe)
 	if (pipe.state & PIPE_STDIN && pipe.in_fd != STDIN_FILENO)
 	{
 		dup2(pipe.in_fd, STDIN_FILENO);
-		close(pipe.in_fd);
+		close_file(pipe.in_fd);
 	}
-	if (pipe.state & PIPE_STDOUT && pipe.in_fd != STDOUT_FILENO)
+	if (pipe.state & PIPE_STDOUT && pipe.writer != STDOUT_FILENO)
 	{
 		dup2(pipe.writer, STDOUT_FILENO);
 		close_file(pipe.writer);

@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:17:55 by event             #+#    #+#             */
-/*   Updated: 2023/02/08 05:00:11 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/09 05:24:32 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 void	close_file(int fd)
 {
+	printf("close:%d\n", fd);
 	if (close(fd) < 0)
 		exit(EXIT_FAILURE);
 }
