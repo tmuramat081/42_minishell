@@ -6,21 +6,20 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:32:30 by event             #+#    #+#             */
-/*   Updated: 2023/02/09 05:24:15 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/10 06:15:43 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-t_pipe	pipe_init(void)
+void	xdup2(int old_fd, int new_fd)
 {
-	t_pipe	piped;
-
-	piped = (t_pipe){};
-	piped.reader = STDIN_FILENO;
-	piped.writer = STDOUT_FILENO;
-	piped.in_fd = STDIN_FILENO;
-	return (piped);
+	if (old_fd != new_fd)
+	{
+		if (dup2(old_fd, new_fd) < 0)
+			exit(EXIT_FAILURE);
+		close(old_fd);
+	}
 }
 
 void	pipe_update(t_pipe *piped)
@@ -28,39 +27,19 @@ void	pipe_update(t_pipe *piped)
 	int	tmp[2];
 
 	if (pipe(tmp) < 0)
-	{
 		exit(EXIT_FAILURE);
-	}
 	piped->reader = tmp[0];
 	piped->writer = tmp[1];
-	printf("update: %d\n", piped->reader);
-	printf("update: %d\n", piped->writer);
-}
-
-void	pipe_fd_backup(t_pipe *pipe)
-{
-	pipe->backup[0] = dup(STDIN_FILENO);
-	pipe->backup[1] = dup(STDOUT_FILENO);
-}
-
-void	pipe_fd_restore(t_pipe pipe)
-{
-	dup2(pipe.backup[0], STDIN_FILENO);
-	dup2(pipe.backup[1], STDOUT_FILENO);
 }
 
 void	set_pipeline(t_pipe pipe)
 {
-	if (pipe.state & PIPE_STDOUT)
-		close_file(pipe.reader);
-	if (pipe.state & PIPE_STDIN && pipe.in_fd != STDIN_FILENO)
+	if (pipe.state & PIPE_STDIN)
 	{
-		dup2(pipe.in_fd, STDIN_FILENO);
-		close_file(pipe.in_fd);
+		xdup2(pipe.in_fd, STDIN_FILENO);
 	}
-	if (pipe.state & PIPE_STDOUT && pipe.writer != STDOUT_FILENO)
+	if (pipe.state & PIPE_STDOUT)
 	{
-		dup2(pipe.writer, STDOUT_FILENO);
-		close_file(pipe.writer);
+		xdup2(pipe.writer, STDOUT_FILENO);
 	}
 }

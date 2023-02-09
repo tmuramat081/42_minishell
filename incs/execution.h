@@ -67,5 +67,6 @@ void	pipe_update(t_pipe *piped);
 void	pipe_fd_backup(t_pipe *pipe);
 void	pipe_fd_restore(t_pipe pipe);
 void	set_pipeline(t_pipe pipe);
+void	xdup2(int old_fd, int new_fd);
 
 #endif

@@ -1,7 +1,7 @@
 # Compile variables
 NAME := minishell
 NAME_DEV := minishell_dev
-CC := gcc
+CC := gcc -g
 CFLAGS := -Wall -Wextra -Werror -MMD -MP -I $(shell brew --prefix readline)/include
 LDFLAGS := -lreadline -lhistory -L$(shell brew --prefix readline)/lib
 ifdef FOR_DEBUG

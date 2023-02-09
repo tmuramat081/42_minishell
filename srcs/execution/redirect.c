@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:17:55 by event             #+#    #+#             */
-/*   Updated: 2023/02/09 05:24:32 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/10 04:36:15 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+
 void	close_file(int fd)
 {
-	printf("close:%d\n", fd);
 	if (close(fd) < 0)
+	{
 		exit(EXIT_FAILURE);
+
+	}
 }
 
 int	xopen(const char *pathname, int flags, mode_t mode)
