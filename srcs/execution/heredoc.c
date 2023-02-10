@@ -25,16 +25,17 @@ int	heredoc_redirect(char	*here_end)
 	t_pipe	pipe;
 	pid_t	pid;
 
-	set_pipeline(&pipe);
+	pipe = init_pipeline(1);
+	set_pipeline(pipe);
 	pid = create_child_process();
 	if (pid == 0)
 	{
 		set_ignore_signal();
-		close_file(pipe.fds[1]);
+		xclose(pipe.fds[1]);
 		heredoc_prompt(pipe, here_end);
 		exit(EXIT_SUCCESS);
 	}
 	wait_child_process(pid);
-	close_file(pipe.fds[1]);
+	xclose(pipe.fds[1]);
 	return (pipe.fds[0]);
 }

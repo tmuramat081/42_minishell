@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:24:01 by event             #+#    #+#             */
-/*   Updated: 2023/02/08 01:32:18 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 03:34:29 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	wait_all_child_processes(size_t cnt)
 	while (cnt--)
 	{
 		waitpid(-1, &status, 0);
-		if (cnt == 0 && WIFEXITED(status))
+		if (WIFEXITED(status) && status)
 			g_status = WEXITSTATUS(status);
 	}
 }

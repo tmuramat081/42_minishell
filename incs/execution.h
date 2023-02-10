@@ -26,6 +26,7 @@ typedef struct s_pipe {
 typedef struct s_process {
 	char		**argv;
 	t_redirect	*redirects;
+	t_pipe		pipes;
 	bool		is_solo;
 }	t_process;
 
@@ -41,7 +42,7 @@ int		builtin_pwd(char **argv, t_shell *msh);
 void	executor(t_ast_node *syntax_tree, t_shell *msh);
 void	exec_command_line(t_ast_node *node, t_process process, t_shell *msh);
 void	exec_pipeline(t_ast_node *node, t_process process, t_shell *msh);
-void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh, t_pipe *pipes);
+void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh);
 void	exec_internal_command(t_builtin_fn builtin_cmd, t_process process, t_shell *msh);
 void	exec_external_command(t_process process, t_shell *msh);
 
@@ -51,9 +52,9 @@ int		ft_execvpe(const char *file, char *const argv[], char *const envp[]);
 char	**convert_vector_to_array(t_vector *src);
 
 /**********  Redirect **********/
-int		set_redirection(t_process process);
+void	set_redirection(t_process process, t_shell *msh);
 void	reset_redirection(t_process process);
-void	close_file(int fd);
+void	xclose(int fd);
 
 /**********  Process **********/
 pid_t	create_child_process(void);
@@ -61,9 +62,9 @@ void	wait_all_child_processes(size_t cnt);
 void	wait_child_process(pid_t pid);
 
 /********** Pipeline **********/
-t_pipe	*init_pipeline(size_t cnt);
-void	set_pipeline(t_pipe *pipes);
-void	delete_pipeline(t_pipe *pipes);
+t_pipe	init_pipeline(size_t cnt);
+void	set_pipeline(t_pipe pipes);
+void	delete_pipeline(t_pipe pipes);
 void	xdup2(int old_fd, int new_fd);
 
 #endif

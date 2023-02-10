@@ -112,7 +112,7 @@ int	try_executable_path(char **paths, const char *file, \
 bool exists_file(const char *path)
 {
 	struct stat st;
-	
+
 	if (stat(path, &st) != 0)
 		return (false);
 	return (S_ISREG(st.st_mode));
@@ -157,7 +157,7 @@ int	ft_execvpe(const char *file, char *const argv[], char *const envp[])
 		}
 		else if (!exists_file(file))
 		{
-			handle_error(MSG_NO_FILE_DIR, argv[0]);
+			shell_perror(argv[0], NULL);
 			exit(127);
 		}
 		return (execve(file, argv, envp));

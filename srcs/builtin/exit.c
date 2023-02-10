@@ -10,13 +10,12 @@
 
 #include "terminal.h"
 
-void	put_error(char *message, char *arg)
+static void	put_error(char *message, char *arg)
 {
-	int fd = 0;
-	ft_putstr_fd("exit: ", fd);
+	ft_putstr_fd("exit: ", STDERR_FILENO);
 	if (arg)
-		ft_putstr_fd(arg, fd);
-	ft_putendl_fd(message, fd);
+		ft_putstr_fd(arg, STDERR_FILENO);
+	ft_putendl_fd(message, STDERR_FILENO);
 	exit(255);
 }
 
@@ -30,29 +29,20 @@ static int	input_args(char **argv)
 	long_num = ft_strtol_d(argv[1], &endptr);
 	if ((long_num == LONG_MIN || long_num == LONG_MAX) \
 		&& errno == ERANGE)
-	{
-		handle_error(MSG_NUM_ARG_REQUIRED, argv[0]);
-		return (255);
-	}
+		put_error(MSG_NUM_ARG_REQUIRED, NULL);
 	else if (*endptr || endptr == argv[1])
-	{
-		handle_error(MSG_NUM_ARG_REQUIRED, argv[0]);
-		return (255);
-	}
+		put_error(MSG_NUM_ARG_REQUIRED, NULL);
 	return ((int)long_num);
 }
 
-int	builtin_exit(char **argv)
+int	builtin_exit(char **argv, t_shell *msh)
 {
-	size_t 	argc;
-	extern	int g_status;
+	size_t 		argc;
+	extern int	g_status;
 
-	argc = ft_matrixlen((const char**)argv);
+	argc = ft_matrixlen((const char **)argv);
 	if (argc > 2)
-	{
-		handle_error(MSG_TOO_MANY_ARGS, argv[0]);
-		exit(1);
-	}
+		shell_perror(argv[0], msh);
 	if (argc == 2)
 		exit(input_args(argv));
 	exit (g_status & 0xFF);

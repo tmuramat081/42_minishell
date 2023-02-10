@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:06:28 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 02:56:54 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 04:40:27 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,39 +43,32 @@ static char	**init_arguments(t_argument *arguments)
 	return (argv);
 }
 
-void	exec_cmd_as_parent(t_process process, t_shell *msh, t_builtin_fn builtin_cmd)
+void	exec_cmd_as_parent(t_process process, t_shell *msh, t_builtin_fn bi_cmd)
 {
-	extern int	g_status;
-
-	if (ast_count_redirects(process.redirects) > 0
-		&& set_redirection(process) < 0)
-	{
-		g_status = 1;
-		return ;
-	}
-	exec_internal_command(builtin_cmd, process, msh);
+	msh->is_child_process = false;
+	set_redirection(process, msh);
+	exec_internal_command(bi_cmd, process, msh);
 }
 
-void	exec_cmd_as_child(t_process process, t_shell *msh, t_pipe *pipes, t_builtin_fn builtin_cmd)
+void	exec_cmd_as_child(t_process process, t_shell *msh, t_builtin_fn bi_cmd)
 {
 	pid_t		pid;
 	extern int	g_status;
 
+	msh->is_child_process = true;
 	pid = create_child_process();
 	if (pid == 0)
 	{
 		set_signal(SIGQUIT, SIG_DFL);
-		set_pipeline(pipes);
-		if (ast_count_redirects(process.redirects) > 0
-			&& set_redirection(process) < 0)
-		{
-			g_status = 1;
-			return ;
-		}
-		if (builtin_cmd)
-			exec_internal_command(builtin_cmd, process, msh);
+		set_signal(SIGTSTP, SIG_DFL);
+		set_pipeline(process.pipes);
+		set_redirection(process, msh);
+		if (bi_cmd)
+			exec_internal_command(bi_cmd, process, msh);
 		else
 			exec_external_command(process, msh);
+		delete_pipeline(process.pipes);
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -85,7 +78,7 @@ void	exec_cmd_as_child(t_process process, t_shell *msh, t_pipe *pipes, t_builtin
  * @param node
  * @param msh
  */
-void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh, t_pipe *pipes)
+void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh)
 {
 	t_builtin_fn	builtin_cmd;
 
@@ -97,6 +90,6 @@ void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh, t_pipe *
 	if (builtin_cmd && process.is_solo)
 		exec_cmd_as_parent(process, msh, builtin_cmd);
 	else
-		exec_cmd_as_child(process, msh, pipes, builtin_cmd);
+		exec_cmd_as_child(process, msh, builtin_cmd);
 	ft_free_matrix(&process.argv);
 }

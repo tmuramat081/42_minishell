@@ -16,7 +16,7 @@
 
 int	builtin_cd(char **args, t_shell *msh)
 {
-	char *path;
+	char	*path;
 
 	if (!args || !*args)
 		return (1);
@@ -26,7 +26,7 @@ int	builtin_cd(char **args, t_shell *msh)
 		path = args[1];
 	if (chdir(path))
 	{
-		handle_error(MSG_NO_FILE_DIR, args[0]);
+		shell_perror(args[0], msh);
 		return (1);
 	}
 	return (0);

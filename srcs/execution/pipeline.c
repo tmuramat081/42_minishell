@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:32:30 by event             #+#    #+#             */
-/*   Updated: 2023/02/10 06:15:43 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 03:13:17 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,53 @@ void	xdup2(int old_fd, int new_fd)
 	if (old_fd != new_fd)
 	{
 		if (dup2(old_fd, new_fd) < 0)
+		{
+			close(old_fd);
 			exit(EXIT_FAILURE);
-		close(old_fd);
+		}
 	}
 }
 
-void	pipe_update(t_pipe *piped)
+void	set_pipeline(t_pipe pipes)
 {
-	int	tmp[2];
-
-	if (pipe(tmp) < 0)
-		exit(EXIT_FAILURE);
-	piped->reader = tmp[0];
-	piped->writer = tmp[1];
+	if (pipes.state & PIPE_STDOUT)
+	{
+		xdup2(pipes.fds[pipes.idx + 1], STDOUT_FILENO);
+	}
+	if ((pipes.state & PIPE_STDIN) && pipes.idx > 1)
+	{
+		xdup2(pipes.fds[pipes.idx - 2], STDIN_FILENO);
+	}
+	delete_pipeline(pipes);
 }
 
-void	set_pipeline(t_pipe pipe)
+t_pipe	init_pipeline(size_t cnt)
 {
-	if (pipe.state & PIPE_STDIN)
+	t_pipe	pipes;
+	size_t	i;
+
+	pipes.fds = ft_xmalloc(sizeof(int) * (cnt * 2));
+	i = 0;
+	while (i < cnt)
 	{
-		xdup2(pipe.in_fd, STDIN_FILENO);
+		pipe(pipes.fds + i * 2);
+		i++;
 	}
-	if (pipe.state & PIPE_STDOUT)
+	pipes.idx = 0;
+	pipes.state = 0;
+	pipes.len = cnt;
+	return (pipes);
+}
+
+void	delete_pipeline(t_pipe pipes)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < pipes.len * 2)
 	{
-		xdup2(pipe.writer, STDOUT_FILENO);
+		close(pipes.fds[i]);
+		i++;
 	}
+	free(pipes.fds);
 }

@@ -1,12 +1,14 @@
 #include "terminal.h"
 
-void	handle_error(char *message, char *command)
+void	shell_perror(char *string, t_shell *msh)
 {
-	ft_putstr_fd("m-shell: ", STDERR_FILENO);
-	if (command)
-	{
-		ft_putstr_fd(command, STDERR_FILENO);
-		ft_putstr_fd(": ", STDERR_FILENO);
-	}
-	ft_putendl_fd(message, STDERR_FILENO);
+	extern int	g_status;
+
+	if (msh && msh->prompt)
+		ft_putstr_fd(msh->prompt, STDERR_FILENO);
+	perror(string);
+	if (msh->is_child_process == false)
+		return ;
+	exit(g_status);
 }
+

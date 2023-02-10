@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:17:55 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 02:28:21 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 04:28:03 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@
 #include <fcntl.h>
 
 
-void	close_file(int fd)
+void	xclose(int fd)
 {
 	if (close(fd) < 0)
 	{
 		exit(EXIT_FAILURE);
-
 	}
 }
 
@@ -37,11 +36,6 @@ int	xopen(const char *pathname, int flags, mode_t mode)
 		fd = open(pathname, flags, mode);
 	else
 		fd = open(pathname, flags);
-	if (fd < 0)
-	{
-		handle_error(MSG_NO_FILE_DIR, (char *)pathname);
-		return (EXIT_FAILURE);
-	}
 	return (fd);
 }
 
@@ -58,11 +52,11 @@ static int	open_file(t_redirect redirect)
 
 	fd = 0;
 	if (redirect.type & NODE_RDIR_OUTPUT)
-		fd = open(redirect.file, O_WRONLY | O_CREAT | O_TRUNC, file_mode);
+		fd = xopen(redirect.file, O_WRONLY | O_CREAT | O_TRUNC, file_mode);
 	else if (redirect.type & NODE_RDIR_APPEND)
-		fd = open(redirect.file, O_WRONLY | O_CREAT | O_APPEND, file_mode);
+		fd = xopen(redirect.file, O_WRONLY | O_CREAT | O_APPEND, file_mode);
 	else if (redirect.type & NODE_RDIR_INPUT)
-		fd = open(redirect.file, O_RDONLY);
+		fd = xopen(redirect.file, O_RDONLY, 0);
 	else if (redirect.type & NODE_RDIR_HEREDOC)
 		fd = heredoc_redirect(redirect.file);
 	return (fd);
@@ -73,28 +67,23 @@ static int	open_file(t_redirect redirect)
  * @details 新規にファイルを開き（open）、入力／出力先に指定（dup2）する。
  * @param process
  */
-int	set_redirection(t_process process)
+void	set_redirection(t_process process, t_shell *msh)
 {
 	int			old_fd;
 	int			new_fd;
 	t_redirect	*redirects;
 
+	if (ast_count_redirects(process.redirects) == 0)
+		return ;
 	redirects = process.redirects;
 	while (redirects)
 	{
 		old_fd = open_file(*redirects);
 		if (old_fd < 0)
-		{
-			if (errno == EACCES)
-				handle_error(MSG_PERMISSION_DENIED, redirects->file);
-			else
-				handle_error(MSG_NO_FILE_DIR, redirects->file);
-			return (-1);
-		}
+			shell_perror(redirects->file, msh);
 		new_fd = redirects->fd;
 		xdup2(old_fd, new_fd);
-		close_file(old_fd);
+		xclose(old_fd);
 		redirects = redirects->next;
 	}
-	return (0);
 }
