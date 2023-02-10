@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:06:28 by event             #+#    #+#             */
-/*   Updated: 2023/02/10 04:26:08 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 02:56:54 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,27 @@ static char	**init_arguments(t_argument *arguments)
 
 void	exec_cmd_as_parent(t_process process, t_shell *msh, t_builtin_fn builtin_cmd)
 {
-	extern int g_status;
+	extern int	g_status;
 
-	if (ast_count_redirects(process.redirects) > 0)
+	if (ast_count_redirects(process.redirects) > 0
+		&& set_redirection(process) < 0)
 	{
-		if (set_redirection(process) == -1)
-		{
-			g_status = 1;
-			return ;
-		}
+		g_status = 1;
+		return ;
 	}
 	exec_internal_command(builtin_cmd, process, msh);
 }
 
-void	exec_cmd_as_child(t_process process, t_shell *msh, t_pipe pipe, t_builtin_fn builtin_cmd)
+void	exec_cmd_as_child(t_process process, t_shell *msh, t_pipe *pipes, t_builtin_fn builtin_cmd)
 {
-	pid_t			pid;
-	extern int g_status;
+	pid_t		pid;
+	extern int	g_status;
 
 	pid = create_child_process();
 	if (pid == 0)
 	{
 		set_signal(SIGQUIT, SIG_DFL);
-		set_pipeline(pipe);
+		set_pipeline(pipes);
 		if (ast_count_redirects(process.redirects) > 0
 			&& set_redirection(process) < 0)
 		{
@@ -87,7 +85,7 @@ void	exec_cmd_as_child(t_process process, t_shell *msh, t_pipe pipe, t_builtin_f
  * @param node
  * @param msh
  */
-void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh, t_pipe pipe)
+void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh, t_pipe *pipes)
 {
 	t_builtin_fn	builtin_cmd;
 
@@ -99,6 +97,6 @@ void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh, t_pipe p
 	if (builtin_cmd && process.is_solo)
 		exec_cmd_as_parent(process, msh, builtin_cmd);
 	else
-		exec_cmd_as_child(process, msh, pipe, builtin_cmd);
+		exec_cmd_as_child(process, msh, pipes, builtin_cmd);
 	ft_free_matrix(&process.argv);
 }

@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:02:45 by event             #+#    #+#             */
-/*   Updated: 2023/02/10 06:18:51 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 02:31:42 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,19 @@
  * @param msh
  * @param pipe
  */
-void	_do_pipes(t_ast_node *node, t_process process, t_shell *msh)
+void	_do_pipes(t_ast_node *node, t_process process, t_shell *msh, t_pipe *pipes)
 {
-	t_pipe	pipe;
-
-	pipe.in_fd = STDIN_FILENO;
+	pipes->state = PIPE_STDOUT;
 	while (node->right)
 	{
-		pipe_update(&pipe);
-		pipe.state = PIPE_STDIN | PIPE_STDOUT;
-		exec_simple_cmd(node->left, process, msh, pipe);
-		Close(pipe.writer);
-		Close(pipe.in_fd);
-		pipe.in_fd = pipe.reader;
+		exec_simple_cmd(node->left, process, msh, pipes);
+		pipes->state |= PIPE_STDIN;
+		pipes->idx += 2;
 		node = node->right;
 	}
-	pipe.state = PIPE_STDIN;
-	exec_simple_cmd(node, process, msh, pipe);
+	pipes->state = PIPE_STDIN;
+	exec_simple_cmd(node, process, msh, pipes);
 }
-
 /**
  * @brief 実行処理：パイプライン（"|"）
  *
@@ -57,14 +51,14 @@ void	_do_pipes(t_ast_node *node, t_process process, t_shell *msh)
  */
 void	exec_pipeline(t_ast_node *node, t_process process, t_shell *msh)
 {
-	size_t	cnt;
-	int		backup;
+	size_t		cnt;
+	t_pipe		*pipes;
 
 	cnt = ast_count_pipeline(node);
 	if (cnt <= 1)
 		process.is_solo = true;
-	backup = dup(STDIN_FILENO);
-	_do_pipes(node, process, msh);
+	pipes = init_pipeline(cnt);
+	_do_pipes(node, process, msh, pipes);
+	delete_pipeline(pipes);
 	wait_all_child_processes(cnt);
-	xdup2(backup, STDIN_FILENO);
 }
