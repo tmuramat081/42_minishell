@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:06:28 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 17:54:20 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 18:13:08 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	**init_arguments(t_argument *arguments)
 	size_t	i;
 	size_t	argc;
 
-argc = ast_count_arguments(arguments);
+	argc = ast_count_arguments(arguments);
 	argv = (char **)ft_xmalloc(sizeof(char *) * (argc + 1));
 	i = 0;
 	while (arguments)
@@ -42,6 +42,7 @@ argc = ast_count_arguments(arguments);
 	argv[i] = NULL;
 	return (argv);
 }
+
 
 
 void	exec_cmd_as_parent(t_process process, t_shell *msh, t_builtin_fn bi_cmd)
