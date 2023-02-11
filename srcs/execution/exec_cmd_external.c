@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:18:48 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 16:30:36 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:56:33 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,7 @@ void	command_perror(char *command, t_shell *msh)
 		ft_putstr_fd(": ", STDERR_FILENO);
 	}
 	ft_putstr_fd(MSG_CMD_NOT_FOUND, STDERR_FILENO);
-	if (msh && msh->is_child_process == false)
-	{
-		g_status = 127;
-		return ;
-	}
-	exit(127);
+	maybe_exit(127, msh);
 }
 
 /**
@@ -50,7 +45,7 @@ void	exec_external_command(t_process process, t_shell *msh)
 	char		*cmd_name;
 
 	if (!process.argv || !process.argv[0])
-		return ;
+		exit(0);
 	cmd_name = process.argv[0];
 	ft_execvpe(process.argv[0], process.argv, construct_environ(msh->envs));
 	if (errno == EISDIR || errno == EACCES)

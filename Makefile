@@ -54,6 +54,7 @@ SRCS := \
 	execution/process.c \
 	execution/heredoc.c \
 	execution/pipeline.c \
+	execution/io_utils.c \
 	builtin/export.c \
 	builtin/unset.c \
 	builtin/echo.c \

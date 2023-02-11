@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:17:55 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 16:30:55 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:09:18 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-
-void	xclose(int fd)
-{
-	if (close(fd) < 0)
-		exit(EXIT_FAILURE);
-}
-
-int	xopen(const char *pathname, int flags, mode_t mode)
-{
-	int	fd;
-
-	if (mode)
-		fd = open(pathname, flags, mode);
-	else
-		fd = open(pathname, flags);
-	return (fd);
-}
 
 /**
  * @brief ファイルをオープンし、オープンしたfdの値を取得する。
@@ -50,11 +33,11 @@ static int	open_file(char *filename, t_node_type type)
 
 	fd = 0;
 	if (type & NODE_RDIR_OUTPUT)
-		fd = xopen(filename, O_WRONLY | O_CREAT | O_TRUNC, file_mode);
+		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, file_mode);
 	else if (type & NODE_RDIR_APPEND)
-		fd = xopen(filename, O_WRONLY | O_CREAT | O_APPEND, file_mode);
+		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, file_mode);
 	else if (type & NODE_RDIR_INPUT)
-		fd = xopen(filename, O_RDONLY, 0);
+		fd = open(filename, O_RDONLY);
 	else if (type & NODE_RDIR_HEREDOC)
 		fd = heredoc_redirect(filename);
 	return (fd);

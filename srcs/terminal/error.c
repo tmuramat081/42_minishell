@@ -12,7 +12,6 @@ void	maybe_exit(int status, t_shell *msh)
 	exit(status);
 }
 
-
 /**
  * @brief
  * @detail 仕様上、errnoがEISDIRである場合のみ"Is a directory"を"is a dorectory"に置き換える。

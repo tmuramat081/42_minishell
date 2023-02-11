@@ -60,7 +60,6 @@ bool	exists_file(const char *path);
 /**********  Redirect **********/
 void	set_redirection(t_process process, t_shell *msh);
 void	reset_redirection(t_process process);
-void	xclose(int fd);
 
 /**********  Process **********/
 pid_t	create_child_process(void);
@@ -71,6 +70,11 @@ void	wait_child_process(pid_t pid);
 t_pipe	init_pipeline(size_t cnt);
 void	set_pipeline(t_pipe pipes);
 void	delete_pipeline(t_pipe pipes);
+
+/********** IO utils **********/
+int		xdup(int new_fd);
 void	xdup2(int old_fd, int new_fd);
+void	xclose(int fd);
+void	xpipe(int fds[2]);
 
 #endif

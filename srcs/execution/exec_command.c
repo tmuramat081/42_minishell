@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:06:28 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 16:45:08 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:54:20 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,32 @@ argc = ast_count_arguments(arguments);
 	return (argv);
 }
 
+
 void	exec_cmd_as_parent(t_process process, t_shell *msh, t_builtin_fn bi_cmd)
 {
-	int	backup;
+	int backup_in;
+	int	backup_out;
 
 	msh->is_child_process = false;
-	backup = dup(STDIN_FILENO);
+	backup_in = xdup(STDIN_FILENO);
+	backup_out = xdup(STDOUT_FILENO);
 	set_redirection(process, msh);
 	if (errno)
 	{
-		xdup2(backup, STDIN_FILENO);
-		close(backup);
+		xdup2(backup_in, STDIN_FILENO);
+		xdup2(backup_out, STDOUT_FILENO);
+		xclose(backup_in);
+		xclose(backup_out);
 		return ;
 	}
 	exec_internal_command(bi_cmd, process, msh);
-	xdup2(backup, STDIN_FILENO);
-	close(backup);
+	xdup2(backup_in, STDIN_FILENO);
+	xdup2(backup_out, STDOUT_FILENO);
+	xclose(backup_in);
+	xclose(backup_out);
 }
 
-void	exec_cmd_as_child(t_process process, t_shell *msh, t_builtin_fn bi_cmd)
+void	exec_cmd_as_child(t_process process, t_shell *msh, t_builtin_fn bltin_cmd)
 {
 	pid_t		pid;
 	extern int	g_status;
@@ -74,8 +81,8 @@ void	exec_cmd_as_child(t_process process, t_shell *msh, t_builtin_fn bi_cmd)
 		set_signal(SIGTSTP, SIG_DFL);
 		set_pipeline(process.pipes);
 		set_redirection(process, msh);
-		if (bi_cmd)
-			exec_internal_command(bi_cmd, process, msh);
+		if (bltin_cmd)
+			exec_internal_command(bltin_cmd, process, msh);
 		else
 			exec_external_command(process, msh);
 		delete_pipeline(process.pipes);

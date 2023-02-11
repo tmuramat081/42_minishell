@@ -6,23 +6,11 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:32:30 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 03:13:17 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:34:40 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
-
-void	xdup2(int old_fd, int new_fd)
-{
-	if (old_fd != new_fd)
-	{
-		if (dup2(old_fd, new_fd) < 0)
-		{
-			close(old_fd);
-			exit(EXIT_FAILURE);
-		}
-	}
-}
 
 void	set_pipeline(t_pipe pipes)
 {
@@ -46,7 +34,7 @@ t_pipe	init_pipeline(size_t cnt)
 	i = 0;
 	while (i < cnt)
 	{
-		pipe(pipes.fds + i * 2);
+		xpipe(pipes.fds + i * 2);
 		i++;
 	}
 	pipes.idx = 0;
@@ -62,7 +50,7 @@ void	delete_pipeline(t_pipe pipes)
 	i = 0;
 	while (i < pipes.len * 2)
 	{
-		close(pipes.fds[i]);
+		xclose(pipes.fds[i]);
 		i++;
 	}
 	free(pipes.fds);
