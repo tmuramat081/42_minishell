@@ -1,14 +1,20 @@
 #include "terminal.h"
 
-void	shell_perror(char *string, t_shell *msh)
+/**
+ * @brief
+ * @detail 仕様上、EISDIRのみ"Is a directory"を"is a dorectory"に置き換える。
+ * @param string
+ * @param msh
+ * @param status
+ */
+void	shell_perror(const char *string, t_shell *msh, int status)
 {
-	extern int	g_status;
-
-	if (msh && msh->prompt)
-		ft_putstr_fd(msh->prompt, STDERR_FILENO);
-	perror(string);
-	if (msh->is_child_process == false)
+	ft_putstr_fd("m-shell: ", STDERR_FILENO);
+	if (errno == EISDIR)
+		ft_putendl_fd("is a directory", STDERR_FILENO);
+	else
+		perror(string);
+	if (msh && msh->is_child_process == false)
 		return ;
-	exit(g_status);
+	exit(status);
 }
-

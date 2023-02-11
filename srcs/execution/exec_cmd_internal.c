@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:21:57 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 03:35:10 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 14:14:30 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	exec_internal_command(
 	int			status;
 
 	status = (*builtin_cmd)(process.argv, msh);
-	if (process.is_solo == false)
+	if (msh->is_child_process == true)
 		exit(status);
 	g_status = status;
 }

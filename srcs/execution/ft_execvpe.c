@@ -54,24 +54,6 @@ char	*get_environ_value(char *const envp[], char *key)
 }
 
 /**
- * @brief 実行可能なエラーかどうかを判定する。
- * @details EACEESS:アクセス権限がない, ENOENT:パスが存在しない, ESTALE:ファイルハンドルが古い,
- * ENOTDIR: ディレクトリではない, ENODEV: デバイスが存在しない, ETIMEDOUT: 操作がタイムアウトした
- * @return true　上記のエラーである場合
- * @return false 上記以外のエラーである場合
- */
-static bool	is_expected_error(bool *seen_eaccess)
-{
-	if (errno == EACCES)
-		*seen_eaccess = true;
-	if (errno == EACCES || errno == ENOENT
-		|| errno == ESTALE || errno == ENOTDIR
-		|| errno == ENODEV || errno == ETIMEDOUT)
-		return (true);
-	return (false);
-}
-
-/**
  * @brief 各PATHとファイル名を組み合わせてFull PATHを作成し、execveを実行する
  *
  * @param paths
@@ -106,27 +88,22 @@ int	try_executable_path(char **paths, const char *file, \
 	}
 	if (seen_eaccess == true)
 		errno = EACCES;
+	else
+		errno = 0;
 	return (-1);
 }
 
-bool exists_file(const char *path)
+int	exec_binary(const char *file, char *const argv[], char *const envp[])
 {
-	struct stat st;
-
-	if (stat(path, &st) != 0)
-		return (false);
-	return (S_ISREG(st.st_mode));
+	execve(file, argv, envp);
+	if (errno == ENOENT)
+		return (-1);
+	if (is_directory(file))
+		errno = EISDIR;
+	else if (!exists_file(file))
+		errno = ENOENT;
+	return (-1);
 }
-
-bool is_directory(const char *path)
-{
-	struct stat st;
-
-	if (stat(path, &st) != 0)
-		return (false);
-	return (S_ISDIR(st.st_mode));
-}
-
 
 /**
  * @brief execvpeの実装
@@ -148,20 +125,7 @@ int	ft_execvpe(const char *file, char *const argv[], char *const envp[])
 		return (-1);
 	}
 	if (ft_strchr(file, '/'))
-	{
-		execve(file, argv, envp);
-		if (is_directory(file))
-		{
-			errno = EISDIR;
-			return (-1);
-		}
-		else if (!exists_file(file))
-		{
-			shell_perror(argv[0], NULL);
-			exit(127);
-		}
-		return (execve(file, argv, envp));
-	}
+		return (exec_binary(file, argv, envp));
 	raw_path = get_environ_value(envp, "PATH=");
 	if (!raw_path)
 		return (-1);

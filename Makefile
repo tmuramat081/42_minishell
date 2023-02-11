@@ -48,6 +48,7 @@ SRCS := \
 	execution/exec_cmd_internal.c \
 	execution/exec_cmd_external.c \
 	execution/ft_execvpe.c \
+	execution/ft_execvpe_utils.c \
 	execution/exec_utils.c \
 	execution/redirect.c \
 	execution/process.c \

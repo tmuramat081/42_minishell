@@ -26,8 +26,7 @@ int	builtin_cd(char **args, t_shell *msh)
 		path = args[1];
 	if (chdir(path))
 	{
-		shell_perror(args[0], msh);
-		return (1);
+		shell_perror(args[0], msh, 1);
 	}
 	return (0);
 }

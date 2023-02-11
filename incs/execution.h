@@ -48,8 +48,14 @@ void	exec_external_command(t_process process, t_shell *msh);
 
 t_builtin_fn	search_builtin(t_process *process);
 char	**construct_environ(t_hashmap *map);
+
+
+/********** ft_execvpe **********/
 int		ft_execvpe(const char *file, char *const argv[], char *const envp[]);
 char	**convert_vector_to_array(t_vector *src);
+bool	is_expected_error(bool *seen_eaccess);
+bool	is_directory(const char *path);
+bool	exists_file(const char *path);
 
 /**********  Redirect **********/
 void	set_redirection(t_process process, t_shell *msh);

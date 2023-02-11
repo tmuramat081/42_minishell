@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:17:55 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 04:28:03 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 15:16:44 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@
 void	xclose(int fd)
 {
 	if (close(fd) < 0)
-	{
 		exit(EXIT_FAILURE);
-	}
 }
 
 int	xopen(const char *pathname, int flags, mode_t mode)
@@ -45,20 +43,20 @@ int	xopen(const char *pathname, int flags, mode_t mode)
  * @param redirect_type
  * @return int
  */
-static int	open_file(t_redirect redirect)
+static int	open_file(char *filename, t_node_type type)
 {
 	const int	file_mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 	int			fd;
 
 	fd = 0;
-	if (redirect.type & NODE_RDIR_OUTPUT)
-		fd = xopen(redirect.file, O_WRONLY | O_CREAT | O_TRUNC, file_mode);
-	else if (redirect.type & NODE_RDIR_APPEND)
-		fd = xopen(redirect.file, O_WRONLY | O_CREAT | O_APPEND, file_mode);
-	else if (redirect.type & NODE_RDIR_INPUT)
-		fd = xopen(redirect.file, O_RDONLY, 0);
-	else if (redirect.type & NODE_RDIR_HEREDOC)
-		fd = heredoc_redirect(redirect.file);
+	if (type & NODE_RDIR_OUTPUT)
+		fd = xopen(filename, O_WRONLY | O_CREAT | O_TRUNC, file_mode);
+	else if (type & NODE_RDIR_APPEND)
+		fd = xopen(filename, O_WRONLY | O_CREAT | O_APPEND, file_mode);
+	else if (type & NODE_RDIR_INPUT)
+		fd = xopen(filename, O_RDONLY, 0);
+	else if (type & NODE_RDIR_HEREDOC)
+		fd = heredoc_redirect(filename);
 	return (fd);
 }
 
@@ -69,6 +67,7 @@ static int	open_file(t_redirect redirect)
  */
 void	set_redirection(t_process process, t_shell *msh)
 {
+	extern	int	g_status;
 	int			old_fd;
 	int			new_fd;
 	t_redirect	*redirects;
@@ -78,9 +77,12 @@ void	set_redirection(t_process process, t_shell *msh)
 	redirects = process.redirects;
 	while (redirects)
 	{
-		old_fd = open_file(*redirects);
+		old_fd = open_file(redirects->file, redirects->type);
 		if (old_fd < 0)
-			shell_perror(redirects->file, msh);
+		{
+			shell_perror(redirects->file, msh, 1);
+			return ;
+		}
 		new_fd = redirects->fd;
 		xdup2(old_fd, new_fd);
 		xclose(old_fd);
