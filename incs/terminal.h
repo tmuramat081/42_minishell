@@ -46,7 +46,10 @@ void		put_banner(void);
 /*************  Signal ***********/
 void		set_ignore_signal(void);
 void		set_signal(int signal, void (*sighandler)(int));
+
+/*********** Error **********/
 void		shell_perror(const char *string, t_shell *msh, int status);
+void		maybe_exit(int status, t_shell *msh);
 
 //********** debug command ********/
 void		boot_minishell_dev(t_shell *msh);

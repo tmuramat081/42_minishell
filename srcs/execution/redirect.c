@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:17:55 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 15:16:44 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:30:55 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static int	open_file(char *filename, t_node_type type)
  */
 void	set_redirection(t_process process, t_shell *msh)
 {
-	extern	int	g_status;
 	int			old_fd;
 	int			new_fd;
 	t_redirect	*redirects;

@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:18:48 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 15:51:25 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:30:36 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 
 void	command_perror(char *command, t_shell *msh)
 {
+	extern int	g_status;
+
 	ft_putstr_fd("m-shell: ", STDERR_FILENO);
 	if (command)
 	{
@@ -29,7 +31,10 @@ void	command_perror(char *command, t_shell *msh)
 	}
 	ft_putstr_fd(MSG_CMD_NOT_FOUND, STDERR_FILENO);
 	if (msh && msh->is_child_process == false)
+	{
+		g_status = 127;
 		return ;
+	}
 	exit(127);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:06:28 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 14:21:46 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:45:08 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ void	exec_cmd_as_parent(t_process process, t_shell *msh, t_builtin_fn bi_cmd)
 	msh->is_child_process = false;
 	backup = dup(STDIN_FILENO);
 	set_redirection(process, msh);
+	if (errno)
+	{
+		xdup2(backup, STDIN_FILENO);
+		close(backup);
+		return ;
+	}
 	exec_internal_command(bi_cmd, process, msh);
 	xdup2(backup, STDIN_FILENO);
 	close(backup);

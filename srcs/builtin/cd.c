@@ -14,6 +14,19 @@
  */
 #include "execution.h"
 
+static void	cd_put_error(char *path, char *cmd, t_shell *msh)
+{
+	errno = ENOENT;
+
+	(void)msh;
+	ft_putstr_fd("m-shell: ", STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(path, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putendl_fd(MSG_NO_FILE_DIR, STDERR_FILENO);
+}
+
 int	builtin_cd(char **args, t_shell *msh)
 {
 	char	*path;
@@ -26,7 +39,8 @@ int	builtin_cd(char **args, t_shell *msh)
 		path = args[1];
 	if (chdir(path))
 	{
-		shell_perror(args[0], msh, 1);
+		cd_put_error(path, args[0], msh);
+		return (1);
 	}
 	return (0);
 }
