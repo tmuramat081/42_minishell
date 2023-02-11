@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 08:25:16 by event             #+#    #+#             */
-/*   Updated: 2023/01/24 23:56:37 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 22:38:53 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*ast_get_command_name(t_command *command)
 	return (command->arguments->argument);
 }
 
-size_t		ast_count_pipeline(t_ast_node *node)
+size_t	ast_count_pipeline(t_ast_node *node)
 {
 	size_t		count;
 	t_ast_node	*tmp_node;

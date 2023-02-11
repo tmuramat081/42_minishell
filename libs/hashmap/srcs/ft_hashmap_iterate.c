@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_hashmap_iterate.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <event@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 16:42:19 by kkohki            #+#    #+#             */
-/*   Updated: 2023/01/16 09:20:04 by event            ###   ########.fr       */
+/*   Updated: 2023/02/11 22:36:38 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_hashmap.h"
 
-int	ft_hashmap_iterate(t_hashmap *map, int(*f)(t_hashmap_data *, void *),
+int	ft_hashmap_iterate(t_hashmap *map, int (*f)(t_hashmap_data *, void *),
 	void *item)
 {
 	size_t			i;

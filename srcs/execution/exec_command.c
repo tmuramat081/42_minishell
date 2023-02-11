@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:06:28 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 18:13:08 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 22:29:48 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	**init_arguments(t_argument *arguments)
 
 void	exec_cmd_as_parent(t_process process, t_shell *msh, t_builtin_fn bi_cmd)
 {
-	int backup_in;
+	int	backup_in;
 	int	backup_out;
 
 	msh->is_child_process = false;

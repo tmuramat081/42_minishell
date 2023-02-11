@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/11 22:23:36 by tmuramat          #+#    #+#             */
+/*   Updated: 2023/02/11 22:23:50 by tmuramat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /**
  * @file exit.c
  * @brief ビルトイン - exitコマンド
@@ -35,7 +47,7 @@ static int	input_args(char **argv)
 
 int	builtin_exit(char **argv, t_shell *msh)
 {
-	size_t 		argc;
+	size_t		argc;
 	extern int	g_status;
 
 	(void)msh;
@@ -47,4 +59,3 @@ int	builtin_exit(char **argv, t_shell *msh)
 	exit (g_status & 0xFF);
 	return (0);
 }
-

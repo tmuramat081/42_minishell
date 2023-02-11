@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 19:15:08 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 21:41:39 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 22:51:59 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
  * @param curr
  * @return t_redirect* リダイレクトの管理情報
  */
-t_redirect	*parse_io_redirct(t_vector *tokens, t_token **curr)
+t_redirect	*parse_io_redirect(t_vector *tokens, t_token **curr)
 {
 	int		dir;
 	int		fd;

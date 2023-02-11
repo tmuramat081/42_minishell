@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_token.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/11 22:24:42 by tmuramat          #+#    #+#             */
+/*   Updated: 2023/02/11 22:24:53 by tmuramat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /**
  * @file print_token.c
  * @author tmuramat (tmuramat@student.42tokyo.jp)
@@ -13,7 +25,7 @@
 #include "parser.h"
 #include "ft_printf.h"
 
-char *get_type_name(t_token_type type)
+char	*get_type_name(t_token_type type)
 {
 	if (type & TOKEN_STR)
 		return ("[STRING]");
@@ -38,7 +50,7 @@ char *get_type_name(t_token_type type)
 
 static void	print_token(void *p_str, void *p_index)
 {
-	t_token *token;
+	t_token	*token;
 	int		*index;
 	char	*type;
 

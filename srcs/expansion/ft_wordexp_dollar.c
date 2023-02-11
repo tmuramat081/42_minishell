@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_wordexp_dollar.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/11 22:34:05 by tmuramat          #+#    #+#             */
+/*   Updated: 2023/02/11 22:34:16 by tmuramat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include "expansion.h"
 #include "libft.h"
 
@@ -32,7 +45,8 @@ static int	we_parse_special(char **buff, t_wordexp *wp, size_t *offset)
  */
 int	we_parse_dollar(char *words, char **buff, t_wordexp *wp, size_t *offset)
 {
-	if (words[*offset] == '"' || words[*offset] == '\0' || words[*offset] == ' ')
+	if (words[*offset] == '"' || words[*offset] == '\0'
+		|| words[*offset] == ' ')
 	{
 		*buff = we_addchar(*buff, wp, '$');
 		return (FTWRDE_SUCCESS);

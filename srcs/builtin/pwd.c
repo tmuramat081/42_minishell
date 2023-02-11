@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pwd.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/11 22:24:05 by tmuramat          #+#    #+#             */
+/*   Updated: 2023/02/11 22:24:07 by tmuramat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /**
  * @file pwd.c
  * @author tmuramat (tmuramat@student.42tokyo.jp)
@@ -8,6 +20,7 @@
  * @copyright Copyright (c) 2023
  *
  */
+
 #include "terminal.h"
 #include "ft_printf.h"
 #include "execution.h"
