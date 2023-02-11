@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:21:57 by event             #+#    #+#             */
-/*   Updated: 2023/02/08 01:51:47 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:26:37 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ t_builtin_fn	search_builtin(t_process *process)
 	while (g_builtins[i].symbol)
 	{
 		if (!ft_strcmp(process->argv[0], g_builtins[i].symbol))
-		{
 			return ((t_builtin_fn)g_builtins[i].func);
-		}
 		i++;
 	}
 	return (NULL);
@@ -66,14 +64,11 @@ t_builtin_fn	search_builtin(t_process *process)
  * @param msh シェルの管理情報
  * @return int 実行したコマンドの戻り値を返す。コマンドが見つからなければ1を返す。
  */
-void	exec_internal_command(t_builtin_fn builtin_cmd, \
-			t_process process, t_shell *msh)
+void	exec_internal_command(t_builtin_fn bltin_cmd, t_process process, \
+	t_shell *msh)
 {
-	extern int	g_status;
 	int			status;
 
-	status = (*builtin_cmd)(process.argv, msh);
-	if (process.is_solo == false)
-		exit(status);
-	g_status = status;
+	status = (*bltin_cmd)(process.argv, msh);
+	maybe_exit(status, msh);
 }

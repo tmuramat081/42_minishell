@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:17:55 by event             #+#    #+#             */
-/*   Updated: 2023/02/08 05:00:11 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:09:18 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-void	close_file(int fd)
-{
-	if (close(fd) < 0)
-		exit(EXIT_FAILURE);
-}
-
-int	xopen(const char *pathname, int flags, mode_t mode)
-{
-	int	fd;
-
-	if (mode)
-		fd = open(pathname, flags, mode);
-	else
-		fd = open(pathname, flags);
-	if (fd < 0)
-	{
-		handle_error(MSG_NO_FILE_DIR, (char *)pathname);
-		return (EXIT_FAILURE);
-	}
-	return (fd);
-}
 
 /**
  * @brief ファイルをオープンし、オープンしたfdの値を取得する。
@@ -47,20 +26,20 @@ int	xopen(const char *pathname, int flags, mode_t mode)
  * @param redirect_type
  * @return int
  */
-static int	open_file(t_redirect redirect)
+static int	open_file(char *filename, t_node_type type)
 {
 	const int	file_mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 	int			fd;
 
 	fd = 0;
-	if (redirect.type & NODE_RDIR_OUTPUT)
-		fd = open(redirect.file, O_WRONLY | O_CREAT | O_TRUNC, file_mode);
-	else if (redirect.type & NODE_RDIR_APPEND)
-		fd = open(redirect.file, O_WRONLY | O_CREAT | O_APPEND, file_mode);
-	else if (redirect.type & NODE_RDIR_INPUT)
-		fd = open(redirect.file, O_RDONLY);
-	else if (redirect.type & NODE_RDIR_HEREDOC)
-		fd = heredoc_redirect(redirect.file);
+	if (type & NODE_RDIR_OUTPUT)
+		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, file_mode);
+	else if (type & NODE_RDIR_APPEND)
+		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, file_mode);
+	else if (type & NODE_RDIR_INPUT)
+		fd = open(filename, O_RDONLY);
+	else if (type & NODE_RDIR_HEREDOC)
+		fd = heredoc_redirect(filename);
 	return (fd);
 }
 
@@ -69,32 +48,26 @@ static int	open_file(t_redirect redirect)
  * @details 新規にファイルを開き（open）、入力／出力先に指定（dup2）する。
  * @param process
  */
-int	set_redirection(t_process process)
+void	set_redirection(t_process process, t_shell *msh)
 {
 	int			old_fd;
 	int			new_fd;
 	t_redirect	*redirects;
 
+	if (ast_count_redirects(process.redirects) == 0)
+		return ;
 	redirects = process.redirects;
 	while (redirects)
 	{
-		old_fd = open_file(*redirects);
+		old_fd = open_file(redirects->file, redirects->type);
 		if (old_fd < 0)
 		{
-			if (errno == EACCES)
-				handle_error(MSG_PERMISSION_DENIED, redirects->file);
-			else
-				handle_error(MSG_NO_FILE_DIR, redirects->file);
-			return (-1);
+			shell_perror(redirects->file, msh, 1);
+			return ;
 		}
 		new_fd = redirects->fd;
-		if (dup2(old_fd, new_fd) < 0)
-		{
-			close_file(old_fd);
-			exit(EXIT_FAILURE);
-		}
-		close_file(old_fd);
+		xdup2(old_fd, new_fd);
+		xclose(old_fd);
 		redirects = redirects->next;
 	}
-	return (0);
 }

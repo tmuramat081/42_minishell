@@ -1,45 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process.c                                          :+:      :+:    :+:   */
+/*   io_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 01:24:01 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 12:53:37 by tmuramat         ###   ########.fr       */
+/*   Created: 2023/02/11 17:12:20 by tmuramat          #+#    #+#             */
+/*   Updated: 2023/02/11 17:46:29 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fcntl.h>
 #include "execution.h"
-#include "ft_printf.h"
-#include <signal.h>
 
-pid_t	create_child_process(void)
+void	xclose(int fd)
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid < 0)
+	if (close(fd) < 0)
 		exit(EXIT_FAILURE);
-	return (pid);
 }
 
-void	wait_all_child_processes(size_t cnt)
+void	xdup2(int old_fd, int new_fd)
 {
-	extern int	g_status;
-	int			status;
-
-	while (cnt--)
+	if (old_fd != new_fd)
 	{
-		waitpid(-1, &status, 0);
-		if (WIFEXITED(status))
-			g_status = WEXITSTATUS(status);
+		if (dup2(old_fd, new_fd) < 0)
+		{
+			xclose(old_fd);
+			exit(EXIT_FAILURE);
+		}
 	}
 }
 
-void	wait_child_process(pid_t pid)
+int	xdup(int old_fd)
 {
-	int	status;
+	int	new_fd;
 
-	waitpid(pid, &status, 0);
+	new_fd = dup(old_fd);
+	if (new_fd < 0)
+		exit(EXIT_FAILURE);
+	return (new_fd);
+}
+
+void	xpipe(int fds[2])
+{
+	if (pipe(fds) < 0)
+		exit(EXIT_FAILURE);
+}
+
+void	dup_and_close(int old_fd, int new_fd)
+{
+	xdup2(old_fd, new_fd);
+	xclose(old_fd);
 }

@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:06:28 by event             #+#    #+#             */
-/*   Updated: 2023/02/08 01:48:02 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:54:20 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	**init_arguments(t_argument *arguments)
 	size_t	i;
 	size_t	argc;
 
-	argc = ast_count_arguments(arguments);
+argc = ast_count_arguments(arguments);
 	argv = (char **)ft_xmalloc(sizeof(char *) * (argc + 1));
 	i = 0;
 	while (arguments)
@@ -43,41 +43,50 @@ static char	**init_arguments(t_argument *arguments)
 	return (argv);
 }
 
-void	exec_cmd_as_parent(t_process process, t_shell *msh, t_builtin_fn builtin_cmd)
-{
-	extern int g_status;
 
-	if (ast_count_redirects(process.redirects) > 0)
+void	exec_cmd_as_parent(t_process process, t_shell *msh, t_builtin_fn bi_cmd)
+{
+	int backup_in;
+	int	backup_out;
+
+	msh->is_child_process = false;
+	backup_in = xdup(STDIN_FILENO);
+	backup_out = xdup(STDOUT_FILENO);
+	set_redirection(process, msh);
+	if (errno)
 	{
-		if (set_redirection(process) == -1)
-		{
-			g_status = 1;
-			return ;
-		}
+		xdup2(backup_in, STDIN_FILENO);
+		xdup2(backup_out, STDOUT_FILENO);
+		xclose(backup_in);
+		xclose(backup_out);
+		return ;
 	}
-	exec_internal_command(builtin_cmd, process, msh);
+	exec_internal_command(bi_cmd, process, msh);
+	xdup2(backup_in, STDIN_FILENO);
+	xdup2(backup_out, STDOUT_FILENO);
+	xclose(backup_in);
+	xclose(backup_out);
 }
 
-void	exec_cmd_as_child(t_process process, t_shell *msh, t_pipe pipe, t_builtin_fn builtin_cmd)
+void	exec_cmd_as_child(t_process process, t_shell *msh, t_builtin_fn bltin_cmd)
 {
-	pid_t			pid;
-	extern int g_status;
+	pid_t		pid;
+	extern int	g_status;
 
+	msh->is_child_process = true;
 	pid = create_child_process();
 	if (pid == 0)
 	{
 		set_signal(SIGQUIT, SIG_DFL);
-		set_pipeline(pipe);
-		if (ast_count_redirects(process.redirects) > 0
-			&& set_redirection(process) < 0)
-		{
-			g_status = 1;
-			return ;
-		}
-		if (builtin_cmd)
-			exec_internal_command(builtin_cmd, process, msh);
+		set_signal(SIGTSTP, SIG_DFL);
+		set_pipeline(process.pipes);
+		set_redirection(process, msh);
+		if (bltin_cmd)
+			exec_internal_command(bltin_cmd, process, msh);
 		else
 			exec_external_command(process, msh);
+		delete_pipeline(process.pipes);
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -87,7 +96,7 @@ void	exec_cmd_as_child(t_process process, t_shell *msh, t_pipe pipe, t_builtin_f
  * @param node
  * @param msh
  */
-void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh, t_pipe pipe)
+void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh)
 {
 	t_builtin_fn	builtin_cmd;
 
@@ -99,6 +108,6 @@ void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh, t_pipe p
 	if (builtin_cmd && process.is_solo)
 		exec_cmd_as_parent(process, msh, builtin_cmd);
 	else
-		exec_cmd_as_child(process, msh, pipe, builtin_cmd);
+		exec_cmd_as_child(process, msh, builtin_cmd);
 	ft_free_matrix(&process.argv);
 }

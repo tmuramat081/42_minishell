@@ -1,7 +1,7 @@
 # Compile variables
 NAME := minishell
 NAME_DEV := minishell_dev
-CC := gcc
+CC := gcc -g
 CFLAGS := -Wall -Wextra -Werror -MMD -MP -I $(shell brew --prefix readline)/include
 LDFLAGS := -lreadline -lhistory -L$(shell brew --prefix readline)/lib
 ifdef FOR_DEBUG
@@ -48,11 +48,13 @@ SRCS := \
 	execution/exec_cmd_internal.c \
 	execution/exec_cmd_external.c \
 	execution/ft_execvpe.c \
+	execution/ft_execvpe_utils.c \
 	execution/exec_utils.c \
 	execution/redirect.c \
 	execution/process.c \
 	execution/heredoc.c \
 	execution/pipeline.c \
+	execution/io_utils.c \
 	builtin/export.c \
 	builtin/unset.c \
 	builtin/echo.c \

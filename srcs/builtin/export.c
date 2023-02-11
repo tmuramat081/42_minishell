@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/06 01:16:30 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 05:09:02 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@
 #include "ft_pqueue.h"
 #include "ft_hashmap.h"
 
+/**
+ * @brief ヒープソート用の比較関数。
+ *
+ * @param p_data1
+ * @param p_data2
+ * @return int
+ */
 static int	compare_key(const void *p_data1, const void *p_data2)
 {
 	const t_env	*env1 = p_data1;
@@ -41,7 +48,7 @@ static int	compare_key(const void *p_data1, const void *p_data2)
 }
 
 /**
- * @brief ハッシュテーブルの値を優先度付きキューに格納する
+ * @brief ハッシュテーブルの値を優先度付きキューに格納する。
  *
  *
 */
@@ -61,7 +68,7 @@ static int	set_priority_queue(t_hashmap_data *hash_data, void *p_pqueue)
 }
 
 /**
- * @brief ASCII順にソートされた環境変数を一覧表示する。
+ * @brief 環境変数ASCII順にを一覧表示する。
  *
  * @param envs
  */
@@ -87,13 +94,22 @@ static int		print_sorted_envs(t_hashmap *envs)
 	return (0);
 }
 
+static void	put_error(char *message, char *arg)
+{
+	ft_putstr_fd("export: ", STDERR_FILENO);
+	if (arg)
+		ft_putstr_fd(arg, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putendl_fd(message, STDERR_FILENO);
+}
+
 /**
- * @brief 文字列の配列を環境変数に追加する。
+ * @brief 文字列の配列を環境変数テーブルに追加する。
  *
  * @param args
  * @param map
  */
-static int	insert_env(char **args, t_hashmap *environs)
+static int	insert_envs(char **args, t_shell *msh)
 {
 	size_t	i;
 	t_env	new_env;
@@ -104,10 +120,10 @@ static int	insert_env(char **args, t_hashmap *environs)
 		new_env = parse_environ(args[i]);
 		if (!new_env.key || !new_env.value)
 		{
-			handle_error(MSG_NOT_VALID_ID, args[0]);
+			put_error(MSG_NOT_VALID_ID, args[i]);
 			return (1);
 		}
-		ft_hashmap_insert(environs, new_env.key, new_env.value);
+		ft_hashmap_insert(msh->envs, new_env.key, new_env.value);
 		i++;
 	}
 	return (0);
@@ -127,5 +143,5 @@ int	builtin_export(char **args, t_shell *msh)
 	argc = ft_matrixlen((const char **)args);
 	if (argc == 1)
 		return (print_sorted_envs(msh->envs));
-	return (insert_env(&args[0], msh->envs));
+	return (insert_envs(&args[0], msh));
 }

@@ -23,6 +23,7 @@ typedef struct s_shell {
 	t_hashmap	*envs;
 	char		*prompt;
 	int			exit_status;
+	int			is_child_process;
 }	t_shell;
 
 /************* terinal ***************/
@@ -36,7 +37,7 @@ void		sort_environs(t_env *env);
 char		*ft_getenv(const char *key, t_hashmap *envs);
 int			ft_setenv(t_env *env, t_hashmap *envs, int overwrite);
 int			ft_unsetenv(const char *key, t_hashmap *envs);
-int	ft_putenv(t_env *env, t_hashmap *envs);
+int			ft_putenv(t_env *env, t_hashmap *envs);
 
 /*************  Prompt ***************/
 char		*get_prompt(void);
@@ -44,8 +45,11 @@ void		put_banner(void);
 
 /*************  Signal ***********/
 void		set_ignore_signal(void);
-void		set_signal(int signal, void(*sighandler)(int));
-void		handle_error(char *message, char *command);
+void		set_signal(int signal, void (*sighandler)(int));
+
+/*********** Error **********/
+void		shell_perror(const char *string, t_shell *msh, int status);
+void		maybe_exit(int status, t_shell *msh);
 
 //********** debug command ********/
 void		boot_minishell_dev(t_shell *msh);
