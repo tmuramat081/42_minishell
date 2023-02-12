@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:06:28 by event             #+#    #+#             */
-/*   Updated: 2023/02/12 13:13:23 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 17:18:16 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,11 @@ void	exec_cmd_as_child(t_process process, t_shell *msh, \
 void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh)
 {
 	t_builtin_fn	builtin_cmd;
+	extern int		g_status;
 
-	if (!node)
+	if (!node || !*(ast_get_command_name(node->command)))
 		return ;
+	g_status = 0;
 	process.argv = init_arguments(node->command->arguments);
 	process.redirects = node->command->redirects;
 	builtin_cmd = search_builtin(&process);
