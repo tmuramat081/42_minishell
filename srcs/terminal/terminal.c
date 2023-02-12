@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/11 21:34:13 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:31:35 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	free_buffers(char *line, t_vector *tokens, t_ast_node *tree)
  *
  * @param msh　シェルの管理情報
  */
-void	boot_minishell(t_shell	*msh)
+void	terminal(t_shell	*msh)
 {
 	char		*line;
 	t_vector	*lexed_tokens;
@@ -86,7 +86,7 @@ void	boot_minishell(t_shell	*msh)
  *
  * @param msh　シェルの管理情報
  */
-void	boot_minishell_dev(t_shell	*msh)
+void	terminal_dev(t_shell	*msh)
 {
 	char		*line;
 	t_vector	*lexed_tokens;

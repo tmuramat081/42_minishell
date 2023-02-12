@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:59:01 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/11 21:32:48 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:29:04 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ int	main(void)
 	t_shell	*msh;
 
 	msh = init_minishell();
-//	put_banner();
+	put_banner();
 	if (DEBUG)
-		boot_minishell_dev(msh);
+		terminal_dev(msh);
 	else
-		boot_minishell(msh);
+		terminal(msh);
 	return (0);
 }

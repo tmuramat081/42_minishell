@@ -6,10 +6,9 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 22:34:05 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/11 22:34:16 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 14:42:14 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "expansion.h"
 #include "libft.h"
@@ -25,13 +24,13 @@ static char	*get_exit_status(void)
 	return (exit_status);
 }
 
-static int	we_parse_special(char **buff, t_wordexp *wp, size_t *offset)
+static int	we_parse_special(t_wordexp *we, size_t *offset)
 {
 	char	*exit_status;
 
 	++*offset;
 	exit_status = get_exit_status();
-	*buff = we_addstr(*buff, wp, exit_status);
+	we_addstr(we, exit_status);
 	free(exit_status);
 	return (FTWRDE_SUCCESS);
 }
@@ -43,21 +42,17 @@ static int	we_parse_special(char **buff, t_wordexp *wp, size_t *offset)
  * @param offset
  * @param environ
  */
-int	we_parse_dollar(char *words, char **buff, t_wordexp *wp, size_t *offset)
+int	we_parse_dollar(char *words, t_wordexp *we, size_t *offset)
 {
 	if (words[*offset] == '"' || words[*offset] == '\0'
 		|| words[*offset] == ' ')
 	{
-		*buff = we_addchar(*buff, wp, '$');
+		we_addchar(we, '$');
 		return (FTWRDE_SUCCESS);
 	}
 	else if (words[*offset] == '?')
-	{
-		return (we_parse_special(buff, wp, offset));
-	}
+		return (we_parse_special(we, offset));
 	else
-	{
-		return (we_parse_params(words, buff, wp, offset));
-	}
+		return (we_parse_params(words, we, offset));
 	return (FTWRDE_SUCCESS);
 }

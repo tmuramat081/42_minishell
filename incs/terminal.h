@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 22:21:57 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/11 22:22:00 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:29:53 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_shell {
 
 /************* terinal ***************/
 t_shell		*init_minishell(void);
-void		boot_minishell(t_shell *msh);
+void		terminal(t_shell *msh);
 
 /******* Environent variables ********/
 t_hashmap	*init_environ(void);
@@ -62,9 +62,10 @@ void		set_signal(int signal, void (*sighandler)(int));
 /*********** Error **********/
 void		shell_perror(const char *string, t_shell *msh, int status);
 void		maybe_exit(int status, t_shell *msh);
+void		builtin_perror(char *string, char *arg, char *cmd, t_shell *msh);
 
 //********** debug command ********/
-void		boot_minishell_dev(t_shell *msh);
+void		terminal_dev(t_shell *msh);
 void		print_tokens(t_vector *tokens);
 void		print_nodes(t_ast_node *node);
 void		print_commands(t_ast_node *node);

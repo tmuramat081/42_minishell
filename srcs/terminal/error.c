@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 20:28:02 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/11 20:29:54 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:21:54 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,34 @@
  */
 
 #include "terminal.h"
+
+/**
+ * @brief ビルトイン用エラーハンドラー
+ *
+ * @param message
+ * @param arg
+ * @param cmd
+ */
+void	builtin_perror(char *string, char *arg, char *cmd, t_shell *msh)
+{
+	if (msh)
+	{
+		ft_putstr_fd("m-shell", STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+	}
+	if (cmd)
+	{
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+	}
+	if (string)
+	{
+		ft_putstr_fd(arg, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+	}
+	if (arg)
+		ft_putendl_fd(string, STDERR_FILENO);
+}
 
 /**
  * @brief プロセスを正しい方法で終了する。

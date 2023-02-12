@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 20:14:45 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/11 20:18:28 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:27:31 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,13 @@
  */
 void	put_banner(void)
 {
+	char	banner[BUFSIZ];
+
 	if (DEBUG)
-		ft_printf("%s%s%s\n", RED, BANNER_DEV, DEFAULT);
+		ft_snprintf(banner, BUFSIZ, "%s%s%s", RED, BANNER_DEV, DEFAULT);
 	else
-		ft_printf("%s\n", BANNER);
+		ft_snprintf(banner, BUFSIZ, "%s", BANNER);
+	ft_putendl_fd(banner, STDERR_FILENO);
 }
 
 /**

@@ -6,13 +6,9 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 22:22:46 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/11 22:22:58 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:20:13 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-#include "ft_hashmap.h"
-#include "terminal.h"
 
 /**
  * @file cd.c
@@ -24,19 +20,10 @@
  * @copyright Copyright (c) 2023
  *
  */
-#include "execution.h"
 
-static void	cd_put_error(char *path, char *cmd, t_shell *msh)
-{
-	errno = ENOENT;
-	(void)msh;
-	ft_putstr_fd("m-shell: ", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putstr_fd(path, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putendl_fd(MSG_NO_FILE_DIR, STDERR_FILENO);
-}
+#include "execution.h"
+#include "ft_hashmap.h"
+#include "terminal.h"
 
 int	builtin_cd(char **args, t_shell *msh)
 {
@@ -50,7 +37,8 @@ int	builtin_cd(char **args, t_shell *msh)
 		path = args[1];
 	if (chdir(path))
 	{
-		cd_put_error(path, args[0], msh);
+		errno = ENOENT;
+		builtin_perror(MSG_NO_FILE_DIR, path, args[0], msh);
 		return (1);
 	}
 	return (0);

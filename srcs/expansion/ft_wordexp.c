@@ -6,15 +6,22 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 22:34:43 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/11 22:34:45 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 14:40:12 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/**
+ * @file ft_wordexp.c
+ * @brief
+ * @date 2023-02-12
+ */
 
 #include "expansion.h"
 #include "libft.h"
 
 /**
  * @brief シェルの文法に従って文字列を展開する。
+ *
  * @detail 環境変数の展開のみ実装
  * @param word　展開元となる文字列
  * @param buff 展開された文字列が格納されるアドレス
@@ -24,27 +31,28 @@
 int	ft_wordexp(char *words, char **buff, t_hashmap *environs)
 {
 	size_t		offset;
-	t_wordexp	wp;
+	t_wordexp	we;
 
-	wp = we_newword(environs);
+	we = we_newword(buff, environs);
 	offset = 0;
 	while (words[offset])
 	{
 		if (words[offset] == '$')
 		{
 			++offset;
-			we_parse_dollar(words, buff, &wp, &offset);
+			we_parse_dollar(words, &we, &offset);
 		}
 		else if (words[offset] == '\'' || words[offset] == '"')
 		{
 			++offset;
-			we_parse_quote(words, buff, &wp, &offset);
+			we_parse_quote(words, &we, &offset);
 		}
 		else
 		{
-			*buff = we_addchar(*buff, &wp, words[offset]);
+			we_addchar(&we, words[offset]);
 			++offset;
 		}
 	}
+	*buff = *we.buff;
 	return (FTWRDE_SUCCESS);
 }
