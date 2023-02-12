@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:06:28 by event             #+#    #+#             */
-/*   Updated: 2023/02/12 17:18:16 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/13 01:58:45 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,28 +43,28 @@ static char	**init_arguments(t_argument *arguments)
 	return (argv);
 }
 
+void	backup_default_fds(int *fd)
+{
+	fd[0] = xdup(STDIN_FILENO);
+	fd[1] = xdup(STDOUT_FILENO);
+}
+
 void	exec_cmd_as_parent(t_process process, t_shell *msh, t_builtin_fn bi_cmd)
 {
-	int	backup_in;
-	int	backup_out;
+	int	tmp_fds[2];
 
 	msh->is_child_process = false;
-	backup_in = xdup(STDIN_FILENO);
-	backup_out = xdup(STDOUT_FILENO);
+	backup_default_fds(tmp_fds);
 	set_redirection(process, msh);
 	if (errno)
 	{
-		xdup2(backup_in, STDIN_FILENO);
-		xdup2(backup_out, STDOUT_FILENO);
-		xclose(backup_in);
-		xclose(backup_out);
+		dup_and_close(tmp_fds[0], STDIN_FILENO);
+		dup_and_close(tmp_fds[1], STDOUT_FILENO);
 		return ;
 	}
 	exec_internal_command(bi_cmd, process, msh);
-	xdup2(backup_in, STDIN_FILENO);
-	xdup2(backup_out, STDOUT_FILENO);
-	xclose(backup_in);
-	xclose(backup_out);
+	dup_and_close(tmp_fds[0], STDIN_FILENO);
+	dup_and_close(tmp_fds[1], STDOUT_FILENO);
 }
 
 void	exec_cmd_as_child(t_process process, t_shell *msh, \
@@ -77,8 +77,7 @@ void	exec_cmd_as_child(t_process process, t_shell *msh, \
 	pid = create_child_process();
 	if (pid == 0)
 	{
-		set_signal(SIGQUIT, SIG_DFL);
-		set_signal(SIGTSTP, SIG_DFL);
+		reset_signals();
 		set_pipeline(process.pipes);
 		set_redirection(process, msh);
 		if (bltin_cmd)
@@ -86,7 +85,6 @@ void	exec_cmd_as_child(t_process process, t_shell *msh, \
 		else
 			exec_external_command(process, msh);
 		delete_pipeline(process.pipes);
-		exit(EXIT_FAILURE);
 	}
 }
 
@@ -101,7 +99,7 @@ void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh)
 	t_builtin_fn	builtin_cmd;
 	extern int		g_status;
 
-	if (!node || !*(ast_get_command_name(node->command)))
+	if (!node)
 		return ;
 	g_status = 0;
 	process.argv = init_arguments(node->command->arguments);

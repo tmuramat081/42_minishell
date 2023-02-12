@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:18:48 by event             #+#    #+#             */
-/*   Updated: 2023/02/13 00:41:06 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/13 01:43:09 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,10 @@ void	command_perror(char *command, t_shell *msh)
 void	exec_external_command(t_process process, t_shell *msh)
 {
 	extern int	g_status;
-	char		*cmd_name;
 
 	if (!process.argv || !process.argv[0])
 		exit(EXIT_SUCCESS);
-	cmd_name = process.argv[0];
+	perror(NULL);
 	ft_execvpe(process.argv[0], process.argv, construct_environ(msh->envs));
 	if (errno == EISDIR || errno == EACCES)
 		shell_perror(process.argv[0], msh, 126);

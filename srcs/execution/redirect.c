@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:17:55 by event             #+#    #+#             */
-/*   Updated: 2023/02/13 00:39:33 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/13 02:40:44 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	set_redirection(t_process process, t_shell *msh)
 			return ;
 		}
 		new_fd = redirects->fd;
-		dup_and_close(old_fd, new_fd);
 		redirects = redirects->next;
 	}
 }

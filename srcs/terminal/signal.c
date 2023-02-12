@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 21:33:43 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/12 23:32:54 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/13 01:31:05 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,5 @@ void	set_ignore_signal(void)
 	set_signal(SIGINT, ignore_sighandler);
 	set_signal(SIGQUIT, SIG_IGN);
 	set_signal(SIGTSTP, SIG_IGN);
+	set_signal(SIGPIPE, SIG_IGN);
 }
