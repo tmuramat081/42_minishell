@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/12 15:31:35 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 21:48:40 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ void	terminal(t_shell	*msh)
 	t_vector	*lexed_tokens;
 	t_ast_node	*syntax_tree;
 
+	set_ignore_signal();
 	line = NULL;
 	while (true)
 	{
-		set_ignore_signal();
 		line = readline(msh->prompt);
 		if (!line)
 			break ;

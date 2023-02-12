@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 22:23:36 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/11 22:23:50 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 17:31:23 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	builtin_exit(char **argv, t_shell *msh)
 		put_error(MSG_TOO_MANY_ARGS, 1);
 	if (argc == 2)
 		exit(input_args(argv));
-	exit (g_status & 0xFF);
+	ft_putendl_fd("exit", STDERR_FILENO);
+	exit(g_status & 0xFF);
 	return (0);
 }

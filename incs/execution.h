@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 22:19:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/12 13:37:12 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 22:08:39 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ int				xdup(int new_fd);
 void			xdup2(int old_fd, int new_fd);
 void			xclose(int fd);
 void			xpipe(int fds[2]);
+void			dup_and_close(int old_fd, int new_fd);
 
 #endif

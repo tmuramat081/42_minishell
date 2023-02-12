@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:02:45 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 04:39:14 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 23:44:15 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ void	exec_pipeline(t_ast_node *node, t_process process, t_shell *msh)
 	process.pipes = init_pipeline(cnt);
 	_do_pipes(node, process, msh);
 	delete_pipeline(process.pipes);
-	wait_all_child_processes(cnt);
+	if (msh->is_child_process == true)
+		wait_all_child_processes(cnt);
 }

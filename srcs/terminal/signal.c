@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 21:33:43 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/11 21:33:47 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 23:32:54 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,13 @@ void	set_signal(int signal, void (*sighandler)(int))
 	sa.sa_handler = sighandler;
 	if (sigaction(signal, &sa, NULL) < 0)
 		exit(EXIT_FAILURE);
+}
+
+void	reset_signals(void)
+{
+	set_signal(SIGINT, SIG_DFL);
+	set_signal(SIGQUIT, SIG_DFL);
+	set_signal(SIGTSTP, SIG_DFL);
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 22:21:57 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/12 15:29:53 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 22:04:38 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void		put_banner(void);
 /*************  Signal ***********/
 void		set_ignore_signal(void);
 void		set_signal(int signal, void (*sighandler)(int));
+void		reset_signals(void);
 
 /*********** Error **********/
 void		shell_perror(const char *string, t_shell *msh, int status);
