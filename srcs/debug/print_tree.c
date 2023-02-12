@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 22:25:01 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/11 22:27:09 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 14:51:53 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,6 @@ void	print_node_command(t_command *command)
 	}
 }
 
-void	print_indent(int depth)
-{
-	while (depth--)
-		ft_printf("%s", INDENT);
-}
-
 void	print_node(t_ast_node *node)
 {
 	ft_printf("-");
@@ -91,7 +85,8 @@ void	print_nodes_rec(t_ast_node *node, int depth)
 	if (!node)
 		return ;
 	print_nodes_rec(node->left, depth + 1);
-	print_indent(depth);
+	while (depth--)
+		ft_printf("%s", INDENT);
 	print_node(node);
 	print_nodes_rec(node->right, depth + 1);
 }

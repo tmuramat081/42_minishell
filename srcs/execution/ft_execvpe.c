@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:14:38 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 20:32:45 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 14:51:07 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	try_executable_path(char **paths, const char *file, \
 			char *const argv[], char *const envp[])
 {
 	size_t	i;
-	char	*buffer;
+	char	*buff;
 	size_t	path_len;
 	size_t	file_len;
 	bool	seen_eaccess;
@@ -76,14 +76,12 @@ int	try_executable_path(char **paths, const char *file, \
 	while (paths[i])
 	{
 		path_len = ft_strlen(paths[i]);
-		buffer = (char *)ft_xmalloc(sizeof(char) * \
-					(file_len + path_len + 1 + 1));
-		ft_snprintf(buffer, file_len + path_len + 1 + 1, \
-					"%s/%s", paths[i], file);
-		execve(buffer, argv, envp);
+		buff = ft_xmalloc(sizeof(char) * (file_len + path_len + 1 + 1));
+		ft_snprintf(buff, file_len + path_len + 1 + 1, "%s/%s", paths[i], file);
+		execve(buff, argv, envp);
 		if (!is_expected_error(&seen_eaccess))
 			return (-1);
-		free(buffer);
+		free(buff);
 		i++;
 	}
 	if (seen_eaccess == true)

@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 08:58:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/11 22:23:57 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:21:23 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
  * @copyright Copyright (c) 2023
  *
  */
+
 #include "terminal.h"
 #include "ft_printf.h"
 #include "libft.h"
@@ -68,11 +69,11 @@ static int	set_priority_queue(t_hashmap_data *hash_data, void *p_pqueue)
 }
 
 /**
- * @brief 環境変数ASCII順にを一覧表示する。
+ * @brief 環境変数をASCII順に一覧表示する。
  *
  * @param envs
  */
-static int		print_sorted_envs(t_hashmap *envs)
+static int	print_sorted_envs(t_hashmap *envs)
 {
 	t_pqueue	*pqueue;
 	t_env		*env;
@@ -94,15 +95,6 @@ static int		print_sorted_envs(t_hashmap *envs)
 	return (0);
 }
 
-static void	put_error(char *message, char *arg)
-{
-	ft_putstr_fd("export: ", STDERR_FILENO);
-	if (arg)
-		ft_putstr_fd(arg, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putendl_fd(message, STDERR_FILENO);
-}
-
 /**
  * @brief 文字列の配列を環境変数テーブルに追加する。
  *
@@ -120,7 +112,7 @@ static int	insert_envs(char **args, t_shell *msh)
 		new_env = parse_environ(args[i]);
 		if (!new_env.key || !new_env.value)
 		{
-			put_error(MSG_NOT_VALID_ID, args[i]);
+			builtin_perror(MSG_NOT_VALID_ID, args[i], args[0], msh);
 			return (1);
 		}
 		ft_hashmap_insert(msh->envs, new_env.key, new_env.value);

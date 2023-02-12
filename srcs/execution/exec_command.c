@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:06:28 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 22:29:48 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 13:13:23 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ static char	**init_arguments(t_argument *arguments)
 	return (argv);
 }
 
-
-
 void	exec_cmd_as_parent(t_process process, t_shell *msh, t_builtin_fn bi_cmd)
 {
 	int	backup_in;
@@ -69,7 +67,8 @@ void	exec_cmd_as_parent(t_process process, t_shell *msh, t_builtin_fn bi_cmd)
 	xclose(backup_out);
 }
 
-void	exec_cmd_as_child(t_process process, t_shell *msh, t_builtin_fn bltin_cmd)
+void	exec_cmd_as_child(t_process process, t_shell *msh, \
+	t_builtin_fn bltin_cmd)
 {
 	pid_t		pid;
 	extern int	g_status;

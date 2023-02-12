@@ -6,10 +6,9 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 22:19:26 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/11 22:32:48 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 14:34:57 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef EXPANSION_H
 # define EXPANSION_H
@@ -21,10 +20,11 @@
 # define FTWRDE_NOSPACE 4
 # define FTWRDE_SYNTAX 5
 
-#include "libast.h"
-#include "terminal.h"
+# include "libast.h"
+# include "terminal.h"
 
 typedef struct s_wordexp {
+	char		**buff;
 	size_t		act_len;
 	size_t		max_len;
 	t_hashmap	*envs;
@@ -35,13 +35,13 @@ void		expand_environs(t_command *command, t_hashmap *environ);
 void		expand_heredoc(t_command *command);
 
 int			ft_wordexp(char *words, char **buff, t_hashmap *environ);
-int			we_parse_dollar(char *words, char **buff, t_wordexp *wp, size_t *offset);
-int			we_parse_quote(char *words, char **buff, t_wordexp *wp, size_t *offset);
-int			we_parse_params(char *words, char **buff, t_wordexp *wp, size_t *offset);
+int			we_parse_dollar(char *words, t_wordexp *wp, size_t *offset);
+int			we_parse_quote(char *words, t_wordexp *wp, size_t *offset);
+int			we_parse_params(char *words, t_wordexp *wp, size_t *offset);
 
-t_wordexp	we_newword(t_hashmap *environs);
-char		*we_addstr(char *buff, t_wordexp *wp, const char *str);
-char		*we_addchar(char *buff, t_wordexp *wp, char ch);
+t_wordexp	we_newword(char **buff, t_hashmap *environs);
+void		we_addstr(t_wordexp *wp, const char *str);
+void		we_addchar(t_wordexp *wp, char ch);
 
 char		*heredoc_read(char *here_end);
 int			heredoc_redirect(char *here_end);

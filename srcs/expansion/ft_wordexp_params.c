@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_wordexp_params.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/12 14:47:48 by tmuramat          #+#    #+#             */
+/*   Updated: 2023/02/12 14:49:15 by tmuramat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "expansion.h"
 
 /**
@@ -16,15 +28,16 @@ static char	*search_environment(char *key, t_hashmap *environ)
 	return (value);
 }
 
-static int we_envsubst(char *words, char **buff, t_wordexp *wp, size_t var_start, size_t var_end)
+static int	we_envsubst(char *words, t_wordexp *wp, size_t var_start, \
+	size_t var_end)
 {
 	char	*var;
 	char	*env;
 
 	var = ft_substr(words, var_start, var_end - var_start);
 	env = search_environment(var, wp->envs);
-	*buff = we_addstr(*buff, wp, env);
-	if (!*buff)
+	we_addstr(wp, env);
+	if (!*wp->buff)
 		return (FTWRDE_NOSPACE);
 	free(var);
 	return (FTWRDE_SUCCESS);
@@ -69,7 +82,7 @@ static void	forward_to_var_end(char *words, size_t *offset)
 	}
 }
 
-int	we_parse_params(char *words, char **buff, t_wordexp *wp, size_t *offset)
+int	we_parse_params(char *words, t_wordexp *wp, size_t *offset)
 {
 	size_t	var_start;
 	size_t	var_end;
@@ -82,7 +95,7 @@ int	we_parse_params(char *words, char **buff, t_wordexp *wp, size_t *offset)
 		forward_to_var_end(words, offset);
 		var_end = *offset;
 		if (is_valid_syntax(words, var_start, offset))
-			we_envsubst(words, buff, wp, var_start, var_end);
+			we_envsubst(words, wp, var_start, var_end);
 		else
 			return (FTWRDE_SYNTAX);
 	}
