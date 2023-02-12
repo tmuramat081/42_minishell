@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:17:55 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 17:09:18 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 22:30:05 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include "ft_printf.h"
 #include <unistd.h>
 #include <fcntl.h>
-
 
 /**
  * @brief ファイルをオープンし、オープンしたfdの値を取得する。

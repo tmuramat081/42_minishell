@@ -1,12 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/11 21:33:43 by tmuramat          #+#    #+#             */
+/*   Updated: 2023/02/11 21:33:47 by tmuramat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /**
  * @file signal.c
- * @author tmuramat (tmuramat@student.42tokyo.jp)
- * @brief シグナルハンドリングの設定
- * @version 0.1
+ * @brief シグナルハンドラーの設定
  * @date 2023-01-01
- *
- * @copyright Copyright (c) 2023
- *
  */
 
 #include <terminal.h>
@@ -16,9 +23,14 @@
 #include <unistd.h>
 #include <sys/ioctl.h>
 
-void	ignore_sighandler(int sig)
+/**
+ * @brief SIGINT用シグナルハンドラー
+ * @detail READLINEに対する文字出力を抑え、改行する。
+ * @param signal 設定対象のシグナル
+ */
+void	ignore_sighandler(int signal)
 {
-	if (sig == SIGINT)
+	if (signal == SIGINT)
 	{
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_replace_line("", 0);
@@ -26,6 +38,12 @@ void	ignore_sighandler(int sig)
 	}
 }
 
+/**
+ * @brief 対象のシグナルにシグナルハンドラーを設定する。
+ *
+ * @param signal 設定対象のシグナル
+ * @param sighandler　設定するシグナルハンドラー
+ */
 void	set_signal(int signal, void (*sighandler)(int))
 {
 	struct sigaction	sa;
@@ -39,12 +57,10 @@ void	set_signal(int signal, void (*sighandler)(int))
 }
 
 /**
-* @file ignore_signal.c
-* @brief SIGINT, SIGQUITのシグナルを無効化する
-* @author tmuramat
-* @date 2022.12.30
-*/
-void set_ignore_signal(void)
+ * @brief SIGINT, SIGSTOP, SIGQUITのシグナルを無効化する。
+ * @detail SIGINTのみ別途シグナルハンドラーを設定する。
+ */
+void	set_ignore_signal(void)
 {
 	set_signal(SIGINT, ignore_sighandler);
 	set_signal(SIGQUIT, SIG_IGN);

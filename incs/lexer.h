@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/11 22:19:44 by tmuramat          #+#    #+#             */
+/*   Updated: 2023/02/11 22:21:37 by tmuramat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LEXER_H
 # define LEXER_H
 
-#include <stdbool.h>
-#include "ft_vector.h"
+# include <stdbool.h>
+# include "ft_vector.h"
 
-typedef struct s_tokenizer t_tokenizer;
-typedef void *(* t_state_fn)(t_tokenizer *);
+typedef struct s_tokenizer	t_tokenizer;
+typedef void				*(*t_state_fn)(t_tokenizer *);
 
 struct s_tokenizer {
 	char		*str;
@@ -26,10 +38,8 @@ typedef enum e_token_type {
 	TOKEN_AMPERSAND = (1 << 6),
 	TOKEN_SEMICOLON = (1 << 7),
 	TOKEN_END = (1 << 8),
-	TOKEN_RDIR = TOKEN_RDIR_INPUT
-				| TOKEN_RDIR_OUTPUT
-				| TOKEN_RDIR_APPEND
-				| TOKEN_RDIR_HEREDOC,
+	TOKEN_RDIR = TOKEN_RDIR_INPUT | TOKEN_RDIR_OUTPUT \
+				| TOKEN_RDIR_APPEND | TOKEN_RDIR_HEREDOC,
 	TOKEN_ALL = ~0,
 }	t_token_type;
 

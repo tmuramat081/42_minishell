@@ -1,18 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/11 22:19:18 by tmuramat          #+#    #+#             */
+/*   Updated: 2023/02/11 22:31:52 by tmuramat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #ifndef EXECUTION_H
 # define EXECUTION_H
+
+# define PIPE_STDIN	0x1
+# define PIPE_STDOUT 0x2
 
 # include "terminal.h"
 # include "libast.h"
 # include "ft_hashmap.h"
 # include "ft_vector.h"
 
-# define PIPE_STDIN (1 << 0)
-# define PIPE_STDOUT (1 << 1)
-
-typedef int (*t_builtin_fn)(char **, t_shell *);
+typedef int	(*t_builtin_fn)(char **, t_shell *);
 
 typedef struct s_builtin {
-	char 			*symbol;
+	char			*symbol;
 	t_builtin_fn	func;
 }	t_builtin;
 
@@ -43,7 +56,8 @@ void	executor(t_ast_node *syntax_tree, t_shell *msh);
 void	exec_command_line(t_ast_node *node, t_process process, t_shell *msh);
 void	exec_pipeline(t_ast_node *node, t_process process, t_shell *msh);
 void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh);
-void	exec_internal_command(t_builtin_fn builtin_cmd, t_process process, t_shell *msh);
+void	exec_internal_command(t_builtin_fn builtin_cmd, t_process process, \
+			t_shell *msh);
 void	exec_external_command(t_process process, t_shell *msh);
 
 t_builtin_fn	search_builtin(t_process *process);

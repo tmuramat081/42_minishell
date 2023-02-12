@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_command.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/11 22:24:19 by tmuramat          #+#    #+#             */
+/*   Updated: 2023/02/11 22:24:25 by tmuramat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "terminal.h"
 #include "ft_printf.h"
 
-static void dbg_print_arguments(t_ast_node *node)
+static void	dbg_print_arguments(t_ast_node *node)
 {
 	t_argument	*curr;
 

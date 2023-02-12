@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_tree.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/11 22:25:01 by tmuramat          #+#    #+#             */
+/*   Updated: 2023/02/11 22:27:09 by tmuramat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /**
  * @file print_tree.c
  * @author tmuramat (tmuramat@student.42tokyo.jp)
@@ -8,6 +20,7 @@
  * @copyright Copyright (c) 2023
  *
  */
+
 #include <fcntl.h>
 #include "lexer.h"
 #include "terminal.h"
@@ -19,33 +32,34 @@
 char	*get_node_type(t_node_type	type)
 {
 	if (type & NODE_PIPELINE)
-		return("[PIPELINE]");
+		return ("[PIPELINE]");
 	else if (type & NODE_SEQUENCE)
-		return("[SEQUENCE]");
+		return ("[SEQUENCE]");
 	else if (type & NODE_COMMAND)
-		return("[COMMAND]");
+		return ("[COMMAND]");
 	else if (type & NODE_WORD)
-		return("[WORD]");
+		return ("[WORD]");
 	else if (type & NODE_RDIR_INPUT)
-		return("<");
+		return ("<");
 	else if (type & NODE_RDIR_OUTPUT)
-		return(">");
+		return (">");
 	else if (type & NODE_RDIR_APPEND)
-		return(">>");
+		return (">>");
 	else if (type & NODE_RDIR_HEREDOC)
-		return("<<");
+		return ("<<");
 	return ("[N/A]");
 }
 
 void	print_node_command(t_command *command)
 {
 	t_argument		*arg_tmp;
-	t_redirect	*redirect_tmp;
+	t_redirect		*redirect_tmp;
 
 	redirect_tmp = command->redirects;
 	while (redirect_tmp)
 	{
-		ft_printf("type:%d%s file:%s ", redirect_tmp->fd, get_node_type(redirect_tmp->type), redirect_tmp->file);
+		ft_printf("type: %d %s file: %s ", redirect_tmp->fd, \
+			get_node_type(redirect_tmp->type), redirect_tmp->file);
 		redirect_tmp = redirect_tmp->next;
 	}
 	arg_tmp = command->arguments;

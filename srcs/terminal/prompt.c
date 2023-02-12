@@ -1,20 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prompt.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/11 20:14:45 by tmuramat          #+#    #+#             */
+/*   Updated: 2023/02/11 20:18:28 by tmuramat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /**
  * @file prompt.c
- * @author tmuramat (tmuramat@student.42tokyo.jp)
- * @brief プロンプトの生成
- * @version 0.1
+ * @brief コマンド入力状態で使用するプロンプトの生成
  * @date 2023-01-01
- *
- * @copyright Copyright (c) 2023
- *
  */
+
 #include "terminal.h"
 #include "constant.h"
 #include "ft_printf.h"
 #include "ft_snprintf.h"
 
 /**
- * @brief 起動時バナーの表示
+ * @brief 初回起動時のバナーを出力する。
  *
  */
 void	put_banner(void)
@@ -27,7 +35,8 @@ void	put_banner(void)
 
 /**
  * @brief プロンプト名を生成する
- * @details　プロンプト名の文字列を動的に生成する。TODO: 環境変数PS1からの取得を要検討。
+ * @details　プロンプト名の文字列を動的に生成する。
+ * 生成した文字列はエラーに使用するめ、プログラムを通してshell構造体に保持し続ける。
  * @return char*　生成した文字列
  */
 char	*get_prompt(void)

@@ -1,8 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expansion.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/11 22:19:26 by tmuramat          #+#    #+#             */
+/*   Updated: 2023/02/11 22:32:48 by tmuramat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #ifndef EXPANSION_H
 # define EXPANSION_H
-
-#include "libast.h"
-#include "terminal.h"
 
 # define FTWRDE_SUCCESS 0
 # define FTWRDE_BADCHAR 1
@@ -10,6 +20,9 @@
 # define FTWRDE_CMDSUB 3
 # define FTWRDE_NOSPACE 4
 # define FTWRDE_SYNTAX 5
+
+#include "libast.h"
+#include "terminal.h"
 
 typedef struct s_wordexp {
 	size_t		act_len;

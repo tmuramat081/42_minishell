@@ -6,19 +6,14 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:25:19 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/10 04:08:00 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 21:34:13 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
- * @file boot.c
- * @author tmuramat (tmuramat@student.42tokyo.jp)
- * @brief コマンド入力の待機状態
- * @version 0.1
+ * @file terminal.c
+ * @brief コマンド入力の待機状態。
  * @date 2023-01-01
- *
- * @copyright Copyright (c) 2023
- *
  */
 
 #include "terminal.h"
@@ -30,9 +25,10 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-int g_status = 0;
+/** 最後のコマンドの終了ステータスを保持する */
+int	g_status = 0;
 
-void	delete_token(void *p_token, void *p_item)
+static void	delete_token(void *p_token, void *p_item)
 {
 	t_token	*token;
 
@@ -42,21 +38,25 @@ void	delete_token(void *p_token, void *p_item)
 }
 
 /**
- * @brief 入力・字句解析・構文解析に使ったメモリを解放する
- *
- * @param line
- * @param lexed_tokens
- * @param syntax_tree
+ * @brief 入力・字句解析・構文解析に使用したメモリを解放する。
+
+ * @param line 入力された文字列
+ * @param lexed_tokens　字句解析により生成されたトークン
+ * @param syntax_tree　構文解析により生成された抽象構文木
  */
-static void	free_buffers(char *line, t_vector *lexed_tokens, t_ast_node *syntax_tree)
+static void	free_buffers(char *line, t_vector *tokens, t_ast_node *tree)
 {
-	ft_vector_foreach(lexed_tokens, delete_token, NULL);
-	ft_vector_delete(&lexed_tokens);
-	ast_node_delete(syntax_tree);
+	ft_vector_foreach(tokens, delete_token, NULL);
+	ft_vector_delete(&tokens);
+	ast_node_delete(tree);
 	free(line);
 }
 
-/** コマンド入力の待機 */
+/**
+ * @brief 標準入力を待機し、コマンドの字句・構文解析および実行を行う。
+ *
+ * @param msh　シェルの管理情報
+ */
 void	boot_minishell(t_shell	*msh)
 {
 	char		*line;
@@ -84,7 +84,7 @@ void	boot_minishell(t_shell	*msh)
 /**
  * @brief コマンド入力の待機（デバッグ用）
  *
- * @param msh
+ * @param msh　シェルの管理情報
  */
 void	boot_minishell_dev(t_shell	*msh)
 {

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/11 22:22:46 by tmuramat          #+#    #+#             */
+/*   Updated: 2023/02/11 22:22:58 by tmuramat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include "ft_hashmap.h"
 #include "terminal.h"
-
 
 /**
  * @file cd.c
@@ -17,7 +29,6 @@
 static void	cd_put_error(char *path, char *cmd, t_shell *msh)
 {
 	errno = ENOENT;
-
 	(void)msh;
 	ft_putstr_fd("m-shell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);

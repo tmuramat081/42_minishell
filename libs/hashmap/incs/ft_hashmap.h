@@ -52,7 +52,8 @@ typedef struct s_hashmap {
  * @param hash ハッシュ関数。NULLで既定の関数が呼ばれる。
  * @return t_hashmap*　ハッシュマップ構造体
  */
-t_hashmap	*ft_hashmap_init(size_t(*hash)(const void *data), void(*destr)(void *));
+t_hashmap	*ft_hashmap_init(size_t(*hash) \
+	(const void *data), void(*destr)(void *));
 
 /**
  * @brief メモリをfreeするための関数。最後に忘れず呼び出す。
@@ -89,7 +90,7 @@ int			ft_hashmap_remove(t_hashmap *map, const char *key);
  * @return int 成功なら1が返る。失敗したら0が返る。
  */
 int			ft_hashmap_iterate(t_hashmap *map, \
-				int(*f)(t_hashmap_data *, void *), void *data);
+				int (*f) (t_hashmap_data *, void *), void *data);
 void		ft_hashmap_clear(t_hashmap *map);
 int			ft_hashmap_resize(t_hashmap *map);
 int			ft_hashmap_find(t_hashmap *map, const char *key, void **arg);

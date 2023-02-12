@@ -6,14 +6,28 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:18:28 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/06 01:04:45 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/11 20:35:21 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "terminal.h"
-#include <ctype.h>
+/**
+ * @file environ.c
+ * @brief 環境変数の取得・解析
+ * @date 2023-02-11
+ *
+ */
 
-static bool is_valid_key(const char *key)
+#include "terminal.h"
+
+/**
+ * @brief 環境変数のキーを検証する。
+ *
+ * @detail　キーは英字もしくは'_'で始まる。また、英数字もしくは'_'以外を含んではならない。
+ * @param key　検証する環境変数のキー
+ * @return true　
+ * @return false
+ */
+static bool	is_valid_key(const char *key)
 {
 	size_t	i;
 
@@ -30,11 +44,12 @@ static bool is_valid_key(const char *key)
 	}
 	return (true);
 }
+
 /**
- * @brief 文字列をkeyとvalueに分解し、env構造体に格納する。
+ * @brief 受け取った文字列をkeyとvalueに分解し、構造体に格納する。
  *
- * @param str 分割する文字列
- * @return t_env
+ * @param str 分解元となる文字列
+ * @return t_env 解析したキーと値の構造体
  */
 t_env	parse_environ(const char *str)
 {
@@ -64,7 +79,8 @@ t_env	parse_environ(const char *str)
 
 /**
  * @brief グローバル変数'environ'から環境変数を取得する。
- * @detail $OLDPWDは空文字列で初期化する。
+ *
+ * @detail $OLDPWDは起動時に初期化する。
  * @return t_hashmap*
  */
 t_hashmap	*init_environ(void)
