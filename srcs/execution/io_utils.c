@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 17:12:20 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/13 02:01:00 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/14 00:07:14 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	xpipe(int fds[2])
 
 void	dup_and_close(int old_fd, int new_fd)
 {
-	dprintf(2, "%d;%d\n", old_fd, new_fd);
 	xdup2(old_fd, new_fd);
 	xclose(old_fd);
 }

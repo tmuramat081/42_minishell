@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 22:19:18 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/12 22:08:39 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/13 23:11:12 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,16 @@ typedef struct s_pipe {
 	size_t	len;
 }	t_pipe;
 
+typedef struct s_redir {
+	int		fd;
+	int		io;
+	char	*file;
+	int		type;
+}	t_redir;
+
 typedef struct s_process {
 	char		**argv;
-	t_redirect	*redirects;
+	t_redir		*redir;
 	t_pipe		pipes;
 	bool		is_solo;
 }	t_process;
@@ -75,8 +82,9 @@ bool			is_directory(const char *path);
 bool			exists_file(const char *path);
 
 /**********  Redirect **********/
-void			set_redirection(t_process process, t_shell *msh);
+void			set_redirect(t_process process, t_shell *msh);
 void			reset_redirection(t_process process);
+void			dup_redirect(t_process process, t_shell *msh);
 
 /**********  Process **********/
 pid_t			create_child_process(void);

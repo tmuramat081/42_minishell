@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_external.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:18:48 by event             #+#    #+#             */
-/*   Updated: 2023/02/13 01:43:09 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/14 00:08:10 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	exec_external_command(t_process process, t_shell *msh)
 
 	if (!process.argv || !process.argv[0])
 		exit(EXIT_SUCCESS);
-	perror(NULL);
 	ft_execvpe(process.argv[0], process.argv, construct_environ(msh->envs));
 	if (errno == EISDIR || errno == EACCES)
 		shell_perror(process.argv[0], msh, 126);
