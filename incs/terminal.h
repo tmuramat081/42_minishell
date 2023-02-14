@@ -23,6 +23,7 @@
 # include "constant.h"
 # include "ft_hashmap.h"
 # include "ft_vector.h"
+# include "ft_deque.h"
 # include "libast.h"
 # include "lexer.h"
 
@@ -36,6 +37,7 @@ typedef struct s_shell {
 	char		*prompt;
 	int			exit_status;
 	int			is_child_process;
+	t_deque		*pids;
 }	t_shell;
 
 /************* terinal ***************/

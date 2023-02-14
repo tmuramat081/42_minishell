@@ -92,10 +92,10 @@ void	terminal_dev(t_shell	*msh)
 	t_vector	*lexed_tokens;
 	t_ast_node	*syntax_tree;
 
+	set_ignore_signal();
 	line = NULL;
 	while (true)
 	{
-		set_ignore_signal();
 		line = readline(msh->prompt);
 		if (!line)
 			break ;

@@ -58,7 +58,6 @@ void	set_signal(int signal, void (*sighandler)(int))
 
 void	reset_signals(void)
 {
-	set_signal(SIGINT, SIG_DFL);
 	set_signal(SIGQUIT, SIG_DFL);
 	set_signal(SIGTSTP, SIG_DFL);
 }
