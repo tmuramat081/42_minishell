@@ -21,7 +21,6 @@
  *
  */
 #include "libast.h"
-#include "parser.h"
 #include "terminal.h"
 #include "execution.h"
 

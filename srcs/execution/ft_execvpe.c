@@ -22,12 +22,8 @@
  */
 
 #include "execution.h"
-#include "terminal.h"
 #include "ft_snprintf.h"
 #include "ft_hashmap.h"
-#include "ft_printf.h"
-#include <sys/stat.h>
-#include <sys/types.h>
 
 /**
  * @brief 環境変数テーブルからPATHの値を取得する。

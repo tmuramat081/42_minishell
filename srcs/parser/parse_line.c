@@ -20,7 +20,6 @@
  * @copyright Copyright (c) 2023
  *
  */
-#include "terminal.h"
 #include "parser.h"
 
 /**

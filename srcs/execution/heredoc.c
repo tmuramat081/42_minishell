@@ -10,16 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "terminal.h"
-#include "expansion.h"
 #include "execution.h"
 #include "constant.h"
 #include <readline/readline.h>
 
-void	heredoc_prompt(t_pipe pipe, char *here_end)
+static void	heredoc_prompt(t_pipe pipe, char *here_end, t_shell *msh)
 {
 	char		*line;
 
+	(void)msh;
 	while (true)
 	{
 		line = readline(HEREDOC_PROMPT);
@@ -32,15 +31,21 @@ void	heredoc_prompt(t_pipe pipe, char *here_end)
 	}
 }
 
-int	heredoc_redirect(char	*here_end)
+int	heredoc_redirect(char	*here_end, t_shell *msh)
 {
-	t_pipe	pipe;
+	t_pipe		pipe;
+	extern int	g_status;
 
 	pipe = init_pipeline(1);
 	set_signal(SIGQUIT, SIG_IGN);
 	set_signal(SIGTSTP, SIG_IGN);
-	set_signal(SIGPIPE, SIG_IGN);
-	heredoc_prompt(pipe, here_end);
+	heredoc_prompt(pipe, here_end, msh);
 	close(pipe.fds[1]);
+	if (g_status == 130)
+	{
+		close(pipe.fds[0]);
+		return (0);
+	}
+	reset_signals();
 	return (pipe.fds[0]);
 }

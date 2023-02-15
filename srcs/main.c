@@ -18,7 +18,6 @@
 */
 
 #include "terminal.h"
-#include "ft_deque.h"
 
 /**
  * @brief シェルの管理情報を初期化する。

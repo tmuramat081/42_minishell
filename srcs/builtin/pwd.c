@@ -21,8 +21,6 @@
  *
  */
 
-#include "terminal.h"
-#include "ft_printf.h"
 #include "execution.h"
 
 int	builtin_pwd(char **arg, t_shell *msh)

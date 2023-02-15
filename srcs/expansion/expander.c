@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "expansion.h"
-#include "terminal.h"
 #include "libast.h"
 
 /**

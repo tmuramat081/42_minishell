@@ -19,11 +19,9 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-void	command_perror(char *command, t_shell *msh)
+static void	command_perror(char *command, t_shell *msh)
 {
-	extern int	g_status;
-
-	ft_putstr_fd(msh->prompt, STDERR_FILENO);
+	ft_putstr_fd(PROMPT_NAME, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
 	if (command)
 	{

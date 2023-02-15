@@ -23,8 +23,6 @@
 
 #include <limits.h>
 #include "execution.h"
-#include "ft_hashmap.h"
-#include "terminal.h"
 
 static int	update_old_pwd(char *old_path, t_shell *msh)
 {

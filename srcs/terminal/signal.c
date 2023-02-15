@@ -30,8 +30,11 @@
  */
 void	ignore_sighandler(int signal)
 {
+	extern int	g_status;
+
 	if (signal == SIGINT)
 	{
+		g_status = 130;
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -58,6 +61,7 @@ void	set_signal(int signal, void (*sighandler)(int))
 
 void	reset_signals(void)
 {
+	set_signal(SIGINT, SIG_DFL);
 	set_signal(SIGQUIT, SIG_DFL);
 	set_signal(SIGTSTP, SIG_DFL);
 }
@@ -71,5 +75,4 @@ void	set_ignore_signal(void)
 	set_signal(SIGINT, ignore_sighandler);
 	set_signal(SIGQUIT, SIG_IGN);
 	set_signal(SIGTSTP, SIG_IGN);
-	set_signal(SIGPIPE, SIG_IGN);
 }

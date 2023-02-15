@@ -22,9 +22,6 @@
  */
 
 #include "parser.h"
-#include "lexer.h"
-#include "libast.h"
-#include "terminal.h"
 
 /**
  * @note

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "expansion.h"
-#include "libft.h"
 
 static char	*get_exit_status(void)
 {

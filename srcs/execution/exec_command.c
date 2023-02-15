@@ -44,46 +44,7 @@ static char	**init_arguments(t_argument *arguments)
 	return (argv);
 }
 
-void	exec_cmd_as_parent(t_process process, t_shell *msh, t_builtin_fn bi_cmd)
-{
-	int	tmp_fds[2];
-
-	msh->is_child_process = false;
-	tmp_fds[0] = xdup(STDIN_FILENO);
-	tmp_fds[1] = xdup(STDOUT_FILENO);
-	set_redirect(process, msh);
-	if (errno)
-	{
-		dup_and_close(tmp_fds[0], STDIN_FILENO);
-		dup_and_close(tmp_fds[1], STDOUT_FILENO);
-		return ;
-	}
-	exec_internal_command(bi_cmd, process, msh);
-	dup_and_close(tmp_fds[0], STDIN_FILENO);
-	dup_and_close(tmp_fds[1], STDOUT_FILENO);
-}
-
-void	exec_cmd_as_child(t_process process, t_shell *msh, \
-	t_builtin_fn bltin_cmd)
-{
-	pid_t		pid;
-
-	msh->is_child_process = true;
-	pid = create_child_process(msh);
-	if (pid == 0)
-	{
-		reset_signals();
-		set_pipeline(process.pipes);
-		set_redirect(process, msh);
-		if (bltin_cmd)
-			exec_internal_command(bltin_cmd, process, msh);
-		else
-			exec_external_command(process, msh);
-		delete_pipeline(process.pipes);
-	}
-}
-
-t_redir	*init_redirects(t_redirect *redirects)
+static t_redir	*init_redirects(t_redirect *redirects)
 {
 	size_t	len;
 	t_redir	*redirs;
@@ -109,6 +70,45 @@ t_redir	*init_redirects(t_redirect *redirects)
 	}
 	redirs[i].file = NULL;
 	return (redirs);
+}
+
+void	exec_cmd_as_parent(t_process process, t_shell *msh, t_builtin_fn bi_cmd)
+{
+	int	tmp_fds[2];
+
+	msh->is_child_process = false;
+	tmp_fds[0] = xdup(STDIN_FILENO);
+	tmp_fds[1] = xdup(STDOUT_FILENO);
+	set_redirect(process, msh);
+	if (errno)
+	{
+		dup_and_close(tmp_fds[0], STDIN_FILENO);
+		dup_and_close(tmp_fds[1], STDOUT_FILENO);
+		return ;
+	}
+	exec_internal_command(bi_cmd, process, msh);
+	dup_and_close(tmp_fds[0], STDIN_FILENO);
+	dup_and_close(tmp_fds[1], STDOUT_FILENO);
+}
+
+static void	exec_cmd_as_child(t_process process, t_shell *msh, \
+	t_builtin_fn bltin_cmd)
+{
+	pid_t		pid;
+
+	msh->is_child_process = true;
+	pid = create_child_process(msh);
+	if (pid == 0)
+	{
+		reset_signals();
+		set_pipeline(process.pipes);
+		set_redirect(process, msh);
+		if (bltin_cmd)
+			exec_internal_command(bltin_cmd, process, msh);
+		else
+			exec_external_command(process, msh);
+		delete_pipeline(process.pipes);
+	}
 }
 
 /**

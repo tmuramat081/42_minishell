@@ -25,7 +25,7 @@
  * @param redirect_type
  * @return int
  */
-static int	open_file(char *filename, t_node_type type)
+static int	open_file(char *filename, t_node_type type, t_shell *msh)
 {
 	const int	file_mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 	int			fd;
@@ -38,7 +38,7 @@ static int	open_file(char *filename, t_node_type type)
 	else if (type & NODE_RDIR_INPUT)
 		fd = open(filename, O_RDONLY);
 	else if (type & NODE_RDIR_HEREDOC)
-		fd = heredoc_redirect(filename);
+		fd = heredoc_redirect(filename, msh);
 	return (fd);
 }
 
@@ -58,7 +58,7 @@ void	set_redirect(t_process process, t_shell *msh)
 	i = 0;
 	while (process.redir[i].file)
 	{
-		old_fd = open_file(process.redir[i].file, process.redir[i].type);
+		old_fd = open_file(process.redir[i].file, process.redir[i].type, msh);
 		if (old_fd < 0)
 		{
 			shell_perror(process.redir[i].file, msh, 1);

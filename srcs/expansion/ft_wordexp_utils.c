@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "expansion.h"
-#include "libft.h"
 #include <assert.h>
 
 static void	_we_addmem(t_wordexp *we, const char *str, size_t len)
