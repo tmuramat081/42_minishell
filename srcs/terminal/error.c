@@ -77,8 +77,11 @@ void	shell_perror(const char *string, t_shell *msh, int status)
 {
 	extern int	g_status;
 
-	ft_putstr_fd(msh->prompt, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
+	if (msh)
+	{
+		ft_putstr_fd(msh->prompt, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+	}
 	if (errno == EISDIR)
 		ft_putendl_fd("is a directory", STDERR_FILENO);
 	else

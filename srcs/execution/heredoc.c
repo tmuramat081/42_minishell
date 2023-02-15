@@ -34,13 +34,16 @@ void	heredoc_prompt(t_pipe pipe, char *here_end)
 
 int	heredoc_redirect(char	*here_end)
 {
-	t_pipe	pipe;
+	t_pipe		pipe;
+	extern int	g_status;
 
 	pipe = init_pipeline(1);
-	set_signal(SIGQUIT, SIG_IGN);
-	set_signal(SIGTSTP, SIG_IGN);
-	set_signal(SIGPIPE, SIG_IGN);
 	heredoc_prompt(pipe, here_end);
 	close(pipe.fds[1]);
+	if (g_status == 130)
+	{
+		close(pipe.fds[0]);
+		return (0);
+	}
 	return (pipe.fds[0]);
 }
