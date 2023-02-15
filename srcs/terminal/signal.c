@@ -23,9 +23,6 @@
 #include <unistd.h>
 #include <sys/ioctl.h>
 
-
-
-
 /**
  * @brief SIGINT用シグナルハンドラー
  * @detail READLINEに対する文字出力を抑え、改行する。
@@ -33,7 +30,7 @@
  */
 void	ignore_sighandler(int signal)
 {
-	extern int g_status;
+	extern int	g_status;
 
 	if (signal == SIGINT)
 	{

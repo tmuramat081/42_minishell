@@ -72,7 +72,6 @@ t_redir	*init_redirects(t_redirect *redirects)
 	return (redirs);
 }
 
-
 void	exec_cmd_as_parent(t_process process, t_shell *msh, t_builtin_fn bi_cmd)
 {
 	int	tmp_fds[2];
