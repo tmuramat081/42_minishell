@@ -69,19 +69,3 @@ void	set_redirect(t_process process, t_shell *msh)
 		i++;
 	}
 }
-
-void	dup_redirect(t_process process, t_shell *msh)
-{
-	size_t		i;
-
-	(void)msh;
-	if (!process.redir)
-		return ;
-	i = 0;
-	while (process.redir[i].file)
-	{
-		xdup2(process.redir[i].io, process.redir[i].fd);
-		i++;
-	}
-}
-
