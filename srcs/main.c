@@ -18,6 +18,7 @@
 */
 
 #include "terminal.h"
+#include "ft_deque.h"
 
 /**
  * @brief シェルの管理情報を初期化する。
@@ -31,6 +32,7 @@ t_shell	*init_minishell(void)
 	msh = (t_shell *)ft_xmalloc(sizeof(t_shell));
 	msh->envs = init_environ();
 	msh->prompt = get_prompt();
+	msh->pids = ft_deque_init(sizeof(pid_t), 1);
 	return (msh);
 }
 

@@ -51,5 +51,5 @@ void	exec_pipeline(t_ast_node *node, t_process process, t_shell *msh)
 	_do_pipes(node, process, msh);
 	delete_pipeline(process.pipes);
 	if (msh->is_child_process == true)
-		wait_all_child_processes(cnt);
+		wait_all_child_processes(msh);
 }

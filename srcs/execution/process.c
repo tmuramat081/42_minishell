@@ -14,20 +14,22 @@
 #include "ft_printf.h"
 #include <signal.h>
 
-pid_t	create_child_process(void)
+pid_t	create_child_process(t_shell *msh)
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (pid < 0)
 		exit(EXIT_FAILURE);
+	if (msh)
+		ft_deque_push_back(msh->pids, &pid);
 	return (pid);
 }
 
-void	set_exit_status(int status, bool seen_sigint)
+void	set_exit_status(int status)
 {
-	extern int	g_status;
 	int			signal;
+	extern int	g_status;
 
 	if (WIFEXITED(status))
 		g_status = WEXITSTATUS(status);
@@ -38,30 +40,28 @@ void	set_exit_status(int status, bool seen_sigint)
 			ft_putendl_fd("Quit: 3", STDERR_FILENO);
 		g_status = signal + 128;
 	}
-	if (seen_sigint)
-		waitpid(-1, &status, 0);
 }
 
-
-void	wait_all_child_processes(size_t cnt)
+void	wait_all_child_processes(t_shell *msh)
 {
 	int		status;
 	bool	seen_sigint;
+	int		next_pid;
 
 	seen_sigint = false;
-	while (cnt)
+	while (!ft_deque_is_empty(msh->pids))
 	{
-		waitpid(-1, &status, 0);
-		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-			seen_sigint = true;
-		cnt--;
+		ft_deque_pop_front(msh->pids, &next_pid);
+		while (waitpid(next_pid, &status, 0) >= 0)
+			;
 	}
-	set_exit_status(status, seen_sigint);
+	set_exit_status(status);
 }
 
 void	wait_child_process(pid_t pid)
 {
 	int	status;
 
-	waitpid(pid, &status, 0);
+	if (waitpid(pid, &status, 0) < 0)
+		exit(EXIT_FAILURE);
 }

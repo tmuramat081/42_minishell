@@ -30,24 +30,17 @@ void	heredoc_prompt(t_pipe pipe, char *here_end)
 		ft_putendl_fd(line, pipe.fds[1]);
 		free(line);
 	}
-	puts("ONG");
 }
 
 int	heredoc_redirect(char	*here_end)
 {
 	t_pipe	pipe;
-	pid_t	pid;
 
 	pipe = init_pipeline(1);
-	pipe.state = PIPE_STDOUT;
-	pid = create_child_process();
-	if (pid == 0)
-	{
-		set_pipeline(pipe);
-		set_ignore_signal();
-		xclose(pipe.fds[1]);
-		heredoc_prompt(pipe, here_end);
-		exit(EXIT_SUCCESS);
-	}
+	set_signal(SIGQUIT, SIG_IGN);
+	set_signal(SIGTSTP, SIG_IGN);
+	set_signal(SIGPIPE, SIG_IGN);
+	heredoc_prompt(pipe, here_end);
+	close(pipe.fds[1]);
 	return (pipe.fds[0]);
 }

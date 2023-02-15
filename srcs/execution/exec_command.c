@@ -37,7 +37,7 @@ static char	**init_arguments(t_argument *arguments)
 	while (arguments)
 	{
 		if (*arguments->argument)
-			argv[i++] = ft_strdup(arguments->argument);
+			argv[i++] = arguments->argument;
 		arguments = arguments->next;
 	}
 	argv[i] = NULL;
@@ -63,40 +63,35 @@ void	exec_cmd_as_parent(t_process process, t_shell *msh, t_builtin_fn bi_cmd)
 	dup_and_close(tmp_fds[1], STDOUT_FILENO);
 }
 
-
-
 void	exec_cmd_as_child(t_process process, t_shell *msh, \
 	t_builtin_fn bltin_cmd)
 {
 	pid_t		pid;
-	extern int	g_status;
 
 	msh->is_child_process = true;
-	pid = create_child_process();
+	pid = create_child_process(msh);
 	if (pid == 0)
 	{
 		reset_signals();
-		set_redirect(process, msh);
 		set_pipeline(process.pipes);
-		dup_redirect(process, msh);
+		set_redirect(process, msh);
 		if (bltin_cmd)
 			exec_internal_command(bltin_cmd, process, msh);
 		else
 			exec_external_command(process, msh);
 		delete_pipeline(process.pipes);
 	}
-	int status;
-	wait(&status);;
 }
 
-
-t_redir *init_redirects(t_redirect *redirects)
+t_redir	*init_redirects(t_redirect *redirects)
 {
 	size_t	len;
 	t_redir	*redirs;
 	size_t	i;
 
 	len = ast_count_redirects(redirects);
+	if (!len)
+		return (NULL);
 	redirs = ft_xmalloc(sizeof(t_redir) * (len + 1));
 	if (!len)
 		return (NULL);
@@ -105,17 +100,16 @@ t_redir *init_redirects(t_redirect *redirects)
 	{
 		if (redirects->file)
 		{
-			redirs[i].file = ft_strdup(redirects->file);
+			redirs[i].file = redirects->file;
 			redirs[i].fd = redirects->fd;
 			redirs[i].type = redirects->type;
 		}
-		i++;
 		redirects = redirects->next;
+		i++;
 	}
 	redirs[i].file = NULL;
 	return (redirs);
 }
-
 
 /**
  * @brief 実行処理:コマンド
@@ -138,5 +132,6 @@ void	exec_simple_cmd(t_ast_node *node, t_process process, t_shell *msh)
 		exec_cmd_as_parent(process, msh, builtin_cmd);
 	else
 		exec_cmd_as_child(process, msh, builtin_cmd);
-	ft_free_matrix(&process.argv);
+	free(process.argv);
+	free(process.redir);
 }

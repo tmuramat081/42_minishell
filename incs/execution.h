@@ -37,7 +37,6 @@ typedef struct s_pipe {
 
 typedef struct s_redir {
 	int		fd;
-	int		io;
 	char	*file;
 	int		type;
 }	t_redir;
@@ -87,8 +86,8 @@ void			reset_redirection(t_process process);
 void			dup_redirect(t_process process, t_shell *msh);
 
 /**********  Process **********/
-pid_t			create_child_process(void);
-void			wait_all_child_processes(size_t cnt);
+pid_t			create_child_process(t_shell *msh);
+void			wait_all_child_processes(t_shell *msh);
 void			wait_child_process(pid_t pid);
 
 /********** Pipeline **********/
@@ -96,7 +95,7 @@ t_pipe			init_pipeline(size_t cnt);
 void			set_pipeline(t_pipe pipes);
 void			delete_pipeline(t_pipe pipes);
 
-/********** IO utils **********/
+/********** I/O utils **********/
 int				xdup(int new_fd);
 void			xdup2(int old_fd, int new_fd);
 void			xclose(int fd);
