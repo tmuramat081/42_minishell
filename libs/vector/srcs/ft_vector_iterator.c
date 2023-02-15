@@ -41,16 +41,17 @@ void	*ft_vector_next(t_vector *vector, void *it, size_t n)
 	return (it);
 }
 
-void	ft_vector_foreach(t_vector *vector, void (*func)(void *))
+void	ft_vector_foreach(t_vector *vector, void (*func)(void *, void *), \
+			void *item)
 {
-	void	*i;
+	void	*itr;
 	size_t	len;
 
-	i = vector->data;
+	itr = vector->data;
 	len = vector->len;
-	while (0 < len--)
+	while (len--)
 	{
-		func(i);
-		i = (char *)i + vector->data_size;
+		func(itr, item);
+		itr = (char *)itr + vector->data_size;
 	}
 }

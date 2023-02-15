@@ -30,8 +30,8 @@ int	ft_vector_pop_back(t_vector *vector, void *data)
 {
 	if (ft_vector_is_empty(vector) == true)
 		return (VECTOR_FAILURE);
-	ft_memcpy(data, vector->end, vector->data_size);
 	vector->end -= vector->data_size;
+	ft_memcpy(data, vector->end, vector->data_size);
 	vector->len -= 1;
 	return (VECTOR_SUCCESS);
 }

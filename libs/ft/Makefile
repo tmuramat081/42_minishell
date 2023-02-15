@@ -11,19 +11,23 @@ CHR_SRCS = ft_isalpha.c \
 		ft_isprint.c \
 		ft_isspace.c
 STR_SRCS = ft_strlen.c \
+		ft_strnlen.c \
 		ft_split.c \
 		ft_strchr.c \
+		ft_strrchr.c \
+		ft_strchrnul.c \
 		ft_strspn.c \
 		ft_strcspn.c \
 		ft_strdup.c \
+		ft_strndup.c \
 		ft_striteri.c \
 		ft_strjoin.c \
 		ft_strlcat.c \
 		ft_strlcpy.c \
 		ft_strmapi.c \
+		ft_strcmp.c \
 		ft_strncmp.c \
 		ft_strnstr.c \
-		ft_strrchr.c \
 		ft_strtol_d.c \
 		ft_substr.c \
 		ft_strtoupper.c \
@@ -38,10 +42,12 @@ MEM_SRCS = ft_bzero.c \
 		ft_memchr.c \
 		ft_memcmp.c \
 		ft_memcpy.c \
+		ft_mempcpy.c \
 		ft_memmove.c \
 		ft_memset.c \
 		ft_memswap.c \
 		ft_xmalloc.c \
+		ft_realloc.c \
 		ft_memcat.c \
 		ft_qsort.c
 MTH_SRCS = ft_abs.c \
@@ -134,10 +140,12 @@ ${OBJ_DIR}%.o: %.c
 all: ${NAME}
 
 clean:
-	${RM} ${ALL_OBJS}
+	@${RM} ${ALL_OBJS}
+	@${PRINTF} "${RED}Cleaned up object files in ${basename ${NAME}}${DEFAULT}\n"
 
 fclean: clean
-	${RM} ${NAME}
+	@${RM} ${NAME}
+	@${PRINTF} "${RED}Removed object and executable files in ${basename ${NAME}}${DEFAULT}\n"
 
 re: fclean
 	@${MAKE} -s all

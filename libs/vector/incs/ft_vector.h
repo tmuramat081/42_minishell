@@ -52,6 +52,7 @@ size_t		ft_vector_size(t_vector *vector);
 int			ft_vector_realloc(t_vector *deuqe);
 
 // ********** Iterator ********** //
-void		ft_vector_foreach(t_vector *vector, void (*func)(void *));
+void		ft_vector_foreach(t_vector *vector, void (*func)(void *, void *), \
+				void *item);
 
 #endif
