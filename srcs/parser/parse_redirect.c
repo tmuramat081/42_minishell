@@ -15,8 +15,6 @@
  * @brief 構文解析その3：リダイレクト ">, >>, <, <<"
  * @date 2023-01-01
  */
-#include "libast.h"
-#include "lexer.h"
 #include "parser.h"
 
 /**

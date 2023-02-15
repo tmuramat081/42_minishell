@@ -44,7 +44,7 @@ static char	**init_arguments(t_argument *arguments)
 	return (argv);
 }
 
-t_redir	*init_redirects(t_redirect *redirects)
+static t_redir	*init_redirects(t_redirect *redirects)
 {
 	size_t	len;
 	t_redir	*redirs;
@@ -91,7 +91,7 @@ void	exec_cmd_as_parent(t_process process, t_shell *msh, t_builtin_fn bi_cmd)
 	dup_and_close(tmp_fds[1], STDOUT_FILENO);
 }
 
-void	exec_cmd_as_child(t_process process, t_shell *msh, \
+static void	exec_cmd_as_child(t_process process, t_shell *msh, \
 	t_builtin_fn bltin_cmd)
 {
 	pid_t		pid;

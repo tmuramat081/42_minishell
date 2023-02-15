@@ -17,7 +17,6 @@
  */
 
 #include "expansion.h"
-#include "libft.h"
 
 /**
  * @brief シェルの文法に従って文字列を展開する。

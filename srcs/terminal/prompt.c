@@ -18,7 +18,6 @@
 
 #include "terminal.h"
 #include "constant.h"
-#include "ft_printf.h"
 #include "ft_snprintf.h"
 
 /**

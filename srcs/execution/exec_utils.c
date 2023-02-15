@@ -23,7 +23,6 @@
 
 #include "execution.h"
 #include "ft_snprintf.h"
-#include "ft_printf.h"
 
 /**
  * @brief ベクター型を文字列の配列に変換する

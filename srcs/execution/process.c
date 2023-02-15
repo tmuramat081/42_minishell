@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "execution.h"
-#include "ft_printf.h"
 #include <signal.h>
 
 pid_t	create_child_process(t_shell *msh)

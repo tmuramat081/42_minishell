@@ -17,7 +17,6 @@
  */
 
 #include "terminal.h"
-#include "libast.h"
 #include "constant.h"
 #include "parser.h"
 #include "expansion.h"

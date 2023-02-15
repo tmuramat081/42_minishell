@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "execution.h"
-#include "terminal.h"
-#include "execution.h"
-#include "terminal.h"
 #include <sys/stat.h>
 #include <sys/types.h>
 

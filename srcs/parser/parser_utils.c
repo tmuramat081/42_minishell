@@ -11,10 +11,6 @@
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "lexer.h"
-#include "libast.h"
-#include "terminal.h"
-#include "ft_deque.h"
 
 /**
  * @brief 解析対象のインデックスを次に進める。

@@ -43,7 +43,6 @@ t_wordexp	we_newword(char **buff, t_hashmap *environs);
 void		we_addstr(t_wordexp *wp, const char *str);
 void		we_addchar(t_wordexp *wp, char ch);
 
-char		*heredoc_read(char *here_end);
-int			heredoc_redirect(char *here_end);
+int			heredoc_redirect(char *here_end, t_shell *msh);
 
 #endif
