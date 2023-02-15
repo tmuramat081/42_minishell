@@ -29,7 +29,7 @@ void	builtin_perror(char *string, char *arg, char *cmd, t_shell *msh)
 {
 	if (msh)
 	{
-		ft_putstr_fd(msh->prompt, STDERR_FILENO);
+		ft_putstr_fd(PROMPT_NAME, STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);
 	}
 	if (cmd)
@@ -37,12 +37,12 @@ void	builtin_perror(char *string, char *arg, char *cmd, t_shell *msh)
 		ft_putstr_fd(cmd, STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);
 	}
-	if (string)
+	if (arg)
 	{
 		ft_putstr_fd(arg, STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);
 	}
-	if (arg)
+	if (string)
 		ft_putendl_fd(string, STDERR_FILENO);
 }
 
@@ -75,11 +75,9 @@ void	maybe_exit(int status, t_shell *msh)
  */
 void	shell_perror(const char *string, t_shell *msh, int status)
 {
-	extern int	g_status;
-
 	if (msh)
 	{
-		ft_putstr_fd(msh->prompt, STDERR_FILENO);
+		ft_putstr_fd(PROMPT_NAME, STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);
 	}
 	if (errno == EISDIR)
