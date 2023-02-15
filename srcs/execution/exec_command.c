@@ -73,13 +73,13 @@ void	exec_cmd_as_child(t_process process, t_shell *msh, \
 	if (pid == 0)
 	{
 		reset_signals();
-		set_redirect(process, msh);
 		set_pipeline(process.pipes);
-		dup_redirect(process, msh);
+		set_redirect(process, msh);
 		if (bltin_cmd)
 			exec_internal_command(bltin_cmd, process, msh);
 		else
 			exec_external_command(process, msh);
+		delete_pipeline(process.pipes);
 	}
 }
 

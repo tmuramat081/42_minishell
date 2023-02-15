@@ -50,18 +50,22 @@ static int	open_file(char *filename, t_node_type type)
 void	set_redirect(t_process process, t_shell *msh)
 {
 	size_t		i;
+	int			old_fd;
+	int			new_fd;
 
 	if (!process.redir)
 		return ;
 	i = 0;
 	while (process.redir[i].file)
 	{
-		process.redir[i].io = open_file(process.redir[i].file, process.redir[i].type);
-		if (process.redir[i].io < 0)
+		old_fd = open_file(process.redir[i].file, process.redir[i].type);
+		if (old_fd < 0)
 		{
 			shell_perror(process.redir[i].file, msh, 1);
 			return ;
 		}
+		new_fd = process.redir[i].fd;
+		xdup2(old_fd, new_fd);
 		i++;
 	}
 }

@@ -37,7 +37,6 @@ typedef struct s_pipe {
 
 typedef struct s_redir {
 	int		fd;
-	int		io;
 	char	*file;
 	int		type;
 }	t_redir;

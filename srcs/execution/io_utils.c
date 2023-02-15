@@ -21,7 +21,6 @@ void	xclose(int fd)
 
 void	xdup2(int old_fd, int new_fd)
 {
-	printf("%d %d\n", old_fd, new_fd);
 	if (old_fd != new_fd)
 	{
 		if (dup2(old_fd, new_fd) < 0)
