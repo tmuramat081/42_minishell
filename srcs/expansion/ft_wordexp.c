@@ -33,6 +33,8 @@ int	ft_wordexp(char *words, char **buff, t_hashmap *environs)
 	size_t		offset;
 	t_wordexp	we;
 
+	if (!words)
+		return (FTWRDE_SYNTAX);
 	we = we_newword(buff, environs);
 	offset = 0;
 	while (words[offset])
@@ -48,10 +50,7 @@ int	ft_wordexp(char *words, char **buff, t_hashmap *environs)
 			we_parse_quote(words, &we, &offset);
 		}
 		else
-		{
-			we_addchar(&we, words[offset]);
-			++offset;
-		}
+			we_addchar(&we, words[offset++]);
 	}
 	*buff = *we.buff;
 	return (FTWRDE_SUCCESS);

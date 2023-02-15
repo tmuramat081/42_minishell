@@ -36,10 +36,15 @@ static int	we_envsubst(char *words, t_wordexp *wp, size_t var_start, \
 
 	var = ft_substr(words, var_start, var_end - var_start);
 	env = search_environment(var, wp->envs);
+	free(var);
+	if (!*env)
+	{
+		free(env);
+		return (FTWRDE_BADCHAR);
+	}
 	we_addstr(wp, env);
 	if (!*wp->buff)
 		return (FTWRDE_NOSPACE);
-	free(var);
 	return (FTWRDE_SUCCESS);
 }
 
@@ -95,7 +100,9 @@ int	we_parse_params(char *words, t_wordexp *wp, size_t *offset)
 		forward_to_var_end(words, offset);
 		var_end = *offset;
 		if (is_valid_syntax(words, var_start, offset))
+		{
 			we_envsubst(words, wp, var_start, var_end);
+		}
 		else
 			return (FTWRDE_SYNTAX);
 	}

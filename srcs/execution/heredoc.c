@@ -38,6 +38,8 @@ int	heredoc_redirect(char	*here_end)
 	extern int	g_status;
 
 	pipe = init_pipeline(1);
+	set_signal(SIGQUIT, SIG_IGN);
+	set_signal(SIGTSTP, SIG_IGN);
 	heredoc_prompt(pipe, here_end);
 	close(pipe.fds[1]);
 	if (g_status == 130)
@@ -45,5 +47,6 @@ int	heredoc_redirect(char	*here_end)
 		close(pipe.fds[0]);
 		return (0);
 	}
+	reset_signals();
 	return (pipe.fds[0]);
 }

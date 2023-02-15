@@ -44,6 +44,35 @@ static char	**init_arguments(t_argument *arguments)
 	return (argv);
 }
 
+t_redir	*init_redirects(t_redirect *redirects)
+{
+	size_t	len;
+	t_redir	*redirs;
+	size_t	i;
+
+	len = ast_count_redirects(redirects);
+	if (!len)
+		return (NULL);
+	redirs = ft_xmalloc(sizeof(t_redir) * (len + 1));
+	if (!len)
+		return (NULL);
+	i = 0;
+	while (redirects)
+	{
+		if (redirects->file)
+		{
+			redirs[i].file = redirects->file;
+			redirs[i].fd = redirects->fd;
+			redirs[i].type = redirects->type;
+		}
+		redirects = redirects->next;
+		i++;
+	}
+	redirs[i].file = NULL;
+	return (redirs);
+}
+
+
 void	exec_cmd_as_parent(t_process process, t_shell *msh, t_builtin_fn bi_cmd)
 {
 	int	tmp_fds[2];
@@ -81,34 +110,6 @@ void	exec_cmd_as_child(t_process process, t_shell *msh, \
 			exec_external_command(process, msh);
 		delete_pipeline(process.pipes);
 	}
-}
-
-t_redir	*init_redirects(t_redirect *redirects)
-{
-	size_t	len;
-	t_redir	*redirs;
-	size_t	i;
-
-	len = ast_count_redirects(redirects);
-	if (!len)
-		return (NULL);
-	redirs = ft_xmalloc(sizeof(t_redir) * (len + 1));
-	if (!len)
-		return (NULL);
-	i = 0;
-	while (redirects)
-	{
-		if (redirects->file)
-		{
-			redirs[i].file = redirects->file;
-			redirs[i].fd = redirects->fd;
-			redirs[i].type = redirects->type;
-		}
-		redirects = redirects->next;
-		i++;
-	}
-	redirs[i].file = NULL;
-	return (redirs);
 }
 
 /**
