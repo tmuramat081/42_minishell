@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkohki <kkohki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:17:55 by event             #+#    #+#             */
-/*   Updated: 2023/02/11 22:30:05 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/14 00:07:45 by kkohki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,37 @@ static int	open_file(char *filename, t_node_type type)
  * @details 新規にファイルを開き（open）、入力／出力先に指定（dup2）する。
  * @param process
  */
-void	set_redirection(t_process process, t_shell *msh)
+void	set_redirect(t_process process, t_shell *msh)
 {
-	int			old_fd;
-	int			new_fd;
-	t_redirect	*redirects;
+	size_t		i;
 
-	if (ast_count_redirects(process.redirects) == 0)
+	if (!process.redir)
 		return ;
-	redirects = process.redirects;
-	while (redirects)
+	i = 0;
+	while (process.redir[i].file)
 	{
-		old_fd = open_file(redirects->file, redirects->type);
-		if (old_fd < 0)
+		process.redir[i].io = open_file(process.redir[i].file, process.redir[i].type);
+		if (process.redir[i].io < 0)
 		{
-			shell_perror(redirects->file, msh, 1);
+			shell_perror(process.redir[i].file, msh, 1);
 			return ;
 		}
-		new_fd = redirects->fd;
-		xdup2(old_fd, new_fd);
-		xclose(old_fd);
-		redirects = redirects->next;
+		i++;
 	}
 }
+
+void	dup_redirect(t_process process, t_shell *msh)
+{
+	size_t		i;
+
+	(void)msh;
+	if (!process.redir)
+		return ;
+	i = 0;
+	while (process.redir[i].file)
+	{
+		xdup2(process.redir[i].io, process.redir[i].fd);
+		i++;
+	}
+}
+

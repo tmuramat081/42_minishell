@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 21:33:43 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/11 21:33:47 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/13 01:31:05 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,13 @@ void	set_signal(int signal, void (*sighandler)(int))
 		exit(EXIT_FAILURE);
 }
 
+void	reset_signals(void)
+{
+	set_signal(SIGINT, SIG_DFL);
+	set_signal(SIGQUIT, SIG_DFL);
+	set_signal(SIGTSTP, SIG_DFL);
+}
+
 /**
  * @brief SIGINT, SIGSTOP, SIGQUITのシグナルを無効化する。
  * @detail SIGINTのみ別途シグナルハンドラーを設定する。
@@ -65,4 +72,5 @@ void	set_ignore_signal(void)
 	set_signal(SIGINT, ignore_sighandler);
 	set_signal(SIGQUIT, SIG_IGN);
 	set_signal(SIGTSTP, SIG_IGN);
+	set_signal(SIGPIPE, SIG_IGN);
 }

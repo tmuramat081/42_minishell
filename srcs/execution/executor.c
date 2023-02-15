@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 01:25:52 by event             #+#    #+#             */
-/*   Updated: 2023/02/12 17:13:13 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/12 23:44:17 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,5 @@ void	executor(t_ast_node *syntax_tree, t_shell *msh)
 		return ;
 	process = (t_process){};
 	exec_command_line(syntax_tree, process, msh);
+	set_ignore_signal();
 }

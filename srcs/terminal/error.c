@@ -6,7 +6,7 @@
 /*   By: tmuramat <tmuramat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 20:28:02 by tmuramat          #+#    #+#             */
-/*   Updated: 2023/02/12 15:21:54 by tmuramat         ###   ########.fr       */
+/*   Updated: 2023/02/13 00:41:51 by tmuramat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	builtin_perror(char *string, char *arg, char *cmd, t_shell *msh)
 {
 	if (msh)
 	{
-		ft_putstr_fd("m-shell", STDERR_FILENO);
+		ft_putstr_fd(msh->prompt, STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);
 	}
 	if (cmd)
@@ -77,7 +77,8 @@ void	shell_perror(const char *string, t_shell *msh, int status)
 {
 	extern int	g_status;
 
-	ft_putstr_fd("m-shell: ", STDERR_FILENO);
+	ft_putstr_fd(msh->prompt, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
 	if (errno == EISDIR)
 		ft_putendl_fd("is a directory", STDERR_FILENO);
 	else
