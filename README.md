@@ -1,6 +1,6 @@
 # MINISHELL
 
-## Document. 
+## Document
 https://tmuramat081.github.io/minishell_doc/
 
 ## Thanks
