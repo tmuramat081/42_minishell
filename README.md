@@ -5,15 +5,15 @@
 https://tmuramat081.github.io/minishell_doc/
 
 ## Logs
-- [使用可能関数](/asset/funcs.pdf)
+- [使用可能関数](/assets/funcs.pdf)
 
-- [抽象構文木](/asset/ast.pdf)
+- [抽象構文木](/assets/ast.pdf)
 
-- [参考文献](/asset/ref.pdf)
+- [参考文献](/assets/ref.pdf)
 
-- [Doxygenによる文書化](/asset/doxygen.pdf)
+- [Doxygenによる文書化](/assets/doxygen.pdf)
 
-- [Gitの管理方法](/asset/git_manage.pdf)
+- [Gitの管理方法](/assets/git_manage.pdf)
 
 
 ## Thanks
