@@ -13,7 +13,7 @@ And if you start with debug mode, as follows.
 ```
 make dev
 ./minishell_dev
-
+```
 With debug mode, you can check the process of lexer/parser/expander/executor.
 
 ## Document
