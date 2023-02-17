@@ -2,6 +2,10 @@
 ![Image 1](assets/screen_shot1.png)
 
 ## Installation
+As prerequisites, make sure you have 'readline' package installed.
+
+for macOS: to install GNU readline, you need to use homebrew: brew install readline
+
 Please clone this repository as follows
 
 ```
