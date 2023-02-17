@@ -4,13 +4,13 @@
 https://tmuramat081.github.io/minishell_doc/
 
 ## Logs
-- Doxygenによるドキュメント化
+- Doxygenによるドキュメント化  
 /asset/Doxygenによるドキュメント化.pdf
 
-- Gitの管理方法
+- Gitの管理方法  
 /asset/Gitの管理方法.pdf
 
-- 参考文献
+- 参考文献  
 /asset/参考文献.pdf
 
 ## Thanks
