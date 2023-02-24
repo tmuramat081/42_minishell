@@ -12,8 +12,9 @@ Please clone this repository as follows
 
 ```
 git clone git@github.com:tmuramat081/42_minishell.git
-cd minishell
+cd 42_minishell
 make
+./minishell
 ```
 And if you start with debug mode, as follows.
 ```
