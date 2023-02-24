@@ -11,7 +11,7 @@ brew install readline
 Please clone this repository as follows
 
 ```
-git clone https://github.com/madebypixel02/minishell.git
+git clone git@github.com:tmuramat081/42_minishell.git
 cd minishell
 make
 ```
@@ -20,7 +20,7 @@ And if you start with debug mode, as follows.
 make dev
 ./minishell_dev
 ```
-With debug mode, you can check the process of lexer/parser/expander/executor.
+With debug mode, you can check the lexing/parsing process.
 
 ## Document
 https://tmuramat081.github.io/minishell_doc/
